@@ -1,0 +1,63 @@
+version: '2'
+
+services:
+
+    hub:
+        image: selenium/hub
+        volumes:
+            - /dev/shm:/dev/shm
+            - /etc/localtime:/etc/localtime:ro
+
+    node:
+        depends_on:
+            - hub
+        env_file:
+            - ../.env
+        environment:
+            HUB_HOST: hub
+        image: selenium/node-chrome-debug
+        volumes_from:
+            - hub
+
+    novnc:
+        build:
+            context: ./
+            dockerfile: novnc.dockerfile
+        command: node
+        depends_on:
+            - node
+        ports:
+            - 6080:6080
+
+    php-unit:
+        image: phpunit/phpunit
+
+    console:
+        build:
+            args:
+                GID: ${_GID}
+                UID: ${_UID}
+                USER: ${USER}
+            context: ./
+            dockerfile: console.dockerfile
+        depends_on:
+            - php-unit
+            - novnc
+        hostname: ${_HOSTNAME}
+        expose:
+              - 9000
+#        ports:
+#            - 9000:9001
+        stdin_open: true
+        tty: true
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - ${HOME}/.gitconfig:${HOME}/.gitconfig
+            - ${HOME}/.git-credentials:${HOME}/.git-credentials
+            - ../.local/.bash_history:${HOME}/.bash_history
+            - ..:/src
+        environment:
+          PHP_IDE_CONFIG: "serverName=docker"
+          PHP_XDEBUG_ENABLED: 1
+          XDEBUG_CONFIG: remote_host=${XDEBUG_REMOTE_HOST}
+        working_dir: /src
