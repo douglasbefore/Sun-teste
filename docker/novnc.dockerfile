@@ -10,7 +10,6 @@ ARG NOVNC_DEP="\
 		procps \
 		python \
 		wget \
-		nano \
 		"
 ARG NOVNC_DIR=/opt/novnc
 ARG NOVNC_URL="https://github.com/douglasbefore/noVNC/archive/v1.0.0-beta.tar.gz"
@@ -19,6 +18,7 @@ RUN apk add ${NOVNC_DEP}
 
 RUN mkdir -pv ${NOVNC_DIR} \
 	&& cd ${NOVNC_DIR} \
+	&& echo "caminho NVC: ${NOVNC_DIR}" \
 	&& wget ${NOVNC_URL} -qO - | tar -xzvf - --strip-components=1 \
 	&& ln -fsv vnc.html index.html \
 	&& echo -e "set timeout 120\nspawn ./utils/launch.sh\nexpect \"Using local websockify\"\nsend \\x03" | expect \

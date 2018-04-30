@@ -82,9 +82,8 @@ case "$OSTYPE" in
   msys*)     LOCAL_IP=$( ipconfig | awk '/192.168./ {print $NF;exit}' ) ;;
 esac
 
-echo "Iniciando Docker/XDebug em: $LOCAL_IP"
-export _XDEBUG_REMOTE_HOST=$LOCAL_IP
-export _XDEBUG_REMOTE_PORT=9000
+export _LOCAL_IP_TESTE=$LOCAL_IP
+export _LOCAL_PORT_TESTE=9001
 
 from_dir=$PWD
 _ROOT=$(dirname ${BASH_SOURCE[0]})
@@ -112,13 +111,7 @@ fi
 
 ### END OF CHECKS/VARS ###
 
-if [ "$1" == "build" ];
-  then
-        docker-compose $compose_default_args up -d --build
-  else
-        docker-compose $compose_default_args up -d
-fi
-
+docker-compose $compose_default_args up -d --build
 docker-compose $compose_default_args exec console bash
 history_prune
 docker-compose $compose_default_args down

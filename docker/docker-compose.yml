@@ -7,15 +7,20 @@ services:
         volumes:
             - /dev/shm:/dev/shm
             - /etc/localtime:/etc/localtime:ro
+        ports:
+              - "4444:4444"
 
-    node:
+    chrome:
+        image: selenium/node-chrome-debug
         depends_on:
+            - hub
+        links:
             - hub
         env_file:
             - ../.env
         environment:
-            HUB_HOST: hub
-        image: selenium/node-chrome-debug
+            - HUB_PORT_4444_TCP_ADDR=hub
+            - HUB_PORT_4444_TCP_PORT=4444
         volumes_from:
             - hub
 
@@ -23,14 +28,11 @@ services:
         build:
             context: ./
             dockerfile: novnc.dockerfile
-        command: node
+        command: chrome
         depends_on:
-            - node
+            - chrome
         ports:
             - 6080:6080
-
-    php-unit:
-        image: phpunit/phpunit
 
     console:
         build:
@@ -38,26 +40,20 @@ services:
                 GID: ${_GID}
                 UID: ${_UID}
                 USER: ${USER}
+                LOCAL_IP_TESTE: ${_LOCAL_IP_TESTE}
+                LOCAL_PORT_TESTE: ${_LOCAL_PORT_TESTE}
             context: ./
             dockerfile: console.dockerfile
         depends_on:
-            - php-unit
             - novnc
-        hostname: ${_HOSTNAME}
-        expose:
-              - 9000
-#        ports:
-#            - 9000:9001
+        ports:
+            - 9001:9000
         stdin_open: true
         tty: true
         volumes:
+            - ..:/src
             - /etc/localtime:/etc/localtime:ro
             - ${HOME}/.gitconfig:${HOME}/.gitconfig
             - ${HOME}/.git-credentials:${HOME}/.git-credentials
             - ../.local/.bash_history:${HOME}/.bash_history
-            - ..:/src
-        environment:
-          PHP_IDE_CONFIG: "serverName=docker"
-          PHP_XDEBUG_ENABLED: 1
-          XDEBUG_CONFIG: remote_host=${XDEBUG_REMOTE_HOST}
         working_dir: /src
