@@ -48,6 +48,8 @@ ARG LOCAL_PORT_TESTE=${_LOCAL_PORT_TESTE}
 	&& chown -Rv ${USER} /home/${USER}
 
 ENV WEBDRIVER_DOCKER="http://${LOCAL_IP_TESTE}:4444/wd/hub"
+ENV LOCAL_APP_URL="http://${LOCAL_IP_TESTE}:8080/_sys/main.php"
+
 ENV PATH="$PATH:/src"
 
 USER ${USER}

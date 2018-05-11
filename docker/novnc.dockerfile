@@ -25,6 +25,9 @@ RUN mkdir -pv ${NOVNC_DIR} \
 	&& echo -e "#!/bin/sh\n${PWD}/utils/launch.sh --vnc \$@:5900\nexit \$?" > /usr/bin/connect \
 	&& chmod +x -v /usr/bin/connect
 
+ENV VNC_VIEW_ONLY=true
+ENV VNC_PW = ''
+
 WORKDIR ${NOVNC_DIR}
 
 ENTRYPOINT ["connect"]

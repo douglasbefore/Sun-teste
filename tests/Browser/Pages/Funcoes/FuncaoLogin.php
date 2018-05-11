@@ -34,7 +34,7 @@ class FuncaoLogin extends Page
      */
     public function url()
     {
-        return '/';
+        return env('LOCAL_APP_URL');
     }
 
     /**
@@ -58,6 +58,7 @@ class FuncaoLogin extends Page
         if ($browser->driver != self::$VerificarBrowserNovo) {
 
             self::$LoginPage = new UrlPage();
+
             self::$VerificarBrowserNovo = $browser->driver;
             self::$CpfUltimoUsuarioLogado = $Cpf;
 
@@ -132,11 +133,11 @@ class FuncaoLogin extends Page
      */
     public static function getCpfUsuario()
     {
-//        if(env('APP_AMBIENTE') == 'beta') {
-//            return env('LOGIN_USUARIO_BETA');
-//        }else{
-            return env('LOGIN_USUARIO_LOCAL');
-//        }
+        if(env('USE_AMBIENTE') == 'beta') {
+            return env('BETA_LOGIN_USUARIO');
+        }else{
+            return env('LOCAL_LOGIN_USUARIO');
+        }
     }
 
     /**
@@ -144,11 +145,11 @@ class FuncaoLogin extends Page
      */
     public static function getSenhaUsuario()
     {
-//        if(env('APP_AMBIENTE') == 'beta') {
-//            return env('SENHA_USUARIO_BETA');
-//        }else{
-            return env('SENHA_USUARIO_LOCAL');
-//        }
+        if(env('USE_AMBIENTE') == 'beta') {
+            return env('BETA_SENHA_USUARIO');
+        }else{
+            return env('LOCAL_SENHA_USUARIO');
+        }
     }
 
     /**

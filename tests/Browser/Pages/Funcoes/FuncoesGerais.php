@@ -106,15 +106,17 @@ class FuncoesGerais extends Page
      * Função para esperar acabar o load de carregar do sistema.
      *
      * @param  Browser $browser
-     * @return void
+     * @return bool
      */
     public function loadCarregando(Browser $browser, $selector = '#load'){
 
-        if(!$browser->element($selector)->isDisplayed()){
-            return true;
-        } else{
-            $browser->pause(500);
-            self::loadCarregando($browser, $selector);
+        if(isset($selector)) {
+            if (!$browser->element($selector)->isDisplayed()) {
+                return true;
+            } else {
+                $browser->pause(500);
+                self::loadCarregando($browser, $selector);
+            }
         }
     }
 

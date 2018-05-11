@@ -15,7 +15,11 @@ class UrlPage extends BasePage
 
     public function url()
     {
-        return '/';
+        if(env('USE_AMBIENTE') == 'beta' ){
+            return env('BETA_APP_URL');
+        }else{
+            return env('LOCAL_APP_URL');
+        }
     }
 
     /**

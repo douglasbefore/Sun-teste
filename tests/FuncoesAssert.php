@@ -14,15 +14,7 @@ use Laravel\Dusk\Browser;
 trait FuncoesAssert
 {
 
-    public function assertCampoDisable(Browser $browser, $selector)
-    {
-        DuskTestCase::assertFalse($browser->element($selector)->isEnabled(), 'O campo ['. $selector .'] não esta desabilitado!');
-    }
 
-    public function assertCampoNotDisable(Browser $browser, $seletorID)
-    {
-        DuskTestCase::assertTrue($browser->element($seletorID)->isEnabled(), 'O campo ['. $seletorID .'] n�o esta abilitado!');
-    }
 
     public function alertaErroSistema(Browser $browser, $nomeAlerta, $mensagem, $tempoSegundosEspera = 10){
         $browser->waitFor($nomeAlerta, $tempoSegundosEspera);
