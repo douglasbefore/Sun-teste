@@ -11,7 +11,7 @@ ARG NOVNC_DEP="\
 		python \
 		wget \
 		"
-ARG NOVNC_DIR=/opt/novnc
+ARG NOVNC_DIR=/root/novnc
 ARG NOVNC_URL="https://github.com/douglasbefore/noVNC/archive/v1.0.0-beta.tar.gz"
 
 RUN apk add ${NOVNC_DEP}
@@ -24,9 +24,6 @@ RUN mkdir -pv ${NOVNC_DIR} \
 	&& echo -e "set timeout 120\nspawn ./utils/launch.sh\nexpect \"Using local websockify\"\nsend \\x03" | expect \
 	&& echo -e "#!/bin/sh\n${PWD}/utils/launch.sh --vnc \$@:5900\nexit \$?" > /usr/bin/connect \
 	&& chmod +x -v /usr/bin/connect
-
-ENV VNC_VIEW_ONLY=true
-ENV VNC_PW = ''
 
 WORKDIR ${NOVNC_DIR}
 

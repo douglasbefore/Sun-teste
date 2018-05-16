@@ -4,7 +4,7 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
-use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage;
+use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage as VendaPage;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
@@ -29,17 +29,19 @@ class VendaTest extends DuskTestCase
             $acaoMenu = 'InserirVendas';
 
             $browser->on(new FuncaoLogin);
-            $browser->FazerLogin(self::$canal, '02717678123');
+//            $browser->FazerLogin(self::$canal, '02717678123');
+            $browser->FazerLogin(self::$canal, '05114040189');
 
             $browser->on(new FuncoesMenu);
             $browser->EntrarMenu($acaoMenu);
 
-//            $browser->pause(1500);
+            $Elementos = new VendaPage();
 
             $browser->on(new VendaPage);
-            $browser->on(new FuncoesGerais);
+            $browser->on(new FuncoesGerais());
+//            $campo_token = '';
 
-            $browser->loadCarregando($browser->element('@AlertaRequisicaoToken'));
+            $browser->loadCarregandoCampoNull($Elementos->elements()['@AlertaRequisicaoToken']);
 
             $browser->element('@BotaoContinuar')->isDisplayed();
 

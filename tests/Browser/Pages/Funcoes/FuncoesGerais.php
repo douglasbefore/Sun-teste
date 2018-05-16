@@ -120,6 +120,20 @@ class FuncoesGerais extends Page
         }
     }
 
+    public function loadCarregandoCampoNull(Browser $browser, $selector = '#load'){
+            if (!$browser->element($selector)) {
+                return true;
+            } else {
+                $browser->pause(500);
+                self::loadCarregando($browser, $selector);
+            }
+    }
+//while (isset($campo_token)) {
+//    $campo_token = $browser->element('@AlertaRequisicaoToken');
+//    $browser->pause(500);
+//}
+
+
     /**
      * Get the URL for the page.
      *
