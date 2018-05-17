@@ -16,8 +16,8 @@ ARG LOCAL_PORT_TESTE=${_LOCAL_PORT_TESTE}
         && echo "Iniciando Docker/XDebug em: ${LOCAL_IP_TESTE}:${LOCAL_PORT_TESTE}" \
         && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_enable=1" >> $PHP_INI_DIR/conf.d/xdebug.ini \
-        && echo -e "xdebug.remote_host=${HOST_XDEBUG}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
-        && echo -e "xdebug.remote_port=${PORT_XDEBUG}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
+        && echo -e "xdebug.remote_host=${LOCAL_IP_TESTE}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
+        && echo -e "xdebug.remote_port=${LOCAL_PORT_TESTE}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_autostart=1" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_connect_back=0" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.idekey='dockerTeste'" >> $PHP_INI_DIR/conf.d/xdebug.ini

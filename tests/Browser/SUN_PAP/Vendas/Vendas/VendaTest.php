@@ -35,23 +35,19 @@ class VendaTest extends DuskTestCase
             $browser->on(new FuncoesMenu);
             $browser->EntrarMenu($acaoMenu);
 
-            $Elementos = new VendaPage();
-
             $browser->on(new VendaPage);
-            $browser->on(new FuncoesGerais());
-//            $campo_token = '';
 
-            $browser->loadCarregandoCampoNull($Elementos->elements()['@AlertaRequisicaoToken']);
+            $funcoes = new FuncoesGerais();
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaRequisicaoToken');
 
             $browser->element('@BotaoContinuar')->isDisplayed();
-
-            $browser->value('@InputCPF', '1234567891');
-            $browser->element('@BotaoContinuar')->isDisplayed();
-            $browser->press('@BotaoServicoMovel');
-            $browser->assertVisible('@LabelInformativoCPF');
-            $this->assertCampoDisable($browser, '@BotaoContinuar');
 
             $browser->value('@InputCPF', FuncoesPhp::cpfRandom());
+            $browser->element('@BotaoContinuar')->isDisplayed();
+            $browser->press('@BotaoServicoMovel');
+
+            $browser->element('@BotaoContinuar')->isEnabled();
+            $browser->press('@BotaoContinuar');
 
             $browser->pause(5000);
             $browser->press('@BotaoContinuar');

@@ -94,8 +94,8 @@ class FuncaoLogin extends Page
 
         $browser->press('Entrar');
 
-        $browser->on(new FuncoesGerais);
-        $browser->loadCarregando();
+        $funcoes = new FuncoesGerais();
+        $funcoes->loadCarregando($browser);
 
         if(!self::$FecharComunicao) {
             self::VerificarComunicado($browser);

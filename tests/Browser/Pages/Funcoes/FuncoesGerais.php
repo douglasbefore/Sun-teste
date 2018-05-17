@@ -7,14 +7,14 @@ use Tests\DuskTestCase;
 
 class FuncoesGerais extends Page
 {
-     /**
-      * Funçãoo para utilizar quando a muitos check list na tela de cadastro.
-      * Forçando assim testar todas.
-      *
-      * @param  Browser $browser
-      * @param  array $elemento
-      * @return void
-      */
+    /**
+     * Funçãoo para utilizar quando a muitos check list na tela de cadastro.
+     * Forçando assim testar todas.
+     *
+     * @param  Browser $browser
+     * @param  array $elemento
+     * @return void
+     */
     public function ElementoCheck(Browser $browser, $elemento, $elementoIds, $SomenteVerificar = false)
     {
         foreach ($elemento[$elementoIds] as $checksIds => $CheckAcoes) {
@@ -108,30 +108,23 @@ class FuncoesGerais extends Page
      * @param  Browser $browser
      * @return bool
      */
-    public function loadCarregando(Browser $browser, $selector = '#load'){
-
-        if(isset($selector)) {
-            if (!$browser->element($selector)->isDisplayed()) {
-                return true;
-            } else {
-                $browser->pause(500);
-                self::loadCarregando($browser, $selector);
-            }
+    public function loadCarregando($browser, $selector = '#load')
+    {
+        if (!$browser->element($selector)->isDisplayed()) {
+            return true;
+        } else {
+            $browser->pause(500);
+            self::loadCarregando($browser, $selector);
         }
     }
 
-    public function loadCarregandoCampoNull(Browser $browser, $selector = '#load'){
-            if (!$browser->element($selector)) {
-                return true;
-            } else {
-                $browser->pause(500);
-                self::loadCarregando($browser, $selector);
-            }
+    public function loadCarregandoCampoNull($browser, $selector = '#load')
+    {
+        do {
+            $elementoToken = $browser->element($selector);
+            $browser->pause(500);
+        } while (isset($elementoToken));
     }
-//while (isset($campo_token)) {
-//    $campo_token = $browser->element('@AlertaRequisicaoToken');
-//    $browser->pause(500);
-//}
 
 
     /**
