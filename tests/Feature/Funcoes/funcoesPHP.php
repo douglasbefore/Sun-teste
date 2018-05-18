@@ -62,7 +62,7 @@ class funcoesPHP{
      * @param int $mascara
      * @return string
      */
-    public static function gerarCPF($mascara = 1) {
+    public static function gerarCPF($mascara = 0) {
         $n1 = rand(0, 9);
         $n2 = rand(0, 9);
         $n3 = rand(0, 9);

@@ -110,6 +110,7 @@ class FuncoesGerais extends Page
      */
     public function loadCarregando($browser, $selector = '#load')
     {
+        $browser->pause(500);
         if (!$browser->element($selector)->isDisplayed()) {
             return true;
         } else {

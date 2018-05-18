@@ -4,7 +4,7 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
-use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage as VendaPage;
+use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
@@ -42,16 +42,50 @@ class VendaTest extends DuskTestCase
 
             $browser->element('@BotaoContinuar')->isDisplayed();
 
-            $browser->value('@InputCPF', FuncoesPhp::cpfRandom());
+            $cpf = FuncoesPhp::gerarCPF(1);
+
+            $browser->type('@CampoClienteCPF', $cpf);
             $browser->element('@BotaoContinuar')->isDisplayed();
-            $browser->press('@BotaoServicoMovel');
+            $browser->click('@BotaoServicoMovel');
 
             $browser->element('@BotaoContinuar')->isEnabled();
             $browser->press('@BotaoContinuar');
 
-            $browser->pause(5000);
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCadastroCPF360');
+
+            $Nome = $browser->value('@CampoClienteNomeCompleto');
+            if($Nome == "") {
+                $browser->type('@CampoClienteNomeCompleto', 'Teste Teste Teste');
+                $browser->type('@CampoClienteDataNascimento', '11111946');
+                $browser->type('@CampoClienteNomeMae', 'Mae Teste Teste');
+
+                $browser->click('@BotaoSexoMasculino');
+
+                $browser->type('@CampoClienteEmail', 'testeteste@teste.com.br');
+                $browser->type('@CampoClienteTelefoneCelular', '67985856498');
+
+            }else{
+                if($browser->value('@CampoClienteNomeCompleto') == ""){
+                    $browser->type('@CampoClienteNomeCompleto', 'Teste Teste Teste');
+                }
+
+            }
+
+            $browser->element('@BotaoContinuar')->isEnabled();
             $browser->press('@BotaoContinuar');
-            $browser->pause(2000);
+
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
+
+            $browser->type('@CampoEnderecoCep', '79002-212');
+            $browser->type('@CampoEnderecoNumero', '780');
+
+            $browser->pause(500);
+
+            $browser->element('@BotaoContinuar')->isEnabled();
+            $browser->press('@BotaoContinuar');
+
+            $browser->pause(500);
         });
     }
 }
