@@ -27,7 +27,7 @@ function local_config {
 	if [[ ( -f .env ) && ( ! -L .env ) ]]; then
 		mv -fv .env .local/
 	elif [[ ( ! -f .env ) || ( -L .env ) ]]; then
-		cp ../template.env .local/.env
+		cp $_ROOT/template.env .local/.env
 	fi
 
 	ln -fsv .local/.env
