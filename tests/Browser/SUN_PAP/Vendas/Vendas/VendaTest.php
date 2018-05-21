@@ -43,7 +43,6 @@ class VendaTest extends DuskTestCase
             $browser->element('@BotaoContinuar')->isDisplayed();
 
             $cpf = FuncoesPhp::gerarCPF(1);
-
             $browser->type('@CampoClienteCPF', $cpf);
             $browser->element('@BotaoContinuar')->isDisplayed();
             $browser->click('@BotaoServicoMovel');
@@ -54,23 +53,8 @@ class VendaTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCadastroCPF360');
 
-            $Nome = $browser->value('@CampoClienteNomeCompleto');
-            if($Nome == "") {
-                $browser->type('@CampoClienteNomeCompleto', 'Teste Teste Teste');
-                $browser->type('@CampoClienteDataNascimento', '11111946');
-                $browser->type('@CampoClienteNomeMae', 'Mae Teste Teste');
-
-                $browser->click('@BotaoSexoMasculino');
-
-                $browser->type('@CampoClienteEmail', 'testeteste@teste.com.br');
-                $browser->type('@CampoClienteTelefoneCelular', '67985856498');
-
-            }else{
-                if($browser->value('@CampoClienteNomeCompleto') == ""){
-                    $browser->type('@CampoClienteNomeCompleto', 'Teste Teste Teste');
-                }
-
-            }
+            $dadosCliente = new VendaPAPFuncao();
+            $dadosCliente->PreencherCamposDadosCliente($browser);
 
             $browser->element('@BotaoContinuar')->isEnabled();
             $browser->press('@BotaoContinuar');
@@ -79,8 +63,8 @@ class VendaTest extends DuskTestCase
 
             $browser->type('@CampoEnderecoCep', '79002-212');
             $browser->type('@CampoEnderecoNumero', '780');
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaEnderecoCarregandoCidade');
 
-            $browser->pause(500);
 
             $browser->element('@BotaoContinuar')->isEnabled();
             $browser->press('@BotaoContinuar');
