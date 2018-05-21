@@ -61,13 +61,14 @@ class VendaTest extends DuskTestCase
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
 
-            $browser->type('@CampoEnderecoCep', '79002-212');
+            $browser->type('@CampoEnderecoCep', '79020-250');
             $browser->type('@CampoEnderecoNumero', '780');
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaEnderecoCarregandoCidade');
 
-
             $browser->element('@BotaoContinuar')->isEnabled();
             $browser->press('@BotaoContinuar');
+
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeRealizandoAnalise');
 
             $browser->pause(500);
         });

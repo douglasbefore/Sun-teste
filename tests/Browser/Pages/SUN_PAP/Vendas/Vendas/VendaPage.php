@@ -20,7 +20,7 @@ class VendaPage extends BasePage
     /**
      * Assert that the browser is on the page.
      *
-     * @param  Browser  $browser
+     * @param  Browser $browser
      * @return void
      */
     public function assert(Browser $browser)
@@ -44,7 +44,8 @@ class VendaPage extends BasePage
             '@AlertaRequisicaoToken' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
             '@AlertaCarregandoDados' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div.loading-wrapper > div > span',
             '@AlertaCadastroCPF360' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
-            '@AlertaEnderecoCarregandoCidade' => 'body > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(6) > div > div.loading-wrapper > div > span',
+            '@AlertaEnderecoCarregandoCidade' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(6) > div > div.loading-wrapper > div > span',
+            '@AlertaAgurdeRealizandoAnalise' => '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo',
 
             /* Atribua a venda a um vendedor */
             '@CampoVendedorEstado' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select',
@@ -86,16 +87,14 @@ class VendaPage extends BasePage
             '@CampoEnderecoNumero' => '#numero > div.field-group > input',
             '@CampoEnderecoRua' => '#rua > div.field-group > input',
             '@CampoEnderecoBairro' => '#bairro > div.field-group > input',
-            '@CampoEnderecoComplemento' => 'body > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input',
+            '@SelectEnderecoUF' => '#estado > div > select',
+            '@SelectEnderecoCidade' => '#cidade > div > select',
+            '@SelectEnderecoTipoComplemento' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select',
+            '@CampoEnderecoComplemento' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input',
             /* ** VALIDACOES ** */
             '@ValidarEnderecoCep' => '#cep > div.form-control-feedback',
             '@ValidarEnderecoNumero' => '#numero > div.form-control-feedback',
-            '@ValidarEnderecoCep' => '#cep > div.field-group > input',
-
-            // Select
-            '@SelectEnderecoUF' => '#estado > div > select',
-            '@SelectEnderecoCidade' => '#cidade > div > select',
-            '@SelectEnderecoTipoComplemento' => 'body > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select',
+            '@ValidarEnderecoComplemento' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback',
 
         ];
     }
