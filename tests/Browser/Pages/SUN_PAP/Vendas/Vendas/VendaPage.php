@@ -36,9 +36,13 @@ class VendaPage extends BasePage
     public function elements()
     {
         return [
-
             /* Geral da Venda */
             '@BotaoContinuar' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn',
+
+            // Alertas e informativos
+            '@AlertaRequisicaoToken' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
+            '@AlertaCarregandoDados' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div.loading-wrapper > div > span',
+            '@AlertaCadastroCPF360' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
 
             /* Campos Nova Venda */
             '@CampoClienteCPF' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.field-group > input',
@@ -70,7 +74,7 @@ class VendaPage extends BasePage
             '@ValidarClienteTelefoneCelular' => '#celular > div.form-control-feedback',
             '@ValidarClienteTelefoneFixo' => '#fixo > div.form-control-feedback',
 
-            /**/
+            /* Endereco do cliente */
             '@CampoEnderecoCep' => '#cep > div.field-group > input',
             '@CampoEnderecoNumero' => '#numero > div.field-group > input',
             '@CampoEnderecoRua' => '#rua > div.field-group > input',
@@ -84,14 +88,6 @@ class VendaPage extends BasePage
             '@SelectEnderecoCidade' => '#cidade > div > select',
             '@SelectEnderecoTipoComplemento' => 'body > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select',
 
-            // Label informativo de erros
-            '@LabelInformativoCPF' => '> div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.form-control-feedback',
-
-
-            // Alertas e informativos
-            '@AlertaRequisicaoToken' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
-            '@AlertaCarregandoDados' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div.loading-wrapper > div > span',
-            '@AlertaCadastroCPF360' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
         ];
     }
 }
