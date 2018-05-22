@@ -33,6 +33,7 @@ abstract class DuskTestCase extends BaseTestCase
         $options = (new ChromeOptions)->addArguments([
             '--disable-gpu',
             '--disable-infobars',
+            '--start-maximized',
         ]);
 
         if (env('USE_SELENIUM_DOCKER', 'false') == 'true') {

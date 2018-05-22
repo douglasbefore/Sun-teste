@@ -103,7 +103,7 @@ class FuncoesGerais extends Page
     }
 
     /**
-     * Função para esperar acabar o load de carregar do sistema.
+     * Funçao para esperar acabar o load de carregar do sistema.
      *
      * @param  Browser $browser
      * @return bool
@@ -119,12 +119,32 @@ class FuncoesGerais extends Page
         }
     }
 
+    /**
+     * Funçao para esperar acabar os loads que apos finalizar sao removidos do html.
+     *
+     * @param  Browser $browser
+     * @return bool
+     */
     public function loadCarregandoCampoNull($browser, $selector = '#load')
     {
         do {
             $elementoToken = $browser->element($selector);
             $browser->pause(500);
         } while (isset($elementoToken));
+    }
+
+    /**
+     * Funçao para esperar ate o selector fique abilitado.
+     *
+     * @param  Browser $browser
+     * @return bool
+     */
+    public function elementsIsEnabled($browser, $selector)
+    {
+        do {
+            $selectorEnabled = $browser->element($selector)->isEnabled();
+            $browser->pause(500);
+        } while (empty($selectorEnabled));
     }
 
 

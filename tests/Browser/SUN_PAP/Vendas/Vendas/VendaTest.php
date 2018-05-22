@@ -40,14 +40,11 @@ class VendaTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaRequisicaoToken');
 
-            $browser->element('@BotaoContinuar')->isDisplayed();
-
             $cpf = FuncoesPhp::gerarCPF(1);
             $browser->type('@CampoClienteCPF', $cpf);
-            $browser->element('@BotaoContinuar')->isDisplayed();
             $browser->click('@BotaoServicoMovel');
 
-            $browser->element('@BotaoContinuar')->isEnabled();
+            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
@@ -56,7 +53,7 @@ class VendaTest extends DuskTestCase
             $dadosCliente = new VendaPAPFuncao();
             $dadosCliente->PreencherCamposDadosCliente($browser);
 
-            $browser->element('@BotaoContinuar')->isEnabled();
+            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
@@ -65,7 +62,7 @@ class VendaTest extends DuskTestCase
             $browser->type('@CampoEnderecoNumero', '780');
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaEnderecoCarregandoCidade');
 
-            $browser->element('@BotaoContinuar')->isEnabled();
+            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeRealizandoAnalise');
