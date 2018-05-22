@@ -31,8 +31,8 @@ abstract class DuskTestCase extends BaseTestCase
     protected function driver()
     {
         $options = (new ChromeOptions)->addArguments([
-            '--disable-gpu',
-            '--disable-infobars',
+//            '--disable-gpu',
+//            '--disable-infobars',
             '--start-maximized',
         ]);
 

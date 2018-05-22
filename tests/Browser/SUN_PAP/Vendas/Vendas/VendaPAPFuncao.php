@@ -43,6 +43,10 @@ class VendaPAPFuncao
                 $browser->type('@CampoClienteTelefoneFixo', '6733331111');
             }
         }
+    }
+
+    public function PreencherCamposEndereco(Browser $browser, $cep){
 
     }
+
 }

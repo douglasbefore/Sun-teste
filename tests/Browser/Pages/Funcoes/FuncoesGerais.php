@@ -131,6 +131,7 @@ class FuncoesGerais extends Page
             $elementoToken = $browser->element($selector);
             $browser->pause(500);
         } while (isset($elementoToken));
+        $browser->pause(500);
     }
 
     /**

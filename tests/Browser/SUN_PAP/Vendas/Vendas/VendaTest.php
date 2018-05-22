@@ -50,8 +50,8 @@ class VendaTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCadastroCPF360');
 
-            $dadosCliente = new VendaPAPFuncao();
-            $dadosCliente->PreencherCamposDadosCliente($browser);
+            $funcoeVenda = new VendaPAPFuncao();
+            $funcoeVenda->PreencherCamposDadosCliente($browser);
 
             $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
@@ -67,7 +67,24 @@ class VendaTest extends DuskTestCase
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeRealizandoAnalise');
 
+            $browser->click('@BotaoRecolherAnalise');
             $browser->pause(500);
+            $browser->press('@BotaoServicoMovelControleCartao');
+
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaServicoControleCartaoTipoCarregandoPlanos');
+            $browser->waitFor('@SelectServicoControleCartaoPlano');
+            $browser->select('@SelectServicoControleCartaoPlano',1123);
+            $browser->click('@BotaoServicoControleCartaoTipoClienteAlta');
+            $browser->type('@CampoServicoControleCartaoNumeroCliente', '67978485486');
+            $browser->type('@CampoServicoControleCartaoICCID', '895599849844568854678945');
+
+            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
+            $browser->press('@BotaoContinuar');
+            $browser->press('@BotaoEnviarPedido');
+
+            $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeCarregandoDados');
+            $browser->assertVisible('@MensagemPedidoConcluidoSucesso');
+
         });
     }
 }

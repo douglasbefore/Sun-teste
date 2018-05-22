@@ -39,6 +39,8 @@ class VendaPage extends BasePage
             /* Geral da Venda */
             '@BotaoContinuar' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn',
             '@BotaoVoltar' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn.btn-link.secondary-actions',
+            '@BotaoRecolherAnalise' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.sidebar-container > div.sidebar > span',
+            '@BotaoEnviarPedido' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn.btn-success.ml-auto',
 
             // Alertas e informativos
             '@AlertaRequisicaoToken' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
@@ -46,6 +48,9 @@ class VendaPage extends BasePage
             '@AlertaCadastroCPF360' => '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span',
             '@AlertaEnderecoCarregandoCidade' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(6) > div > div.loading-wrapper > div > span',
             '@AlertaAgurdeRealizandoAnalise' => '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo',
+            '@AlertaAgurdeCarregandoDados' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div.loading-wrapper > div > span',
+            '@MensagemPedidoConcluidoSucesso' => '> div:nth-child(6) > div.module-container > div.container.venda-finalizada > div.container.venda-finalizada > div > div.message',
+
 
             /* Atribua a venda a um vendedor */
             '@CampoVendedorEstado' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select',
@@ -96,6 +101,26 @@ class VendaPage extends BasePage
             '@ValidarEnderecoNumero' => '#numero > div.form-control-feedback',
             '@ValidarEnderecoComplemento' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback',
 
+            /* incluir serviço */
+            '@BotaoServicoIncluirServico' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div:nth-child(1) > div:nth-child(1) > button',
+            '@BotaoServicoMovelMovelControleFatura' => '.icon-card.controleFatura',
+            '@BotaoServicoMovelMovelControleFaturaDesabilitado' => '.icon-card.disabled.controleFatura',
+            '@BotaoServicoMovelFixoFWT' => '.icon-card.fixoFWT',
+            '@BotaoServicoMovelFixoFWTDesabilitado' => '.icon-card.disabled.fixoFWT',
+            '@BotaoServicoMovelControleCartao' => '.icon-card.controleCartao',
+            '@BotaoServicoMovelControleCartaoDesabilitado' => '.icon-card.disabled.controleCartao',
+            '@BotaoServicoMovelControlePassDigital' => '.icon-card.controlePassDigital',
+            '@BotaoServicoMovelControlePassDigitalDesabilitado' => '.icon-card.disabled.controlePassDigital',
+
+            /* Servico Controle Cartao */
+            '@AlertaServicoControleCartaoTipoCarregandoPlanos' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div:nth-child(1) > div > div.loading-wrapper > div > div:nth-child(3)',
+            '@SelectServicoControleCartaoPlano' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div:nth-child(1) > div > [id^="plano_"] > div > select',
+            '@BotaoServicoControleCartaoTipoClienteAlta' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div > [id^="tipoCliente_"] > div > div:nth-child(1)',
+            '@BotaoServicoControleCartaoTipoClienteMigracao' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div > [id^="tipoCliente_"] > div > div:nth-child(2)',
+            '@BotaoServicoControleCartaoTipoClienteUpgrade' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div > [id^="tipoCliente_"] > div > div:nth-child(3)',
+
+            '@CampoServicoControleCartaoNumeroCliente' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div > [id^="numeroCliente_"] > div.field-group > input',
+            '@CampoServicoControleCartaoICCID' => '.lista-servico-selecionados > span > div.icon-card-form.controleCartao > div.form-wrapper > div > div > [id^="iccid_"] > div.field-group > input',
         ];
     }
 }
