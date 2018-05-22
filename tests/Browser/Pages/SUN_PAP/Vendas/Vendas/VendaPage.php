@@ -46,7 +46,7 @@ class VendaPage extends BasePage
 
             /* Campos Nova Venda */
             '@CampoClienteCPF' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.field-group > input',
-            '@SelectDDD' => 'body > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(2) > div > div > select',
+            '@SelectDDD' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(2) > div > div > select',
             '@BotaoServicoMovel' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.movel.web',
             '@BotaoServicoFixa' => '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.fixa.web > div',
             /* ** VALIDACOES ** */
@@ -67,7 +67,6 @@ class VendaPage extends BasePage
             '@ValidarClienteCPF' => '#cpf > div.form-control-feedback',
             '@ValidarClienteNome' => '#nome > div.form-control-feedback',
             '@ValidarClienteDataNascimento' => '#dataNascimento > div.form-control-feedback',
-            '@ValidarClienteNomeMae' => '#nomeMae > div.form-control-feedback',
             '@ValidarClienteNomeMae' => '#nomeMae > div.form-control-feedback',
             '@ValidarClienteSexo' => '#sexo > div.form-control-feedback',
             '@ValidarClienteEmail' => '#email > div.form-control-feedback',
