@@ -50,8 +50,8 @@ class VendaTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaCadastroCPF360');
 
-            $funcoeVenda = new VendaPAPFuncao();
-            $funcoeVenda->PreencherCamposDadosCliente($browser);
+            $funcoesVenda = new VendaPAPFuncao();
+            $funcoesVenda->PreencherCamposDadosCliente($browser);
 
             $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
