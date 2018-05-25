@@ -11,7 +11,7 @@ use Tests\Browser\Pages\Funcoes\FuncaoLogin;
 use Tests\Browser\Pages\Funcoes\FuncoesMenu;
 use Tests\Feature\Funcoes\funcoesPHP;
 
-class VendaTest extends DuskTestCase
+class VendaPAPTest extends DuskTestCase
 {
 
     private static $canal = FuncaoLogin::CANAL_PAP;

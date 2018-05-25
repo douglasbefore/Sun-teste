@@ -62,7 +62,6 @@ class FuncaoLogin extends Page
 
             $browser->visit(self::$LoginPage);
             $browser->maximize();
-//            $browser->keys('body', '{F11}');
 
             self::Logar($browser, $Canal, $Cpf, $Senha);
         }
