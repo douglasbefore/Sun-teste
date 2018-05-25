@@ -1,8 +1,6 @@
 <?php
 
 namespace Tests\Browser\Pages\Funcoes;
-
-
 use Laravel\Dusk\Browser;
 use League\Flysystem\Config;
 use Tests\CreatesApplication;

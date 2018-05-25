@@ -17,7 +17,7 @@ class VendaPAPFuncao
             $browser->type('@CampoClienteNomeCompleto', 'Teste Teste Teste');
             $browser->type('@CampoClienteDataNascimento', '11111946');
             $browser->type('@CampoClienteNomeMae', 'Mae Teste Teste');
-            $browser->click('@BotaoSexoMasculino');
+            $browser->click('@BotaoClienteSexoMasculino');
             $browser->type('@CampoClienteEmail', 'testeteste@teste.com.br');
             $browser->type('@CampoClienteTelefoneCelular', '67985856498');
         }else{

@@ -2,9 +2,9 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
-
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
@@ -24,6 +24,8 @@ class VendaTest extends DuskTestCase
      */
     public function testInserirVendaVendedor()
     {
+        new VendaServicosElementsPAP();
+
         $this->browse(function (Browser $browser) {
 
             $acaoMenu = 'InserirVendas';
@@ -41,7 +43,7 @@ class VendaTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaRequisicaoToken');
 
             $cpf = FuncoesPhp::gerarCPF(1);
-            $browser->type('@CampoClienteCPF', $cpf);
+            $browser->type('@CampoVendaCPFCliente', $cpf);
             $browser->click('@BotaoServicoMovel');
 
             $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
@@ -71,16 +73,17 @@ class VendaTest extends DuskTestCase
             $browser->pause(500);
             $browser->press('@BotaoServicoMovelControleCartao');
 
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaServicoControleCartaoTipoCarregandoPlanos');
-            $browser->waitFor('@SelectServicoControleCartaoPlano');
-            $browser->select('@SelectServicoControleCartaoPlano',1123);
-            $browser->click('@BotaoServicoControleCartaoTipoClienteAlta');
-            $browser->type('@CampoServicoControleCartaoNumeroCliente', '67978485486');
-            $browser->type('@CampoServicoControleCartaoICCID', '895599849844568854678945');
+            $funcoes->loadCarregandoCampoNull($browser, ControleCartao::AlertaCarregandoPlanos);
+            $browser->waitFor(ControleCartao::SelectPlano);
+            $browser->select(ControleCartao::SelectPlano,1123);
+            $browser->click(ControleCartao::BotaoTipoClienteAlta);
+            $browser->type(ControleCartao::CampoNumeroCliente, '67978485486');
+            $browser->type(ControleCartao::CampoICCID, '895599849844568854678945');
 
             $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
             $browser->press('@BotaoContinuar');
             $browser->press('@BotaoEnviarPedido');
+
 
             $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeCarregandoDados');
             $browser->assertVisible('@MensagemPedidoConcluidoSucesso');
