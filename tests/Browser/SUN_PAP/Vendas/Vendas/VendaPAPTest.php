@@ -2,13 +2,14 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
-use Tests\Browser\Pages\Funcoes\FuncoesGerais;
-use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\VendaPage;
-use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
+//use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\CampoVenda;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
 use Tests\Browser\Pages\Funcoes\FuncoesMenu;
+use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Feature\Funcoes\funcoesPHP;
 
 class VendaPAPTest extends DuskTestCase
@@ -25,6 +26,7 @@ class VendaPAPTest extends DuskTestCase
     public function testInserirVendaVendedor()
     {
         new VendaServicosElementsPAP();
+        new VendaElementsPAP();
 
         $this->browse(function (Browser $browser) {
 
@@ -37,41 +39,39 @@ class VendaPAPTest extends DuskTestCase
             $browser->on(new FuncoesMenu);
             $browser->EntrarMenu($acaoMenu);
 
-            $browser->on(new VendaPage);
-
             $funcoes = new FuncoesGerais();
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaRequisicaoToken');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
 
             $cpf = FuncoesPhp::gerarCPF(1);
-            $browser->type('@CampoVendaCPFCliente', $cpf);
-            $browser->click('@BotaoServicoMovel');
+            $browser->type(CampoVenda::CampoVendaCPFCliente, $cpf);
+            $browser->click(CampoVenda::BotaoServicoMovel);
 
-            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
-            $browser->press('@BotaoContinuar');
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
 
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCadastroCPF360');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCarregandoDados);
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCadastroCPF360);
 
             $funcoesVenda = new VendaPAPFuncao();
             $funcoesVenda->PreencherCamposDadosCliente($browser);
 
-            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
-            $browser->press('@BotaoContinuar');
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
 
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaCarregandoDados');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCarregandoDados);
 
-            $browser->type('@CampoEnderecoCep', '79020-250');
-            $browser->type('@CampoEnderecoNumero', '780');
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaEnderecoCarregandoCidade');
+            $browser->type(CampoVenda::CampoEnderecoCep, '79020-250');
+            $browser->type(CampoVenda::CampoEnderecoNumero, '780');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
 
-            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
-            $browser->press('@BotaoContinuar');
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
 
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeRealizandoAnalise');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeRealizandoAnalise);
 
-            $browser->click('@BotaoRecolherAnalise');
+            $browser->click(CampoVenda::BotaoRecolherAnalise);
             $browser->pause(500);
-            $browser->press('@BotaoServicoMovelControleCartao');
+            $browser->press(CampoVenda::BotaoServicoMovelControleCartao);
 
             $funcoes->loadCarregandoCampoNull($browser, ControleCartao::AlertaCarregandoPlanos);
             $browser->waitFor(ControleCartao::SelectPlano);
@@ -80,13 +80,12 @@ class VendaPAPTest extends DuskTestCase
             $browser->type(ControleCartao::CampoNumeroCliente, '67978485486');
             $browser->type(ControleCartao::CampoICCID, '895599849844568854678945');
 
-            $funcoes->elementsIsEnabled($browser,'@BotaoContinuar');
-            $browser->press('@BotaoContinuar');
-            $browser->press('@BotaoEnviarPedido');
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoEnviarPedido);
 
-
-            $funcoes->loadCarregandoCampoNull($browser, '@AlertaAgurdeCarregandoDados');
-            $browser->assertVisible('@MensagemPedidoConcluidoSucesso');
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
+            $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
 
         });
     }

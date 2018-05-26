@@ -95,11 +95,11 @@ class FuncaoLogin extends Page
         $funcoes = new FuncoesGerais();
         $funcoes->loadCarregando($browser);
 
+        $browser->waitFor('.tool-logo');
         if(!self::$FecharComunicao) {
             self::VerificarComunicado($browser);
         }
 
-        $browser->waitFor('.tool-logo');
         $browser->assertSee(self::spanCanal($Canal));
     }
 

@@ -4,6 +4,7 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 class VendaServicosElementsPAP{}
 
+
 class ControleFatura extends VendaServicosElementsPAP
 {
     const AlertaCarregandoPlanos = '.lista-servico-selecionados > span > div.icon-card-form.controleFatura > div.form-wrapper > div > div > div > div.loading-wrapper > div > span';
