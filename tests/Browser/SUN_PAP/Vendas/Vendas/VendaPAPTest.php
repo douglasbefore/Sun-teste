@@ -4,7 +4,6 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-//use Tests\Browser\Pages\SUN_PAP\Vendas\Vendas\CampoVenda;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
@@ -76,7 +75,7 @@ class VendaPAPTest extends DuskTestCase
             $browser->waitFor(ControleCartao::SelectPlano);
             $browser->select(ControleCartao::SelectPlano,1123);
             $browser->click(ControleCartao::BotaoTipoClienteAlta);
-            $browser->type(ControleCartao::CampoNumeroCliente, FuncoesPhp::gerarCelularRandomico("99"));
+            $browser->type(ControleCartao::CampoNumeroCliente, FuncoesPhp::gerarCelularRandomico());
             $browser->type(ControleCartao::CampoICCID, FuncoesPhp::geraICCIDRandomico());
 
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
