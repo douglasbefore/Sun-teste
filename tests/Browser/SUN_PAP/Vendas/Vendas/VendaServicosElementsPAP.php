@@ -4,6 +4,18 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 class VendaServicosElementsPAP{}
 
+class IncluirServicos extends VendaServicosElementsPAP
+{
+    const BotaoIncluirServico = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div:nth-child(1) > div:nth-child(1) > button';
+    const BotaoMovelControleFatura = '.icon-card.controleFatura';
+    const BotaoMovelControleFaturaDesabilitado = '.icon-card.disabled.controleFatura';
+    const BotaoMovelFixoFWT = '.icon-card.fixoFWT';
+    const BotaoMovelFixoFWTDesabilitado = '.icon-card.disabled.fixoFWT';
+    const BotaoMovelControleCartao = '.icon-card.controleCartao';
+    const BotaoMovelControleCartaoDesabilitado = '.icon-card.disabled.controleCartao';
+    const BotaoMovelControlePassDigital = '.icon-card.controlePassDigital';
+    const BotaoMovelControlePassDigitalDesabilitado = '.icon-card.disabled.controlePassDigital';
+}
 
 class ControleFatura extends VendaServicosElementsPAP
 {

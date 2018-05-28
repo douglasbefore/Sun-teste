@@ -12,8 +12,43 @@ class funcoesPHP{
         for ($i = 0; $i <= $tamanho; $i++) {
             $nome .= $all_str[mt_rand(0, 61)];
         }
-
         return $nome;
+    }
+
+    public static function geraICCIDRandomico(){
+        $tamanho = 16;
+        $all_str = "1234567890";
+        $iccid = "";
+        for ($i = 0; $i <= $tamanho; $i++) {
+            $iccid .= $all_str[mt_rand(0, strlen($all_str)-1)];
+        }
+        return "8955".$iccid;
+    }
+
+    public static function gerarCelularRandomico($ddd = null){
+        $tamanho = 8;
+        $all_str = "1234567890";
+        $celular = "";
+        for ($i = 0; $i <= $tamanho; $i++) {
+            $celular .= $all_str[mt_rand(0, strlen($all_str)-1)];
+        }
+        if(!$ddd){
+            $ddd = "67";
+        }
+        return $ddd."9".$celular;
+    }
+
+    public static function gerarTelefoneRandomico($ddd = null){
+        $tamanho = 7;
+        $all_str = "1234567890";
+        $telefone = "";
+        for ($i = 0; $i <= $tamanho; $i++) {
+            $telefone .= $all_str[mt_rand(0, strlen($all_str)-1)];
+        }
+        if(!$ddd){
+            $ddd = "67";
+        }
+        return $ddd."3".$telefone;
     }
 
     /**

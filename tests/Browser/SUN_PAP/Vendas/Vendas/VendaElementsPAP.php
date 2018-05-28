@@ -73,15 +73,4 @@ class CampoVenda extends VendaElementsPAP{
     const CampoEnderecoComplemento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
     const Validar_CampoEnderecoComplemento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
 
-    /* incluir serviço */
-    const BotaoServicoIncluirServico = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div:nth-child(1) > div:nth-child(1) > button';
-    const BotaoServicoMovelMovelControleFatura = '.icon-card.controleFatura';
-    const BotaoServicoMovelMovelControleFaturaDesabilitado = '.icon-card.disabled.controleFatura';
-    const BotaoServicoMovelFixoFWT = '.icon-card.fixoFWT';
-    const BotaoServicoMovelFixoFWTDesabilitado = '.icon-card.disabled.fixoFWT';
-    const BotaoServicoMovelControleCartao = '.icon-card.controleCartao';
-    const BotaoServicoMovelControleCartaoDesabilitado = '.icon-card.disabled.controleCartao';
-    const BotaoServicoMovelControlePassDigital = '.icon-card.controlePassDigital';
-    const BotaoServicoMovelControlePassDigitalDesabilitado = '.icon-card.disabled.controlePassDigital';
-
 }

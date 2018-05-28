@@ -68,17 +68,16 @@ class VendaPAPTest extends DuskTestCase
             $browser->press(CampoVenda::BotaoContinuar);
 
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeRealizandoAnalise);
-
             $browser->click(CampoVenda::BotaoRecolherAnalise);
             $browser->pause(500);
-            $browser->press(CampoVenda::BotaoServicoMovelControleCartao);
+            $browser->press(IncluirServicos::BotaoMovelControleCartao);
 
             $funcoes->loadCarregandoCampoNull($browser, ControleCartao::AlertaCarregandoPlanos);
             $browser->waitFor(ControleCartao::SelectPlano);
             $browser->select(ControleCartao::SelectPlano,1123);
             $browser->click(ControleCartao::BotaoTipoClienteAlta);
-            $browser->type(ControleCartao::CampoNumeroCliente, '67978485486');
-            $browser->type(ControleCartao::CampoICCID, '895599849844568854678945');
+            $browser->type(ControleCartao::CampoNumeroCliente, FuncoesPhp::gerarCelularRandomico("99"));
+            $browser->type(ControleCartao::CampoICCID, FuncoesPhp::geraICCIDRandomico());
 
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
