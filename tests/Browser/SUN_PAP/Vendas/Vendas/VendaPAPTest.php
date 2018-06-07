@@ -13,7 +13,7 @@ use Tests\Feature\Funcoes\funcoesPHP;
 
 class VendaPAPTest extends DuskTestCase
 {
-
+    static $arrayTipoServicos = [];
     private static $canal = FuncaoLogin::CANAL_PAP;
 
     /**
@@ -22,12 +22,12 @@ class VendaPAPTest extends DuskTestCase
      * @Test InserirVendaVendedor
      * @group InserirVendaVendedor
      */
-    public function testInserirVendaVendedor()
+    public function testInserirVendaVendedorMovel()
     {
         new VendaServicosElementsPAP();
         new VendaElementsPAP();
 
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $browser){
 
             $acaoMenu = 'InserirVendas';
 
@@ -42,8 +42,13 @@ class VendaPAPTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
 
             $cpf = FuncoesPhp::gerarCPF(1);
+//            $cpf = '04809269132';
+//            $cpf = '05448296114';
             $browser->type(CampoVenda::CampoVendaCPFCliente, $cpf);
-            $browser->click(CampoVenda::BotaoServicoMovel);
+
+            foreach (self::$arrayTipoServicos as $TipoServico){
+                $browser->click($TipoServico);
+            }
 
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
@@ -52,38 +57,43 @@ class VendaPAPTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCadastroCPF360);
 
             $funcoesVenda = new VendaPAPFuncao();
-            $funcoesVenda->PreencherCamposDadosCliente($browser);
+            $retornoClienteCadastroWebVendas = $funcoesVenda->PreencherCamposDadosCliente($browser);
 
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
 
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCarregandoDados);
+            if(!$retornoClienteCadastroWebVendas) {
+                $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCarregandoDados);
+                $browser->value(CampoVenda::CampoEnderecoCep, '');
+                $browser->value(CampoVenda::CampoEnderecoNumero, '');
 
-            $browser->type(CampoVenda::CampoEnderecoCep, '79020-250');
-            $browser->type(CampoVenda::CampoEnderecoNumero, '780');
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
+                $browser->type(CampoVenda::CampoEnderecoCep, '79020-250');
+                $browser->type(CampoVenda::CampoEnderecoNumero, '780');
+                $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
 
-            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
+                $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
+                $browser->press(CampoVenda::BotaoContinuar);
+            }
+            else{
+                $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardandoWebVendas);
+                $browser->waitForText('Escolha o Endereço');
+                $browser->elements(CampoVenda::RadioEscolhaEndereco)[0]->click();
+                $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
+                $browser->press(CampoVenda::BotaoContinuar);
+            }
 
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeRealizandoAnalise);
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-            $browser->press(IncluirServicos::BotaoMovelControleCartao);
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaVerificando);
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise);
 
-            $funcoes->loadCarregandoCampoNull($browser, ControleCartao::AlertaCarregandoPlanos);
-            $browser->waitFor(ControleCartao::SelectPlano);
-            $browser->select(ControleCartao::SelectPlano,1123);
-            $browser->click(ControleCartao::BotaoTipoClienteAlta);
-            $browser->type(ControleCartao::CampoNumeroCliente, FuncoesPhp::gerarCelularRandomico());
-            $browser->type(ControleCartao::CampoICCID, FuncoesPhp::geraICCIDRandomico());
+            if(in_array(TipoServicos::BotaoFixa, self::$arrayTipoServicos) ){
+                $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaBuscandoGruposOferta);
 
-            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoEnviarPedido);
+                $browser->waitForText('Grupo de Oferta');
+                $browser->elements(CampoVenda::RadioGrupoOferta)[0]->click();
 
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
-            $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
+                $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+                $browser->press(CampoVenda::BotaoContinuar);
+            }
 
         });
     }

@@ -25,7 +25,17 @@ class CampoVenda extends VendaElementsPAP{
     const AlertaEnderecoCarregandoCidade = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(6) > div > div.loading-wrapper > div > span';
     const AlertaAgurdeRealizandoAnalise = '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo';
     const AlertaAgurdeCarregandoDados = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div.loading-wrapper > div > span';
+    const AlertaCadastrandoCliente = ' > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div.loading-wrapper > div > span';
     const MensagemPedidoConcluidoSucesso = '> div:nth-child(6) > div.module-container > div.container.venda-finalizada > div.container.venda-finalizada > div > div.message';
+    const AlertaVerificando = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div > div > span';
+
+    const AlertaAguardandoWebVendas = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div > div > div.loading-wrapper > div > span';
+    const AlertaAguardeRealizandoAnalise = '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo';
+    const AlertaBuscandoGruposOferta = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div.loading-wrapper';
+
+
+    const RadioEscolhaEndereco = '.item';
+    const RadioGrupoOferta = '#gruposDeOferta > div > div';
 
     /* Atribua a venda a um vendedor */
     const CampoVendedorEstado = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select';
@@ -36,8 +46,6 @@ class CampoVenda extends VendaElementsPAP{
     const CampoVendaCPFCliente = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.field-group > input';
     const Validar_CampoVendaCPFCliente = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.form-control-feedback';
     const SelectDDD = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(2) > div > div > select';
-    const BotaoServicoMovel = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.movel.web';
-    const BotaoServicoFixa = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.fixa.web > div';
 
     /* Dados do Cliente */
     const CampoClienteCPF = '#cpf > div.form-control-feedback';

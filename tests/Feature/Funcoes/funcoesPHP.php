@@ -10,7 +10,7 @@ class funcoesPHP{
         $all_str = "abcdefghijlkmnopqrstuvxyzwABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
         $nome = "";
         for ($i = 0; $i <= $tamanho; $i++) {
-            $nome .= $all_str[mt_rand(0, 61)];
+            $nome .= $all_str[mt_rand(0, strlen($all_str)-1)];
         }
         return $nome;
     }
