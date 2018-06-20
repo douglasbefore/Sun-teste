@@ -8,6 +8,7 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 
 class VendaPAPFuncao
@@ -22,9 +23,21 @@ class VendaPAPFuncao
             $clienteCadastroWebVendas = true;
         }
 
-        if ($browser->value(CampoVenda::CampoClienteDataNascimento) == "") {
+        $campoDataNascimento = $browser->value(CampoVenda::CampoClienteDataNascimento);
+
+        if ($campoDataNascimento == "") {
             $browser->type(CampoVenda::CampoClienteDataNascimento, '11111946');
+        }else{
+            $dataAtual = Carbon::now();
+            $dataNascimesmo = Carbon::createFromFormat('d/m/Y', $campoDataNascimento);
+            $intervalo = $dataAtual->diffInYears($dataNascimesmo);
+
+            if($intervalo <= 16){
+                $browser->value(CampoVenda::CampoClienteDataNascimento, '');
+                $browser->type(CampoVenda::CampoClienteDataNascimento, '11111946');
+            }
         }
+
         if ($browser->value(CampoVenda::CampoClienteNomeMae) == "") {
             $browser->type(CampoVenda::CampoClienteNomeMae, 'Mae Teste Teste');
         }

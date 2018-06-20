@@ -2,19 +2,11 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
-class VendaServicosElementsPAP
-{
-}
-
-class TipoServicos extends VendaServicosElementsPAP
-{
-    const BotaoMovel = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.movel.web';
-    const BotaoFixa = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(3) > div > div.icon-card-item.fixa.web > div';
-}
+class VendaServicosElementsPAP{}
 
 class IncluirServicos extends VendaServicosElementsPAP
 {
-    const BotaoIncluirServico = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div:nth-child(1) > div:nth-child(1) > button';
+    const BotaoIncluirServico = '.module-container .container .btn-incluir-servico';
     const BotaoMovelControleFatura = '.icon-card.controleFatura';
     const BotaoMovelControleFaturaDesabilitado = '.icon-card.disabled.controleFatura';
     const BotaoMovelFixoFWT = '.icon-card.fixoFWT';
@@ -62,11 +54,11 @@ class FixoFWT extends VendaServicosElementsPAP
     const AlertaCarregandoPlanos = '.fixoFWT .loading-wrapper > div > span';
     const BotaoRemoverServico = '.fixoFWT > div.remove > span';
     const SelectPlano = '.fixoFWT [id^="plano_"] select';
-    const OptionPlano = '.controleFatura [id^="plano_"] option';
+    const OptionPlano = '.fixoFWT [id^="plano_"] option';
     const Validar_SelectPlano = '.fixoFWT [id^="plano_"] > div.form-control-feedback';
     const RadioPortabilidadeSim = '.fixoFWT [id^="portabilidade_"] > div.radio-group.block > div:nth-child(1)';
     const RadioPortabilidadeNao = '.fixoFWT [id^="portabilidade_"] > div.radio-group.block > div:nth-child(2)';
-//    const Validar_RadioPortabilidade = '.fixoFWT [id^="portabilidade_"] > div.form-control-feedback';
+    const Validar_RadioPortabilidade = '.fixoFWT [id^="portabilidade_"] > div.form-control-feedback';
     const CampoNumeroCliente = '.fixoFWT [id^="numeroCliente_"] input';
     const Validar_CampoNumeroCliente = '.fixoFWT [id^="numeroCliente_"] > div.form-control-feedback';
     const SelectOperadora = '.fixoFWT [id^="operadora_"] select';

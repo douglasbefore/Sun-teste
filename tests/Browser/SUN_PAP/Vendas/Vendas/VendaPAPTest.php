@@ -13,45 +13,115 @@ use Tests\Feature\Funcoes\funcoesPHP;
 
 class VendaPAPTest extends DuskTestCase
 {
-    static $arrayTipoServicos = [];
+    static $vendaFixa = false;
     private static $canal = FuncaoLogin::CANAL_PAP;
 
     /**
      * @throws \Exception
      * @throws \Throwable
-     * @Test InserirVendaVendedor
-     * @group InserirVendaVendedor
      */
-    public function testInserirVendaVendedorMovel()
+    public function inicioVenda($cpfUsuario = '05114040189')
     {
-        new VendaServicosElementsPAP();
-        new VendaElementsPAP();
-
-        $this->browse(function (Browser $browser){
+        $this->browse(function (Browser $browser) use ($cpfUsuario) {
 
             $acaoMenu = 'InserirVendas';
 
             $browser->on(new FuncaoLogin);
 //            $browser->FazerLogin(self::$canal, '02717678123');
-            $browser->FazerLogin(self::$canal, '05114040189');
+            $browser->FazerLogin(self::$canal, $cpfUsuario);
 
             $browser->on(new FuncoesMenu);
             $browser->EntrarMenu($acaoMenu);
+        });
+    }
 
+    /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function escolherVendaMovel($cpfCliente = null){
+
+        new VendaElementsPAP();
+
+        $this->browse(function (Browser $browser) use ($cpfCliente) {
             $funcoes = new FuncoesGerais();
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::LoadCarregando);
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
 
-            $cpf = FuncoesPhp::gerarCPF(1);
-//            $cpf = '04809269132';
-//            $cpf = '05448296114';
-            $browser->type(CampoVenda::CampoVendaCPFCliente, $cpf);
-
-            foreach (self::$arrayTipoServicos as $TipoServico){
-                $browser->click($TipoServico);
+            if(!isset($cpfCliente)){
+                $cpfCliente = FuncoesPhp::gerarCPF(1);
             }
+            $browser->type(CampoVenda::CampoVendaCPFCliente, $cpfCliente);
+
+            $browser->click(TipoServicos::BotaoMovel);
 
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
+        });
+    }
+
+    /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function escolherVendaFixa($cpfCliente = null){
+
+        new VendaElementsPAP();
+        self::$vendaFixa = true;
+
+        $this->browse(function (Browser $browser) use ($cpfCliente) {
+            $funcoes = new FuncoesGerais();
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
+
+            if(!isset($cpfCliente)){
+                $cpfCliente = FuncoesPhp::gerarCPF(1);
+            }
+            $browser->type(CampoVenda::CampoVendaCPFCliente, $cpfCliente);
+
+            $browser->click(TipoServicos::BotaoFixa);
+
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
+        });
+    }
+
+    /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function escolherVendaMovelFixa($cpfCliente = null){
+
+        new VendaElementsPAP();
+        self::$vendaFixa = true;
+
+        $this->browse(function (Browser $browser) use ($cpfCliente) {
+            $funcoes = new FuncoesGerais();
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
+
+            if(!isset($cpfCliente)){
+                $cpfCliente = FuncoesPhp::gerarCPF(1);
+            }
+            $browser->type(CampoVenda::CampoVendaCPFCliente, $cpfCliente);
+
+            $browser->click(TipoServicos::BotaoFixa);
+            $browser->pause(100);
+            $browser->click(TipoServicos::BotaoMovel);
+
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
+        });
+    }
+
+    /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function dadosCliente(){
+
+        new VendaElementsPAP();
+
+        $this->browse(function (Browser $browser) {
+            $funcoes = new FuncoesGerais();
 
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCarregandoDados);
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCadastroCPF360);
@@ -85,7 +155,7 @@ class VendaPAPTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaVerificando);
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise);
 
-            if(in_array(TipoServicos::BotaoFixa, self::$arrayTipoServicos) ){
+            if(self::$vendaFixa){
                 $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaBuscandoGruposOferta);
 
                 $browser->waitForText('Grupo de Oferta');

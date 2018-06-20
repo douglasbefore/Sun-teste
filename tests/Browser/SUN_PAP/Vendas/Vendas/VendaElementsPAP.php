@@ -10,42 +10,49 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 class VendaElementsPAP{}
 
+class TipoServicos extends VendaServicosElementsPAP
+{
+    const BotaoMovel = '.module-container .container .icon-card-item.movel.web';
+    const BotaoFixa = '.module-container .container .icon-card-item.fixa.web';
+}
+
 class CampoVenda extends VendaElementsPAP{
 
     /* Geral da Venda */
-    const BotaoContinuar = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn';
-    const BotaoVoltar = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn.btn-link.secondary-actions';
-    const BotaoRecolherAnalise = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.sidebar-container > div.sidebar > span';
-    const BotaoEnviarPedido = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.fixed-footer > button.btn.btn-success.ml-auto';
+    const BotaoContinuar = '.module-container .fixed-footer > button.btn';
+    const BotaoVoltar = '.module-container .fixed-footer > button.btn.btn-link.secondary-actions';
+    const BotaoRecolherAnalise = '.module-container .sidebar-container .sidebar > span';
+    const BotaoEnviarPedido = '.module-container .fixed-footer > button.btn.btn-success.ml-auto';
 
     // Alertas e informativos
-    const AlertaRequisicaoToken = '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span';
-    const AlertaCarregandoDados = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div.loading-wrapper > div > span';
-    const AlertaCadastroCPF360 = '> div:nth-child(6) > div.module-container > span > div > div:nth-child(2) > span';
-    const AlertaEnderecoCarregandoCidade = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(6) > div > div.loading-wrapper > div > span';
-    const AlertaAgurdeRealizandoAnalise = '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo';
-    const AlertaAgurdeCarregandoDados = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div.loading-wrapper > div > span';
-    const AlertaCadastrandoCliente = ' > div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div.loading-wrapper > div > span';
-    const MensagemPedidoConcluidoSucesso = '> div:nth-child(6) > div.module-container > div.container.venda-finalizada > div.container.venda-finalizada > div > div.message';
-    const AlertaVerificando = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.transition-container > div > div > span';
+    const LoadCarregando = '.module-container .container .loading-wrapper i';
+    const AlertaRequisicaoToken = '.module-container > span > div > div:nth-child(2) > span';
+    const AlertaCarregandoDados = '.module-container .transition-container .loading-wrapper span';
+    const AlertaCadastroCPF360  = '.module-container > span > div > div:nth-child(2) > span';
+    const AlertaEnderecoCarregandoCidade = '.module-container .container .loading-wrapper span';
+    const AlertaAgurdeRealizandoAnalise = '.module-container .pagina-erro .mensagem .titulo';
+    const AlertaAgurdeCarregandoDados = '.module-container .container .loading-wrapper span';
+    const AlertaCadastrandoCliente = ' .module-container .container .loading-wrapper span';
+    const MensagemPedidoConcluidoSucesso = '.module-container .container.venda-finalizada .container.venda-finalizada .message';
+    const AlertaVerificando = '.module-container .transition-container span';
 
-    const AlertaAguardandoWebVendas = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div > div > div.loading-wrapper > div > span';
-    const AlertaAguardeRealizandoAnalise = '> div:nth-child(6) > div.module-container > div.pagina-erro > div.mensagem > div.titulo';
-    const AlertaBuscandoGruposOferta = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div > div.loading-wrapper';
+    const AlertaAguardandoWebVendas = '.module-container .container .loading-wrapper span';
+    const AlertaAguardeRealizandoAnalise = '.module-container .pagina-erro .mensagem .titulo';
+    const AlertaBuscandoGruposOferta = '.module-container .container .loading-wrapper';
 
 
     const RadioEscolhaEndereco = '.item';
     const RadioGrupoOferta = '#gruposDeOferta > div > div';
 
     /* Atribua a venda a um vendedor */
-    const CampoVendedorEstado = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select';
-    const CampoVendedorPontoVenda = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(2) > div > div > div.field-group > input';
-    const CampoVendedorVendedor = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div > div.col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(3) > div > div > div.field-group > input';
+    const CampoVendedorEstado       = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select';
+    const CampoVendedorPontoVenda   = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(2) > div > div > div.field-group > input';
+    const CampoVendedorVendedor     = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(3) > div > div > div.field-group > input';
 
     /* Campos Nova Venda */
-    const CampoVendaCPFCliente = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.field-group > input';
-    const Validar_CampoVendaCPFCliente = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(1) > div > div.form-control-feedback';
-    const SelectDDD = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(2) > div > div > select';
+    const CampoVendaCPFCliente = '.module-container .container .field-group > input';
+    const Validar_CampoVendaCPFCliente = '.module-container .container .form-control-feedback';
+    const SelectDDD = '.module-container .container > div > div > div:nth-child(2) > div > div > select';
 
     /* Dados do Cliente */
     const CampoClienteCPF = '#cpf > div.form-control-feedback';
@@ -66,7 +73,7 @@ class CampoVenda extends VendaElementsPAP{
     const CampoClienteTelefoneFixo = '#fixo > div.field-group > input';
     const Validar_CampoClienteTelefoneFixo = '#fixo > div.form-control-feedback';
     const CampoClienteOutroContato = '#celular > div.field-group > input';
-    const BotaoAnexarDocumento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div:nth-child(1) > div > div.panel > div > div.col-12.mt-3 > button';
+    const BotaoAnexarDocumento = '.module-container .panel .col-12.mt-3 > button';
 
     /* Endereco do cliente */
     const CampoEnderecoCep = '#cep > div.field-group > input';
@@ -77,8 +84,8 @@ class CampoVenda extends VendaElementsPAP{
     const CampoEnderecoBairro = '#bairro > div.field-group > input';
     const SelectEnderecoUF = '#estado > div > select';
     const SelectEnderecoCidade = '#cidade > div > select';
-    const SelectEnderecoTipoComplemento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
-    const CampoEnderecoComplemento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
-    const Validar_CampoEnderecoComplemento = '> div:nth-child(6) > div.module-container > div:nth-child(3) > div.container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
+    const SelectEnderecoTipoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
+    const CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
+    const Validar_CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
 
 }
