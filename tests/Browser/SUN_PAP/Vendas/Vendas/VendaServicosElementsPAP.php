@@ -70,8 +70,8 @@ class FixoFWT extends VendaServicosElementsPAP
     const RadioFaturaEmail = '.fixoFWT [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
     const RadioFaturaViaPostal = '.fixoFWT [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(2)';
     const Validar_RadioFatura = '.fixoFWT [id^="tipoFatura_"] > div.form-control-feedback';
-    const CampoEmail = '.controleFatura [id^="email_"] input';
-    const Validar_CampoEmail = '.controleFatura [id^="email_"] > div.form-control-feedback';
+    const CampoEmail = '.fixoFWT [id^="email_"] input';
+    const Validar_CampoEmail = '.fixoFWT [id^="email_"] > div.form-control-feedback';
     const RadioDataVencimento = '.fixoFWT [id^="dataVencimento_"] > div.radio-group.circle > div';
     const Validar_RadioDataVencimento = '.fixoFWT [id^="dataVencimento_"] > div.form-control-feedback';
 }
