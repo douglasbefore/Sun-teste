@@ -93,6 +93,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $browser->type(ControleCartao::CampoICCID, FuncoesPhp::geraICCIDRandomico());
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
+//            $browser->waitFor(CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoEnviarPedido);
 
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
@@ -148,13 +149,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->pause(500);
 
-            $browser->assertMissing(ControleCartao::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleCartao::CampoICCID);
-            $browser->assertMissing(ControleCartao::Validar_CampoICCID);
-
-            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->waitFor(CampoVenda::BotaoEnviarPedido);
+            $browser->press(CampoVenda::BotaoEnviarPedido);
 
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
             $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
@@ -209,13 +204,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->pause(500);
 
-            $browser->assertMissing(ControleCartao::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleCartao::CampoICCID);
-            $browser->assertMissing(ControleCartao::Validar_CampoICCID);
-
-            $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->waitFor(CampoVenda::BotaoEnviarPedido);
+            $browser->press(CampoVenda::BotaoEnviarPedido);
 
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
             $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);

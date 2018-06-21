@@ -23,8 +23,10 @@ class CampoVenda extends VendaElementsPAP{
     const BotaoVoltar = '.module-container .fixed-footer > button.btn.btn-link.secondary-actions';
     const BotaoRecolherAnalise = '.module-container .sidebar-container .sidebar > span';
     const BotaoEnviarPedido = '.module-container .fixed-footer > button.btn.btn-success.ml-auto';
+    const BotaoVoltarAlertaIntervaloInicioVenda = '.swal2-container.swal2-fade.swal2-shown .swal2-buttonswrapper > button.swal2-confirm.btn.btn-primary.btn-block.swal2-styled';
 
     // Alertas e informativos
+    const AlertaIntervaloInicioVenda = '.swal2-modal.swal2-show';
     const LoadCarregando = '.module-container .container .loading-wrapper i';
     const AlertaRequisicaoToken = '.module-container > span > div > div:nth-child(2) > span';
     const AlertaCarregandoDados = '.module-container .transition-container .loading-wrapper span';
@@ -87,5 +89,9 @@ class CampoVenda extends VendaElementsPAP{
     const SelectEnderecoTipoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
     const CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
     const Validar_CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
+}
+
+class ResumoVenda extends VendaElementsPAP{
+
 
 }

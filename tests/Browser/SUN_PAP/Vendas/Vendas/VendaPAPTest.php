@@ -4,12 +4,12 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
-use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
 use Tests\Browser\Pages\Funcoes\FuncoesMenu;
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Feature\Funcoes\funcoesPHP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 
 class VendaPAPTest extends DuskTestCase
 {
@@ -20,8 +20,10 @@ class VendaPAPTest extends DuskTestCase
      * @throws \Exception
      * @throws \Throwable
      */
-    public function inicioVenda($cpfUsuario = '05114040189')
-    {
+    public function inicioVenda($cpfUsuario = '05114040189'){
+
+        new VendaElementsPAP();
+
         $this->browse(function (Browser $browser) use ($cpfUsuario) {
 
             $acaoMenu = 'InserirVendas';
@@ -32,6 +34,14 @@ class VendaPAPTest extends DuskTestCase
 
             $browser->on(new FuncoesMenu);
             $browser->EntrarMenu($acaoMenu);
+
+            $alertaIntervaloVenda = $browser->element(CampoVenda::AlertaIntervaloInicioVenda);
+            if(isset($alertaIntervaloVenda)){
+                $browser->press(CampoVenda::BotaoVoltarAlertaIntervaloInicioVenda);
+                $browser->pause(20000);
+
+                self::inicioVenda($cpfUsuario);
+            }
         });
     }
 

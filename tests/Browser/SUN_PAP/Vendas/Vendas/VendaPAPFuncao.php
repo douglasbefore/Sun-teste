@@ -28,9 +28,13 @@ class VendaPAPFuncao
         if ($campoDataNascimento == "") {
             $browser->type(CampoVenda::CampoClienteDataNascimento, '11111946');
         }else{
-            $dataAtual = Carbon::now();
-            $dataNascimesmo = Carbon::createFromFormat('d/m/Y', $campoDataNascimento);
-            $intervalo = $dataAtual->diffInYears($dataNascimesmo);
+            if(strripos($campoDataNascimento, '/')) {
+                $dataAtual = Carbon::now();
+                $dataNascimesmo = Carbon::createFromFormat('d/m/Y', $campoDataNascimento);
+                $intervalo = $dataAtual->diffInYears($dataNascimesmo);
+            }else{
+                $intervalo = 0;
+            }
 
             if($intervalo <= 16){
                 $browser->value(CampoVenda::CampoClienteDataNascimento, '');
