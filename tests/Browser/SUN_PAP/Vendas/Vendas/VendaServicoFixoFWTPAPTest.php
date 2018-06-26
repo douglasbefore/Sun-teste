@@ -23,8 +23,8 @@ class VendaServicoFixoFWTPAPTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -58,8 +58,8 @@ class VendaServicoFixoFWTPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -144,8 +144,8 @@ class VendaServicoFixoFWTPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);

@@ -16,7 +16,8 @@ class TipoServicos extends VendaServicosElementsPAP
     const BotaoFixa = '.module-container .container .icon-card-item.fixa.web';
 }
 
-class CampoVenda extends VendaElementsPAP{
+class CampoVenda extends VendaElementsPAP
+{
 
     /* Geral da Venda */
     const BotaoContinuar = '.module-container .fixed-footer > button.btn';
@@ -30,26 +31,28 @@ class CampoVenda extends VendaElementsPAP{
     const LoadCarregando = '.module-container .container .loading-wrapper i';
     const AlertaRequisicaoToken = '.module-container > span > div > div:nth-child(2) > span';
     const AlertaCarregandoDados = '.module-container .transition-container .loading-wrapper span';
-    const AlertaCadastroCPF360  = '.module-container > span > div > div:nth-child(2) > span';
+    const AlertaCadastroCPF360 = '.module-container > span > div > div:nth-child(2) > span';
     const AlertaEnderecoCarregandoCidade = '.module-container .container .loading-wrapper span';
     const AlertaAgurdeRealizandoAnalise = '.module-container .pagina-erro .mensagem .titulo';
     const AlertaAgurdeCarregandoDados = '.module-container .container .loading-wrapper span';
-    const AlertaCadastrandoCliente = ' .module-container .container .loading-wrapper span';
+    const AlertaCadastrandoCliente = '.module-container .container .loading-wrapper span';
+    const AlertaCadastrandoEndereco = '.module-container .container .loading-wrapper span';
     const MensagemPedidoConcluidoSucesso = '.module-container .container.venda-finalizada .container.venda-finalizada .message';
     const AlertaVerificando = '.module-container .transition-container span';
-
+    const AlertaFacilidadeIndisponivel = '.module-container .pagina-erro .mensagem .titulo';
     const AlertaAguardandoWebVendas = '.module-container .container .loading-wrapper span';
+
     const AlertaAguardeRealizandoAnalise = '.module-container .pagina-erro .mensagem .titulo';
     const AlertaBuscandoGruposOferta = '.module-container .container .loading-wrapper';
 
-
     const RadioEscolhaEndereco = '.item';
+    const BotaoCadastrarOutroEndereco = '.module-container .container button';
     const RadioGrupoOferta = '#gruposDeOferta > div > div';
 
     /* Atribua a venda a um vendedor */
-    const CampoVendedorEstado       = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select';
-    const CampoVendedorPontoVenda   = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(2) > div > div > div.field-group > input';
-    const CampoVendedorVendedor     = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(3) > div > div > div.field-group > input';
+    const CampoVendedorEstado = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(1) > div > div > select';
+    const CampoVendedorPontoVenda = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(2) > div > div > div.field-group > input';
+    const CampoVendedorVendedor = '.module-container .container .col-12.col-sm-8.col-lg-6.col-xl-4 > div:nth-child(3) > div > div > div.field-group > input';
 
     /* Campos Nova Venda */
     const CampoVendaCPFCliente = '.module-container .container .field-group > input';
@@ -89,6 +92,25 @@ class CampoVenda extends VendaElementsPAP{
     const SelectEnderecoTipoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
     const CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
     const Validar_CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
+
+    const LabelTaxaInstalacaoFixa = '.module-container .fixed-footer .total-container .value';
+    const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
+    const RadioFormaPagamentoAVista = '#formaPagamento .radio-group.block > div:nth-child(1)';
+    const RadioFormaPagamento10Vezes = '#formaPagamento .radio-group.block > div:nth-child(2)';
+
+    const RadioFormatoEnvioEmail = '.module-container .container > div > div > div:nth-child(1) > div > div > div:nth-child(1)';
+    const Validar_RadioFormatoEnvioEmail = '.module-container .container > div > div > div:nth-child(1) .form-control-feedback';
+    const RadioFormatoEnvioPapel = '.module-container .container > div > div > div:nth-child(1) > div > div > div:nth-child(2)';
+    const CampoEmail = '#email input';
+    const Validar_CampoEmail = '#email .form-control-feedback';
+    const RadioDataVencimento = '.module-container .container .radio-options';
+    const RadioFormaPagamentoBoleto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(1)';
+    const RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(2)';
+    const Validar_RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) .form-control-feedback';
+        // esta faltandoo BANCO AGENCIA CONTA.
+
+
+
 }
 
 class ResumoVenda extends VendaElementsPAP{

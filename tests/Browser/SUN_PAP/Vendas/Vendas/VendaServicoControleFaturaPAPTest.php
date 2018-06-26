@@ -24,8 +24,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -61,8 +61,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -144,8 +144,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -283,8 +283,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -453,8 +453,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -546,8 +546,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -662,8 +662,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -755,8 +755,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->inicioVenda();
-            $dadosVenda->escolherVendaMovel();
+//            $dadosVenda->inicioVenda();
+            $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
             $browser->click(CampoVenda::BotaoRecolherAnalise);
@@ -853,6 +853,78 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $browser->press(CampoVenda::BotaoEnviarPedido);
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
             $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
+        });
+    }
+
+    /**
+     * Verifica todos os campo obrigatorios para o serviço movel Controle Fatura
+     *  - Tipo de cliente: Upgrade
+     * @throws \Exception
+     * @throws \Throwable
+     * @Test ServicoMovelControleFaturaClienteUpgrade
+     * @group ServicoMovelControleFaturaClienteUpgrade
+     * @return void
+     */
+    public function testServicoFixa()
+    {
+        $this->browse(function (Browser $browser) {
+            $funcoes = new FuncoesGerais();
+
+            $acoesVenda = new VendaPAPTest();
+//            $acoesVenda->getVenda()->setClienteCPF('00218606109');
+            $acoesVenda->getVenda()->setClienteCPF('58248048187');
+
+            $acoesVenda->testEscolherVendaFixa();
+            $acoesVenda->dadosCliente();
+
+            $browser->click(CampoVenda::BotaoRecolherAnalise);
+            $browser->pause(500);
+            $browser->press(IncluirServicos::BotaoFixaTelefoniaFixa);
+
+            $browser->press(CampoVenda::BotaoContinuar);
+            $valorTaxaInstalacao = $browser->value(CampoVenda::LabelTaxaInstalacaoFixa);
+            if($valorTaxaInstalacao != 'Gratuita'){
+                $browser->assertVisible(CampoVenda::Validar_RadioFormaPagamento);
+                $browser->press(CampoVenda::RadioFormaPagamentoAVista);
+                $browser->press(CampoVenda::BotaoContinuar);
+            }
+
+            $browser->assertVisible(FixaTelefoniaFixa::Validar_SelectPlano);
+            $browser->assertVisible(FixaTelefoniaFixa::Validar_RadioPortabilidade);
+            $browser->assertMissing(FixaTelefoniaFixa::CampoNumeroCliente);
+
+            $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Ilimitado Fixo Local');
+            $browser->select(FixaTelefoniaFixa::SelectPlano, $valuePlano);
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->pause(500);
+
+            $browser->assertMissing(FixaTelefoniaFixa::Validar_SelectPlano);
+            $browser->assertVisible(FixaTelefoniaFixa::Validar_RadioPortabilidade);
+            $browser->assertMissing(FixaTelefoniaFixa::CampoNumeroCliente);
+
+            $browser->press(FixaTelefoniaFixa::RadioPortabilidadeSim);
+            $browser->assertVisible(FixaTelefoniaFixa::CampoNumeroCliente);
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->pause(500);
+
+            $browser->assertMissing(FixaTelefoniaFixa::Validar_SelectPlano);
+            $browser->assertMissing(FixaTelefoniaFixa::Validar_RadioPortabilidade);
+            $browser->assertVisible(FixaTelefoniaFixa::CampoNumeroCliente);
+            $browser->assertVisible(FixaTelefoniaFixa::Validar_CampoNumeroCliente);
+
+            $browser->type(ControleFatura::CampoNumeroCliente, '9996325874');
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->pause(500);
+
+            $browser->assertMissing(FixaTelefoniaFixa::Validar_SelectPlano);
+            $browser->assertMissing(FixaTelefoniaFixa::Validar_RadioPortabilidade);
+            $browser->assertVisible(FixaTelefoniaFixa::CampoNumeroCliente);
+            $browser->assertVisible(FixaTelefoniaFixa::Validar_CampoNumeroCliente);
+
+            $browser->type(ControleFatura::CampoNumeroCliente, '6733112211');
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->pause(500);
+
         });
     }
 
