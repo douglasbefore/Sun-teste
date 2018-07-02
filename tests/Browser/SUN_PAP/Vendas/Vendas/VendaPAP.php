@@ -12,17 +12,20 @@ use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Feature\Funcoes\funcoesPHP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
 
-class VendaPAP
+class VendaPAP extends VendaServicoPAP
 {
     private $usuarioLogin;
     private $vendaFixa;
     private $vendaMovel;
+    private $vendaServicos = array();
     private $clienteCadastroWebVendas;
     private $clienteCPF;
     private $clienteNome;
     private $clienteDataNascimento;
     private $clienteNomeMae;
+    private $clienteSexo;
     private $clienteEmail;
     private $clienteTelefoneCelular;
     private $clienteTelefoneFixo;
@@ -32,6 +35,8 @@ class VendaPAP
 
     public function __construct()
     {
+//        $this->vendaServicos[] = new VendaServicoPAP();
+        new VendaElementsPAP();
         $this->usuarioLogin = '05114040189';  // Usuario Vendedor
 
         $this->vendaFixa = false;
@@ -40,16 +45,32 @@ class VendaPAP
         $this->clienteCadastroWebVendas = false;
         $this->clienteCPF = FuncoesPhp::gerarCPF(1);
         $this->clienteNome = 'Teste Teste Teste';
-        $this->clienteDataNascimento = '11111946';
+        $this->clienteDataNascimento = '11/11/1946';
         $this->clienteNomeMae = 'Mae Teste Teste';
+        $this->clienteSexo = CampoVenda::BotaoClienteSexoMasculino;
         $this->clienteEmail = 'testeteste@teste.com.br';
-        $this->clienteTelefoneCelular = '67985856498';
-        $this->clienteTelefoneFixo = '6733331111';
+        $this->clienteTelefoneCelular = '(67) 98585-6498';
+        $this->clienteTelefoneFixo = '(67) 3333-1111';
 
         $this->enderecoCEP = '79020-250';
         $this->enderecoNumero = '780';
     }
 
+    /**
+     * @return array
+     */
+    public function getVendaServicos()
+    {
+        return $this->vendaServicos;
+    }
+
+    /**
+     * @param $vendaServicos
+     */
+    public function setVendaServicos($vendaServicos): void
+    {
+        $this->vendaServicos[] = $vendaServicos;
+    }
 
     /**
      * @return string
@@ -177,6 +198,22 @@ class VendaPAP
     public function setClienteNomeMae(string $clienteNomeMae): void
     {
         $this->clienteNomeMae = $clienteNomeMae;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClienteSexo(): string
+    {
+        return $this->clienteSexo;
+    }
+
+    /**
+     * @param string $clienteSexo
+     */
+    public function setClienteSexo(string $clienteSexo): void
+    {
+        $this->clienteSexo = $clienteSexo;
     }
 
     /**

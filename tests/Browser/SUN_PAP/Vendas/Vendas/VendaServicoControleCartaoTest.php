@@ -23,7 +23,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-//            $dadosVenda->inicioVenda();
+
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
@@ -55,7 +55,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-//            $dadosVenda->inicioVenda();
+
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
@@ -113,7 +113,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-//            $dadosVenda->inicioVenda();
+
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
@@ -170,7 +170,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
-//            $dadosVenda->inicioVenda();
+
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
@@ -185,7 +185,7 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $browser->assertVisible(ControleCartao::Validar_CampoNumeroCliente);
 
             $valuePlano = $funcoes->retornaValueOption($browser, ControleCartao::OptionPlano, 'controle');
-            $browser->select(ControleCartao::SelectPlano, $valuePlano);
+            $browser->select(ControleCartao::SelectPlano, $valuePlano['value']);
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->pause(500);
 

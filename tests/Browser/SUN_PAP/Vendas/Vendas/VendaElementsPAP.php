@@ -10,7 +10,7 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 class VendaElementsPAP{}
 
-class TipoServicos extends VendaServicosElementsPAP
+class TipoServicos extends VendaElementsPAP
 {
     const BotaoMovel = '.module-container .container .icon-card-item.movel.web';
     const BotaoFixa = '.module-container .container .icon-card-item.fixa.web';
@@ -22,7 +22,6 @@ class CampoVenda extends VendaElementsPAP
     /* Geral da Venda */
     const BotaoContinuar = '.module-container .fixed-footer > button.btn';
     const BotaoVoltar = '.module-container .fixed-footer > button.btn.btn-link.secondary-actions';
-    const BotaoRecolherAnalise = '.module-container .sidebar-container .sidebar > span';
     const BotaoEnviarPedido = '.module-container .fixed-footer > button.btn.btn-success.ml-auto';
     const BotaoVoltarAlertaIntervaloInicioVenda = '.swal2-container.swal2-fade.swal2-shown .swal2-buttonswrapper > button.swal2-confirm.btn.btn-primary.btn-block.swal2-styled';
 
@@ -41,7 +40,6 @@ class CampoVenda extends VendaElementsPAP
     const AlertaVerificando = '.module-container .transition-container span';
     const AlertaFacilidadeIndisponivel = '.module-container .pagina-erro .mensagem .titulo';
     const AlertaAguardandoWebVendas = '.module-container .container .loading-wrapper span';
-
     const AlertaAguardeRealizandoAnalise = '.module-container .pagina-erro .mensagem .titulo';
     const AlertaBuscandoGruposOferta = '.module-container .container .loading-wrapper';
 
@@ -69,7 +67,9 @@ class CampoVenda extends VendaElementsPAP
     const CampoClienteNomeMae = '#nomeMae > div.field-group > input';
     const Validar_CampoClienteNomeMae = '#nomeMae > div.form-control-feedback';
     const BotaoClienteSexoMasculino = '#sexo > div > div:nth-child(1)';
+    const BotaoClienteSexoMasculinoActive = '#sexo > div > div:nth-child(1).radio-options.active';
     const BotaoClienteSexoFeminino = '#sexo > div > div:nth-child(2)';
+    const BotaoClienteSexoFemininoActive = '#sexo > div > div:nth-child(2).radio-options.active';
     const Validar_BotaoClienteSexo = '#sexo > div.form-control-feedback';
     const CampoClienteEmail = '#email > div.field-group > input';
     const Validar_CampoClienteEmail = '#email > div.form-control-feedback';
@@ -92,12 +92,21 @@ class CampoVenda extends VendaElementsPAP
     const SelectEnderecoTipoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
     const CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
     const Validar_CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
-
     const LabelTaxaInstalacaoFixa = '.module-container .fixed-footer .total-container .value';
-    const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
+
     const RadioFormaPagamentoAVista = '#formaPagamento .radio-group.block > div:nth-child(1)';
     const RadioFormaPagamento10Vezes = '#formaPagamento .radio-group.block > div:nth-child(2)';
+    const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
 
+    const BotaoRecolherAnalise = '.module-container .sidebar-container .sidebar > span';
+
+//    '.module-container .fixed-footer .total-container > div:nth-child(1) > span.value';
+//    '.module-container .fixed-footer .total-container > div:nth-child(2) > span.value';
+//    '.module-container .fixed-footer .total-container > div:nth-child(3) > span.value';
+//    '.module-container .sidebar-container .sidebar .analise-fixa .sidebar--details > div > ul > li:nth-child(1)';
+}
+
+class FaturaFixa extends VendaElementsPAP{
     const RadioFormatoEnvioEmail = '.module-container .container > div > div > div:nth-child(1) > div > div > div:nth-child(1)';
     const Validar_RadioFormatoEnvioEmail = '.module-container .container > div > div > div:nth-child(1) .form-control-feedback';
     const RadioFormatoEnvioPapel = '.module-container .container > div > div > div:nth-child(1) > div > div > div:nth-child(2)';
@@ -107,9 +116,12 @@ class CampoVenda extends VendaElementsPAP
     const RadioFormaPagamentoBoleto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(1)';
     const RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(2)';
     const Validar_RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) .form-control-feedback';
-        // esta faltandoo BANCO AGENCIA CONTA.
-
-
+    const SelectFaturaBanco = '.module-container .container > div > div > div:nth-child(4) .field-group > select';
+    const Validar_SelectFaturaBanco = '.module-container .container > div > div > div:nth-child(4) .form-control-feedback';
+    const CampoFaturaAgencia = '.module-container .container > div > div > div:nth-child(5) .field-group > input';
+    const Validar_CampoFaturaAgencia = '.module-container .container > div > div > div:nth-child(5) .form-control-feedback';
+    const CampoFaturaConta = '.module-container .container > div > div > div:nth-child(6) .field-group > input';
+    const Validar_CampoFaturaConta = '.module-container .container > div > div > div:nth-child(6) .form-control-feedback';
 
 }
 

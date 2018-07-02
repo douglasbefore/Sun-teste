@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: douglascolussi
+ * Date: 21/05/18
+ * Time: 11:46
+ */
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
@@ -23,6 +29,8 @@ class IncluirServicos extends VendaServicosElementsPAP
 
 class ControleFatura extends VendaServicosElementsPAP
 {
+    const NomeDoServico = 'Controle Fatura';
+    const SeletorNomeServico = '.controleFatura .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controleFatura div.loading-wrapper > div > span';
     const BotaoRemoverServico = '.controleFatura > div.remove > span';
     const SelectPlano = '.controleFatura [id^="plano_"] select';
@@ -55,6 +63,8 @@ class ControleFatura extends VendaServicosElementsPAP
 
 class FixoFWT extends VendaServicosElementsPAP
 {
+    const NomeDoServico = 'Fixo FWT';
+    const SeletorNomeServico = '.fixoFWT .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.fixoFWT .loading-wrapper > div > span';
     const BotaoRemoverServico = '.fixoFWT > div.remove > span';
     const SelectPlano = '.fixoFWT [id^="plano_"] select';
@@ -82,6 +92,8 @@ class FixoFWT extends VendaServicosElementsPAP
 
 class ControleCartao extends VendaServicosElementsPAP
 {
+    const NomeDoServico = 'Controle Cartão';
+    const SeletorNomeServico = '.controleCartao .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controleCartao .loading-wrapper > div > span';
     const BotaoRemoverServico = '.controleCartao > div.remove > span';
     const SelectPlano = '.controleCartao [id^="plano_"] select';
@@ -99,6 +111,8 @@ class ControleCartao extends VendaServicosElementsPAP
 
 class ControlePassDigital extends VendaServicosElementsPAP
 {
+    const NomeDoServico = 'Controle Pass Digital';
+    const SeletorNomeServico = '.controlePassDigital .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controlePassDigital .loading-wrapper > div > span';
     const BotaoRemoverServico = '.controlePassDigital > div.remove > span';
     const SelectPlano = '.controlePassDigital [id^="plano_"] select';
@@ -130,6 +144,8 @@ class ControlePassDigital extends VendaServicosElementsPAP
 
 class FixaTelefoniaFixa extends VendaServicosElementsPAP
 {
+    const NomeDoServico = '';
+    const SeletorNomeServico = '.telefoniaFixa .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.telefoniaFixa .loading-wrapper > div > span';
     const BotaoRemoverServico = '.telefoniaFixa > div.remove > span';
     const SelectPlano = '.telefoniaFixa [id^="plano_"] select';
@@ -144,6 +160,7 @@ class FixaTelefoniaFixa extends VendaServicosElementsPAP
 
 class FixaBandaLarga extends VendaServicosElementsPAP
 {
+    const SeletorNomeServico = '.bandaLarga .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.bandaLarga .loading-wrapper > div > span';
     const BotaoRemoverServico = '.bandaLarga > div.remove > span';
     const SelectPlano = '.bandaLarga [id^="plano_"] select';

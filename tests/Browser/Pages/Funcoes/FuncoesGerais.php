@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: douglascolussi
+ * Date: 21/05/18
+ * Time: 11:46
+ */
 
 namespace Tests\Browser\Pages\Funcoes;
 
@@ -46,12 +52,22 @@ class FuncoesGerais extends Page
     }
 
     /**
+     * Funçao para rolar a barra de rolagem até o elemento.
+     *
+     * @param  Browser $browser
+     */
+    public function barraRolagemElemento(Browser $browser, $seletor){
+        $x = $browser->element($seletor)->getLocationOnScreenOnceScrolledIntoView()->getX();
+        $browser->driver->executeScript('window.scrollTo('.$x.', 0);');
+    }
+
+    /**
      * Funçao para esperar acabar o load de carregar do sistema.
      *
      * @param  Browser $browser
      * @return bool
      */
-    public function loadCarregando($browser, $selector = '#load')
+    public function loadCarregando(Browser $browser, $selector = '#load')
     {
         $browser->pause(500);
         if (!$browser->element($selector)->isDisplayed()) {
@@ -68,7 +84,7 @@ class FuncoesGerais extends Page
      * @param  Browser $browser
      * @return bool
      */
-    public function loadCarregandoCampoNull($browser, $selector = '#load', $tempo = null)
+    public function loadCarregandoCampoNull(Browser $browser, $selector = '#load', $tempo = null)
     {
         $tempoPadrao = $tempo!=null ? $tempo : self::$Padrao;
 
@@ -109,18 +125,19 @@ class FuncoesGerais extends Page
      * Funçao para esperar ate o selector fique abilitado.
      *
      * @param  Browser $browser
-     * @return bool
+     * @param $selector
+     * @param $text
+     * @return array
      */
     public function retornaValueOption($browser, $selector, $text)
     {
         $valueOperadora = $browser->elements($selector);
 
-        foreach ($valueOperadora as $operadora){
-            if(strpos(strtolower($operadora->getText()), strtolower($text))) {
-                return $operadora->getAttribute('value');
+        foreach ($valueOperadora as $operadora) {
+            if (strpos(strtolower($operadora->getText()), strtolower($text))) {
+                return array("value" => $operadora->getAttribute('value'), "text" => $operadora->getAttribute('text'));
             }
         }
-        return 0;
     }
 
     /**

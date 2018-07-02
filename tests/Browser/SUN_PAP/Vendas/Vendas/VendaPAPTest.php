@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: douglascolussi
+ * Date: 21/05/18
+ * Time: 11:46
+ */
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
@@ -15,6 +21,7 @@ use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 class VendaPAPTest extends DuskTestCase
 {
     protected $Venda;
+    protected $VendaServico;
     private static $canal = FuncaoLogin::CANAL_PAP;
 
     /**
@@ -23,23 +30,34 @@ class VendaPAPTest extends DuskTestCase
     public function __construct()
     {
         $this->Venda = new VendaPAP();
+//        $this->Venda->setVendaServicos() = new VendaServicoPAP();
     }
 
     public function getVenda(){
         return $this->Venda;
     }
 
+    public function VendaServico($dadosVendaServico){
+        $this->getVenda()->setVendaServicos($dadosVendaServico);
+        $this->VendaServico = new VendaServicoPAP();
+    }
+//    public function getVendaServico(){
+//        return $this->getVenda()->getVendaServicos();
+//    }
+
     /**
      * @throws \Exception
      * @throws \Throwable
      */
-    public function inicioVenda(){
+    public function inicioVenda($primeirVez = true){
 
-        new VendaElementsPAP();
-        new VendaPAP();
+        if($primeirVez){
+            new VendaElementsPAP();
+            new VendaServicosElementsPAP();
+            new VendaPAP();
+        }
 
         $this->browse(function (Browser $browser){
-
             $acaoMenu = 'InserirVendas';
 
             $browser->on(new FuncaoLogin);
@@ -53,7 +71,7 @@ class VendaPAPTest extends DuskTestCase
                 $browser->press(CampoVenda::BotaoVoltarAlertaIntervaloInicioVenda);
                 $browser->pause(20000);
 
-                self::inicioVenda();
+                self::inicioVenda(false);
             }
         });
     }
@@ -164,6 +182,8 @@ class VendaPAPTest extends DuskTestCase
                 $this->fluxoVendaMovel($browser);
             }
 
+            $browser->click(CampoVenda::BotaoRecolherAnalise);
+            $browser->pause(500);
         });
     }
 
@@ -172,10 +192,14 @@ class VendaPAPTest extends DuskTestCase
      */
     public function preencherCamposDadosCliente(Browser $browser)
     {
-        if ($browser->value(CampoVenda::CampoClienteNomeCompleto) == "") {
+        $clienteNome = $browser->value(CampoVenda::CampoClienteNomeCompleto);
+        if ($clienteNome == "") {
             $browser->type(CampoVenda::CampoClienteNomeCompleto, $this->Venda->getClienteNome());
-        }elseif (!$browser->element(CampoVenda::CampoClienteNomeCompleto)->isEnabled()){
-            $this->Venda->setClienteCadastroWebVendas(true);
+        }else{
+            $this->Venda->setClienteNome($clienteNome);
+            if (!$browser->element(CampoVenda::CampoClienteNomeCompleto)->isEnabled()){
+                $this->Venda->setClienteCadastroWebVendas(true);
+            }
         }
 
         $campoDataNascimento = $browser->value(CampoVenda::CampoClienteDataNascimento);
@@ -190,26 +214,54 @@ class VendaPAPTest extends DuskTestCase
                 $intervalo = 0;
             }
 
-            if($intervalo <= 16){
+            if($intervalo <= 16 || $intervalo >= 100){
                 $browser->value(CampoVenda::CampoClienteDataNascimento, '');
                 $browser->type(CampoVenda::CampoClienteDataNascimento, $this->Venda->getClienteDataNascimento());
+            }else{
+                $this->Venda->setClienteDataNascimento($campoDataNascimento);
             }
         }
 
-        if ($browser->value(CampoVenda::CampoClienteNomeMae) == "") {
+        $clienteNomeMae = $browser->value(CampoVenda::CampoClienteNomeMae);
+        if ($clienteNomeMae == "") {
             $browser->type(CampoVenda::CampoClienteNomeMae, $this->Venda->getClienteNomeMae());
+        }else{
+            $this->Venda->setClienteNomeMae($clienteNomeMae);
         }
-        if ($browser->value(CampoVenda::BotaoClienteSexoMasculino) == "") {
-            $browser->click(CampoVenda::BotaoClienteSexoMasculino);
+
+        $botaoSexoMasculino = $browser->element(CampoVenda::BotaoClienteSexoMasculinoActive);
+        $botaoSexoFeminino = $browser->element(CampoVenda::BotaoClienteSexoFemininoActive);
+        if (!isset($botaoSexoMasculino) && !isset($botaoSexoFeminino) ) {
+            $browser->click($this->Venda->getClienteSexo());
+            $this->Venda->setClienteSexo($browser->element($this->Venda->getClienteSexo())->getText());
+        }else{
+            if(isset($botaoSexoMasculino)){
+                $this->Venda->setClienteSexo($browser->element(CampoVenda::BotaoClienteSexoMasculino)->getText());
+            }
+            if(isset($botaoSexoFeminino)){
+                $this->Venda->setClienteSexo($browser->element(CampoVenda::BotaoClienteSexoFeminino)->getText());
+            }
         }
-        if ($browser->value(CampoVenda::CampoClienteEmail) == "") {
+
+        $clienteEmail = $browser->value(CampoVenda::CampoClienteEmail);
+        if ($clienteEmail == "") {
             $browser->type(CampoVenda::CampoClienteEmail, $this->Venda->getClienteEmail());
+        }else{
+            $this->Venda->setClienteEmail($clienteEmail);
         }
-        if ($browser->value(CampoVenda::CampoClienteTelefoneCelular) == "") {
+
+        $clienteTelefoneCelular = $browser->value(CampoVenda::CampoClienteTelefoneCelular);
+        if ($clienteTelefoneCelular == "") {
             $browser->type(CampoVenda::CampoClienteTelefoneCelular, $this->Venda->getClienteTelefoneCelular());
+        }else{
+            $this->Venda->setClienteTelefoneCelular($clienteTelefoneCelular);
         }
-        if ($browser->value(CampoVenda::CampoClienteTelefoneFixo) == "" || strlen($browser->value(CampoVenda::CampoClienteTelefoneFixo)) != 10) {
+
+        $clienteTelefoneFixo = $browser->value(CampoVenda::CampoClienteTelefoneFixo);
+        if ($clienteTelefoneFixo == "" || strlen($clienteTelefoneFixo) != 10) {
             $browser->type(CampoVenda::CampoClienteTelefoneFixo, $this->Venda->getClienteTelefoneFixo());
+        }else{
+            $this->Venda->setClienteTelefoneFixo($clienteTelefoneFixo);
         }
     }
 
@@ -298,4 +350,16 @@ class VendaPAPTest extends DuskTestCase
 
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaCadastrandoEndereco, 240);
     }
+
+    /**
+     * @param Browser $browser
+     */
+    public function faturaFixa(Browser $browser)
+    {
+        $browser->press(FaturaFixa::RadioFormatoEnvioPapel);
+        $browser->elements(FaturaFixa::RadioDataVencimento)[1]->click();
+
+        $browser->press(FaturaFixa::RadioFormaPagamentoBoleto);
+    }
+
 }
