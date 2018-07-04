@@ -16,7 +16,7 @@ class funcoesPHP{
     }
 
     public static function geraICCIDRandomico(){
-        $tamanho = 16;
+        $tamanho = 15;
         $all_str = "1234567890";
         $iccid = "";
         for ($i = 0; $i <= $tamanho; $i++) {

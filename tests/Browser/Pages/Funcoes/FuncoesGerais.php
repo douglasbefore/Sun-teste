@@ -87,7 +87,7 @@ class FuncoesGerais extends Page
     public function loadCarregandoCampoNull(Browser $browser, $selector = '#load', $tempo = null)
     {
         $tempoPadrao = $tempo!=null ? $tempo : self::$Padrao;
-
+        $browser->pause(200);
         do {
             $selectorEnabled = $browser->element($selector);
             $browser->pause(500);

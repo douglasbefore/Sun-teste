@@ -90,6 +90,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $browser->pause(500);
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
+        $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -127,7 +128,9 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
         $dadosServico->setServicoPortabilidade($browser->element(ControleFatura::RadioPortabilidadeNao)->getText());
         $browser->press(ControleFatura::RadioPortabilidadeNao);
-        $browser->type(ControleFatura::CampoICCID, FuncoesPhp::geraICCIDRandomico());
+
+        $dadosServico->setServicoICCID(FuncoesPhp::geraICCIDRandomico());
+        $browser->type(ControleFatura::CampoICCID, $dadosServico->getServicoICCID());
         $browser->press(CampoVenda::BotaoContinuar);
         $browser->pause(500);
 
@@ -170,120 +173,14 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
     public function testServicoMovelControleFaturaClienteAltaPortabilidade()
     {
         $this->browse(function (Browser $browser) {
-            $funcoes = new FuncoesGerais();
 
             $dadosVenda = new VendaPAPTest();
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-            $browser->press(IncluirServicos::BotaoMovelControleFatura);
-            $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+            $this->ServicoMovelControleFaturaClienteAltaPortabilidade($browser, $dadosVenda);
 
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->assertVisible(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
-            $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-            $browser->press(ControleFatura::RadioTipoClienteAlta);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->press(ControleFatura::RadioPortabilidadeSim);
-            $browser->assertVisible(ControleFatura::CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::SelectOperadora);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->value(ControleFatura::CampoNumeroCliente, '');
-            $browser->type(ControleFatura::CampoNumeroCliente, '67963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $valueOperadora = $funcoes->retornaValueOption($browser,ControleFatura::OptionOperadora, 'Claro');
-            $browser->select(ControleFatura::SelectOperadora, $valueOperadora);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoICCID, FuncoesPhp::geraICCIDRandomico());
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->press(ControleFatura::RadioFaturaViaPostal);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertMissing(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->elements(ControleFatura::RadioDataVencimento)[1]->click();
-
+            $funcoes = new FuncoesGerais();
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->waitFor(CampoVenda::BotaoEnviarPedido);
@@ -292,6 +189,146 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
             $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
         });
+    }
+
+    public function ServicoMovelControleFaturaClienteAltaPortabilidade(Browser $browser, VendaPAPTest $dadosVenda){
+        $funcoes = new FuncoesGerais();
+        $dadosServico = new VendaServicoPAP();
+
+        $browser->element(IncluirServicos::BotaoIncluirServico)->getLocationOnScreenOnceScrolledIntoView();
+        if($browser->element(IncluirServicos::BotaoIncluirServico)->isDisplayed()){
+            $browser->press(IncluirServicos::BotaoIncluirServico);
+            $browser->pause(500);
+        }
+        $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
+        $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+
+        $browser->press(IncluirServicos::BotaoMovelControleFatura);
+        $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertVisible(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
+        $dadosServico->setServicoDescricaoPlano($valuePlano['text']);
+        $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoTipoCliente($browser->element(ControleFatura::RadioTipoClienteAlta)->getText());
+        $browser->press(ControleFatura::RadioTipoClienteAlta);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoPortabilidade($browser->element(ControleFatura::RadioPortabilidadeSim)->getText());
+        $browser->press(ControleFatura::RadioPortabilidadeSim);
+        $browser->assertVisible(ControleFatura::CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::SelectOperadora);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoNumeroCliente('67963258744');
+        $browser->value(ControleFatura::CampoNumeroCliente, '');
+        $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $valueOperadora = $funcoes->retornaValueOption($browser,ControleFatura::OptionOperadora, 'Claro');
+        $dadosServico->setServicoOperadora($valueOperadora['text']);
+        $browser->select(ControleFatura::SelectOperadora, $valueOperadora['value']);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoICCID(FuncoesPhp::geraICCIDRandomico());
+        $browser->type(ControleFatura::CampoICCID, $dadosServico->getServicoICCID());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoFatura($browser->element(ControleFatura::RadioFaturaViaPostal)->getText());
+        $browser->press(ControleFatura::RadioFaturaViaPostal);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertMissing(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $random = rand(0,count($browser->elements(ControleFatura::RadioDataVencimento))-1);
+        $dadosServico->setServicoDataVencimento($browser->elements(ControleFatura::RadioDataVencimento)[$random]->getText());
+        $browser->elements(ControleFatura::RadioDataVencimento)[$random]->click();
+
+        $dadosVenda->VendaServico($dadosServico);
     }
 
     /**
@@ -308,153 +345,13 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
     public function testServicoMovelControleFaturaClienteAltaPortabilidadeOutros()
     {
         $this->browse(function (Browser $browser) {
-            $funcoes = new FuncoesGerais();
-
             $dadosVenda = new VendaPAPTest();
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-            $browser->press(IncluirServicos::BotaoMovelControleFatura);
-            $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+            $this->ServicoMovelControleFaturaClienteAltaPortabilidadeOutros($browser, $dadosVenda);
 
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->assertVisible(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
-            $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-            $browser->press(ControleFatura::RadioTipoClienteAlta);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->press(ControleFatura::RadioPortabilidadeSim);
-            $browser->assertVisible(ControleFatura::CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::SelectOperadora);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->value(ControleFatura::CampoNumeroCliente, '');
-            $browser->type(ControleFatura::CampoNumeroCliente, '67963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $valueOperadora = $funcoes->retornaValueOption($browser,ControleFatura::OptionOperadora, 'Outros');
-            $browser->select(ControleFatura::SelectOperadora, $valueOperadora);
-            $browser->assertVisible(ControleFatura::CampoOutraOperadora);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoOutraOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoOutraOperadora, 'teste');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoOutraOperadora);
-            $browser->assertVisible(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoICCID, FuncoesPhp::geraICCIDRandomico());
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->press(ControleFatura::RadioFaturaEmail);
-            $browser->assertVisible(ControleFatura::CampoEmail);
-            $browser->value(ControleFatura::CampoEmail, '');
-            $browser->type(ControleFatura::CampoEmail, 'teste');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertMissing(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_CampoEmail);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->value(ControleFatura::CampoEmail, '');
-            $browser->type(ControleFatura::CampoEmail, 'teste_teste_teste@teste.com');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertMissing(ControleFatura::Validar_RadioFatura);
-            $browser->assertMissing(ControleFatura::Validar_CampoEmail);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->elements(ControleFatura::RadioDataVencimento)[1]->click();
-
+            $funcoes = new FuncoesGerais();
             $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->waitFor(CampoVenda::BotaoEnviarPedido);
@@ -463,6 +360,184 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
             $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
         });
+    }
+
+    public function ServicoMovelControleFaturaClienteAltaPortabilidadeOutros(Browser $browser, VendaPAPTest $dadosVenda)
+    {
+        $funcoes = new FuncoesGerais();
+        $dadosServico = new VendaServicoPAP();
+
+        $browser->element(IncluirServicos::BotaoIncluirServico)->getLocationOnScreenOnceScrolledIntoView();
+        if($browser->element(IncluirServicos::BotaoIncluirServico)->isDisplayed()){
+            $browser->press(IncluirServicos::BotaoIncluirServico);
+            $browser->pause(500);
+        }
+        $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
+        $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+
+        $browser->press(IncluirServicos::BotaoMovelControleFatura);
+        $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+        $browser->press(CampoVenda::BotaoContinuar);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertVisible(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
+        $dadosServico->setServicoDescricaoPlano($valuePlano['text']);
+        $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoTipoCliente($browser->element(ControleFatura::RadioTipoClienteAlta)->getText());
+        $browser->press(ControleFatura::RadioTipoClienteAlta);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoPortabilidade($browser->element(ControleFatura::RadioPortabilidadeSim)->getText());
+        $browser->press(ControleFatura::RadioPortabilidadeSim);
+        $browser->assertVisible(ControleFatura::CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::SelectOperadora);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $browser->value(ControleFatura::CampoNumeroCliente, '');
+        $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $valueOperadora = $funcoes->retornaValueOption($browser,ControleFatura::OptionOperadora, 'Outros');
+        $dadosServico->setServicoOperadora($valueOperadora['text']);
+        $browser->select(ControleFatura::SelectOperadora, $valueOperadora['value']);
+        $browser->assertVisible(ControleFatura::CampoOutraOperadora);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoOutraOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoOutraOperadora('Operadora Teste');
+        $browser->type(ControleFatura::CampoOutraOperadora, $dadosServico->getServicoOutraOperadora());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoOutraOperadora);
+        $browser->assertVisible(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoICCID(FuncoesPhp::geraICCIDRandomico());
+        $browser->type(ControleFatura::CampoICCID, $dadosServico->getServicoICCID());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoFatura($browser->element(ControleFatura::RadioFaturaEmail)->getText());
+        $browser->press(ControleFatura::RadioFaturaEmail);
+        $browser->assertVisible(ControleFatura::CampoEmail);
+        $browser->value(ControleFatura::CampoEmail, '');
+        $browser->type(ControleFatura::CampoEmail, 'teste');
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertMissing(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_CampoEmail);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoEmail('teste_teste_teste@teste.com');
+        $browser->value(ControleFatura::CampoEmail, '');
+        $browser->type(ControleFatura::CampoEmail, $dadosServico->getServicoEmail());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertMissing(ControleFatura::Validar_SelectOperadora);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertMissing(ControleFatura::Validar_RadioFatura);
+        $browser->assertMissing(ControleFatura::Validar_CampoEmail);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $random = rand(0,count($browser->elements(ControleFatura::RadioDataVencimento))-1);
+        $dadosServico->setServicoDataVencimento($browser->elements(ControleFatura::RadioDataVencimento)[$random]->getText());
+        $browser->elements(ControleFatura::RadioDataVencimento)[$random]->click();
+
+        $dadosVenda->VendaServico($dadosServico);
     }
 
     /**
@@ -477,83 +552,105 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
     public function testServicoMovelControleFaturaClienteMigracao()
     {
         $this->browse(function (Browser $browser) {
-            $funcoes = new FuncoesGerais();
-
             $dadosVenda = new VendaPAPTest();
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-            $browser->press(IncluirServicos::BotaoMovelControleFatura);
-            $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+            $this->ServicoMovelControleFaturaClienteMigracao($browser, $dadosVenda);
 
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->assertVisible(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
-            $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-            $browser->press(ControleFatura::RadioTipoClienteMigracao);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->value(ControleFatura::CampoNumeroCliente, '');
-            $browser->type(ControleFatura::CampoNumeroCliente, '67963258744');
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
-            $browser->assertVisible(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->press(ControleFatura::RadioFaturaViaPostal);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->pause(500);
-
-            $browser->assertMissing(ControleFatura::Validar_SelectPlano);
-            $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
-            $browser->assertMissing(ControleFatura::Validar_CampoICCID);
-            $browser->assertMissing(ControleFatura::Validar_RadioFatura);
-            $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
-
-            $browser->elements(ControleFatura::RadioDataVencimento)[1]->click();
-
-            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
-            $browser->waitFor(CampoVenda::BotaoEnviarPedido);
-
-            $browser->press(CampoVenda::BotaoEnviarPedido);
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
-            $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
+            $dadosVenda->validarResumoVenda();
         });
+    }
+
+    public function ServicoMovelControleFaturaClienteMigracao(Browser $browser, VendaPAPTest $dadosVenda)
+    {
+        $funcoes = new FuncoesGerais();
+        $dadosServico = new VendaServicoPAP();
+
+        $browser->element(IncluirServicos::BotaoIncluirServico)->getLocationOnScreenOnceScrolledIntoView();
+        if($browser->element(IncluirServicos::BotaoIncluirServico)->isDisplayed()){
+            $browser->press(IncluirServicos::BotaoIncluirServico);
+            $browser->pause(500);
+        }
+        $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
+        $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+
+        $browser->press(IncluirServicos::BotaoMovelControleFatura);
+        $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertVisible(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $valuePlano = $funcoes->retornaValueOption($browser,ControleFatura::OptionPlano, 'Controle Digital');
+        $dadosServico->setServicoDescricaoPlano($valuePlano['text']);
+        $browser->select(ControleFatura::SelectPlano, $valuePlano['value']);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertVisible(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoTipoCliente($browser->element(ControleFatura::RadioTipoClienteMigracao)->getText());
+        $browser->press(ControleFatura::RadioTipoClienteMigracao);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $browser->type(ControleFatura::CampoNumeroCliente, '99963258744');
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertVisible(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $browser->value(ControleFatura::CampoNumeroCliente, '');
+        $browser->type(ControleFatura::CampoNumeroCliente,  $dadosServico->getServicoNumeroCliente());
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoNumeroCliente);
+        $browser->assertVisible(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $dadosServico->setServicoFatura($browser->element(ControleFatura::RadioFaturaViaPostal)->getText());
+        $browser->press(ControleFatura::RadioFaturaViaPostal);
+        $browser->press(CampoVenda::BotaoContinuar);
+        $browser->pause(500);
+
+        $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
+        $browser->assertMissing(ControleFatura::Validar_SelectPlano);
+        $browser->assertMissing(ControleFatura::Validar_RadioTipoCliente);
+        $browser->assertMissing(ControleFatura::Validar_CampoICCID);
+        $browser->assertMissing(ControleFatura::Validar_RadioFatura);
+        $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
+
+        $random = rand(0,count($browser->elements(ControleFatura::RadioDataVencimento))-1);
+        $dadosServico->setServicoDataVencimento($browser->elements(ControleFatura::RadioDataVencimento)[$random]->getText());
+        $browser->elements(ControleFatura::RadioDataVencimento)[$random]->click();
+
+        $dadosVenda->VendaServico($dadosServico);
     }
 
     /**

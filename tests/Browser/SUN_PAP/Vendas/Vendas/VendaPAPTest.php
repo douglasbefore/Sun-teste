@@ -362,4 +362,45 @@ class VendaPAPTest extends DuskTestCase
         $browser->press(FaturaFixa::RadioFormaPagamentoBoleto);
     }
 
+    /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function validarResumoVenda(){
+
+        $this->browse(function (Browser $browser) {
+            $funcoes = new FuncoesGerais();
+            $funcoes->elementsIsEnabled($browser,CampoVenda::BotaoContinuar);
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->waitFor(CampoVenda::BotaoEnviarPedido);
+
+            foreach ($this->Venda->getVendaServicos() as $vendaServico) {
+
+                $selectorPanelServicoTopo                      = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoTopo;
+                $selectorPanelServicoCampos                    = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoCampos;
+                $selectorPanelServicoServicosAdicionaisLabel   = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoServicosAdicionaisLabel;
+                $selectorPanelServicoServicosAdicionais        = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoServicosAdicionais;
+
+                $nomeServico = $vendaServico->getServicoNome().' - '.$vendaServico->getServicoDescricaoPlano();
+                $browser->assertSeeIn($selectorPanelServicoTopo, $nomeServico);
+
+                $camposServicoResumo = $browser->elements($selectorPanelServicoCampos);
+                foreach ($camposServicoResumo as $campo) {
+                    $camposResumo = explode('|', preg_replace("/\r|\n/", "|", $campo->getText()));
+
+                    if (in_array('Valor', $camposResumo)){
+                        $browser->assertSeeIn();
+
+                        $vendaServico->getServicoValor();
+                    }
+                }
+
+            }
+
+            $browser->press(CampoVenda::BotaoEnviarPedido);
+            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAgurdeCarregandoDados);
+            $browser->assertVisible(CampoVenda::MensagemPedidoConcluidoSucesso);
+        });
+    }
+
 }

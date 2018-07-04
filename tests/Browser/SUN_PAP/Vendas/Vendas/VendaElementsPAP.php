@@ -18,7 +18,6 @@ class TipoServicos extends VendaElementsPAP
 
 class CampoVenda extends VendaElementsPAP
 {
-
     /* Geral da Venda */
     const BotaoContinuar = '.module-container .fixed-footer > button.btn';
     const BotaoVoltar = '.module-container .fixed-footer > button.btn.btn-link.secondary-actions';
@@ -126,6 +125,8 @@ class FaturaFixa extends VendaElementsPAP{
 }
 
 class ResumoVenda extends VendaElementsPAP{
-
-
+    const PanelServicoTopo = '.text-wrapper';
+    const PanelServicoCampos = '.display-data';
+    const PanelServicoServicosAdicionaisLabel = '.summary-field-list label';
+    const PanelServicoServicosAdicionais = '.summary-field-list li';
 }

@@ -11,6 +11,7 @@ namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 class VendaServicoPAP
 {
     private $servicoNome;
+    private $servicoElementoPlanoResumo;
     private $servicoDescricaoPlano;
     private $servicoValor;
     private $servicoTipoCliente;
@@ -39,6 +40,29 @@ class VendaServicoPAP
     {
         $this->servicoNome = $servicoNome;
     }
+    /**
+     * @return mixed
+     */
+    public function getServicoElementoPlanoResumo()
+    {
+        return $this->servicoElementoPlanoResumo;
+    }
+
+    /**
+     * @param mixed $servicoElementoPlanoResumo
+     */
+    public function setServicoElementoPlanoResumo($servicoElementoPlanoResumo): void
+    {
+        $this->servicoElementoPlanoResumo = $servicoElementoPlanoResumo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServicoValor()
+    {
+        return $this->servicoValor;
+    }
 
     /**
      * @return mixed
@@ -54,14 +78,11 @@ class VendaServicoPAP
     public function setServicoDescricaoPlano($servicoDescricaoPlano): void
     {
         $this->servicoDescricaoPlano = $servicoDescricaoPlano;
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getServicoValor()
-    {
-        return $this->servicoValor;
+        // Caso tenha o valor no final do plano, seta o valor da class vendaServico.
+        if(strripos($servicoDescricaoPlano, 'R$')){
+            $this->setServicoValor('R$ ' . explode('R$', $servicoDescricaoPlano)[1]);
+        }
     }
 
     /**

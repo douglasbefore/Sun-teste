@@ -30,6 +30,7 @@ class IncluirServicos extends VendaServicosElementsPAP
 class ControleFatura extends VendaServicosElementsPAP
 {
     const NomeDoServico = 'Controle Fatura';
+    const LabelServicoResumo = '.controleFatura';
     const SeletorNomeServico = '.controleFatura .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controleFatura div.loading-wrapper > div > span';
     const BotaoRemoverServico = '.controleFatura > div.remove > span';
@@ -64,6 +65,7 @@ class ControleFatura extends VendaServicosElementsPAP
 class FixoFWT extends VendaServicosElementsPAP
 {
     const NomeDoServico = 'Fixo FWT';
+    const LabelServicoResumo = '.fixoFWT';
     const SeletorNomeServico = '.fixoFWT .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.fixoFWT .loading-wrapper > div > span';
     const BotaoRemoverServico = '.fixoFWT > div.remove > span';
@@ -93,6 +95,7 @@ class FixoFWT extends VendaServicosElementsPAP
 class ControleCartao extends VendaServicosElementsPAP
 {
     const NomeDoServico = 'Controle Cartão';
+    const LabelServicoResumo = '.controleCartao';
     const SeletorNomeServico = '.controleCartao .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controleCartao .loading-wrapper > div > span';
     const BotaoRemoverServico = '.controleCartao > div.remove > span';
@@ -112,6 +115,7 @@ class ControleCartao extends VendaServicosElementsPAP
 class ControlePassDigital extends VendaServicosElementsPAP
 {
     const NomeDoServico = 'Controle Pass Digital';
+    const LabelServicoResumo = '.controlePassDigital';
     const SeletorNomeServico = '.controlePassDigital .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.controlePassDigital .loading-wrapper > div > span';
     const BotaoRemoverServico = '.controlePassDigital > div.remove > span';
@@ -144,7 +148,8 @@ class ControlePassDigital extends VendaServicosElementsPAP
 
 class FixaTelefoniaFixa extends VendaServicosElementsPAP
 {
-    const NomeDoServico = '';
+    const NomeDoServico = 'Telefonia Fixa';
+    const LabelServicoResumo = '.telefoniaFixa';
     const SeletorNomeServico = '.telefoniaFixa .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.telefoniaFixa .loading-wrapper > div > span';
     const BotaoRemoverServico = '.telefoniaFixa > div.remove > span';
@@ -160,6 +165,8 @@ class FixaTelefoniaFixa extends VendaServicosElementsPAP
 
 class FixaBandaLarga extends VendaServicosElementsPAP
 {
+    const NomeDoServico = 'Banda Larga';
+    const LabelServicoResumo = '.bandaLarga';
     const SeletorNomeServico = '.bandaLarga .toggle-form .text-wrapper';
     const AlertaCarregandoPlanos = '.bandaLarga .loading-wrapper > div > span';
     const BotaoRemoverServico = '.bandaLarga > div.remove > span';
@@ -173,4 +180,12 @@ class FixaBandaLarga extends VendaServicosElementsPAP
     const CheckboxServicosAdicionais_HBOGo = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="16"]';
     const CheckboxServicosAdicionais_ESPNPlay = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="17"]';
     const CheckboxServicosAdicionais_FOXPremium = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="18"]';
+}
+
+class FixaTVAssinatura extends VendaServicosElementsPAP
+{
+    const NomeDoServico = 'TV por Assinatura';
+    const LabelServicoResumo = '.tvPorAssinatura';
+
+
 }
