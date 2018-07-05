@@ -91,18 +91,9 @@ class CampoVenda extends VendaElementsPAP
     const SelectEnderecoTipoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div:nth-child(1) > div > select';
     const CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.col-6 > div.field-group > input';
     const Validar_CampoEnderecoComplemento = '.module-container .container > div > div > div:nth-child(7) > div > div.form-group.input-field.has-danger.col-6 > div.form-control-feedback';
-    const LabelTaxaInstalacaoFixa = '.module-container .fixed-footer .total-container .value';
-
-    const RadioFormaPagamentoAVista = '#formaPagamento .radio-group.block > div:nth-child(1)';
-    const RadioFormaPagamento10Vezes = '#formaPagamento .radio-group.block > div:nth-child(2)';
-    const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
 
     const BotaoRecolherAnalise = '.module-container .sidebar-container .sidebar > span';
 
-//    '.module-container .fixed-footer .total-container > div:nth-child(1) > span.value';
-//    '.module-container .fixed-footer .total-container > div:nth-child(2) > span.value';
-//    '.module-container .fixed-footer .total-container > div:nth-child(3) > span.value';
-//    '.module-container .sidebar-container .sidebar .analise-fixa .sidebar--details > div > ul > li:nth-child(1)';
 }
 
 class FaturaFixa extends VendaElementsPAP{
@@ -124,9 +115,46 @@ class FaturaFixa extends VendaElementsPAP{
 
 }
 
+class RodapeVenda extends VendaElementsPAP{
+    const LabelTaxaInstalacaoFixa = '.module-container .total-container [data-test="Taxa de Instalação Fixa"] .label';
+    const ValueTaxaInstalacaoFixa = '.module-container .total-container [data-test="Taxa de Instalação Fixa"] .value';
+    const RadioFormaPagamentoAVista = '#formaPagamento .radio-group.block > div:nth-child(1)';
+    const RadioFormaPagamento10Vezes = '#formaPagamento .radio-group.block > div:nth-child(2)';
+    const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
+    const LabelTotalPlanoFixa = '.module-container .total-container [data-test="Total Plano Fixa"] .label';
+    const ValueTotalPlanoFixa = '.module-container .total-container [data-test="Total Plano Fixa"] .value';
+    const LabelFixaAposMeses = '.module-container .total-container [data-test="Fixa após 12 meses"] .label';
+    const ValueFixaAposMeses = '.module-container .total-container [data-test="Fixa após 12 meses"] .value';
+    const LabelTotalPlanoMovel = '.module-container .total-container [data-test="Plano Móvel"] .label';
+    const ValueTotalPlanoMovel = '.module-container .total-container [data-test="Plano Móvel"] .value';
+
+}
+
 class ResumoVenda extends VendaElementsPAP{
     const PanelServicoTopo = '.text-wrapper';
-    const PanelServicoCampos = '.display-data';
-    const PanelServicoServicosAdicionaisLabel = '.summary-field-list label';
+    const LabelPanelServicoServicosAdicionais = '.summary-field-list label';
     const PanelServicoServicosAdicionais = '.summary-field-list li';
+
+    const LabelPanelServicoValor = '[data-test="Valor"] .label';
+    const ValuePanelServicoValor = '[data-test="Valor"] .value';
+    const LabelPanelServicoTipoCliente = '[data-test="Tipo de Cliente"] .label';
+    const ValuePanelServicoTipoCliente = '[data-test="Tipo de Cliente"] .value';
+    const LabelPanelServicoTrocaChip = '[data-test="Troca Chip"] .label';
+    const ValuePanelServicoTrocaChip = '[data-test="Troca Chip"] .value';
+    const LabelPanelServicoPortabilidade = '[data-test="Portabilidade"] .label';
+    const ValuePanelServicoPortabilidade = '[data-test="Portabilidade"] .value';
+    const LabelPanelServicoOperadora = '[data-test="Operadora"] .label';
+    const ValuePanelServicoOperadora = '[data-test="Operadora"] .value';
+    const LabelPanelServicoNumeroCliente = '[data-test="Número Cliente"] .label';
+    const ValuePanelServicoNumeroCliente = '[data-test="Número Cliente"] .value';
+    const LabelPanelServicoOutraOperadora = '[data-test="Outra Operadora"] .label';
+    const ValuePanelServicoOutraOperadora = '[data-test="Outra Operadora"] .value';
+    const LabelPanelServicoICCID = '[data-test="ICCID"] .label';
+    const ValuePanelServicoICCID = '[data-test="ICCID"] .value';
+    const LabelPanelServicoFatura = '[data-test="Fatura"] .label';
+    const ValuePanelServicoFatura = '[data-test="Fatura"] .value';
+    const LabelPanelServicoDataVencimento = '[data-test="Data Vencimento"] .label';
+    const ValuePanelServicoDataVencimento = '[data-test="Data Vencimento"] .value';
+    const LabelPanelServicoEmail = '[data-test="Email"] .label';
+    const ValuePanelServicoEmail = '[data-test="Email"] .value';
 }

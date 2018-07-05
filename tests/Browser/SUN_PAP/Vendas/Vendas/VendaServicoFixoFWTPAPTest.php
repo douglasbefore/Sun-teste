@@ -34,9 +34,6 @@ class VendaServicoFixoFWTPAPTest extends DuskTestCase
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-
             $browser->press(IncluirServicos::BotaoMovelFixoFWT);
             $browser->pause(500);
 

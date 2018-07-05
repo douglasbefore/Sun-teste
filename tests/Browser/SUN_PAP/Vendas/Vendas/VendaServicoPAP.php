@@ -15,6 +15,7 @@ class VendaServicoPAP
     private $servicoDescricaoPlano;
     private $servicoValor;
     private $servicoTipoCliente;
+    private $servicoTrocaChip;
     private $servicoPortabilidade;
     private $servicoNumeroCliente;
     private $servicoOperadora;
@@ -81,7 +82,7 @@ class VendaServicoPAP
 
         // Caso tenha o valor no final do plano, seta o valor da class vendaServico.
         if(strripos($servicoDescricaoPlano, 'R$')){
-            $this->setServicoValor('R$ ' . explode('R$', $servicoDescricaoPlano)[1]);
+            $this->setServicoValor('R$ ' . str_replace('.', ',', explode('R$', $servicoDescricaoPlano)[1]));
         }
     }
 
@@ -107,6 +108,22 @@ class VendaServicoPAP
     public function setServicoTipoCliente($servicoTipoCliente): void
     {
         $this->servicoTipoCliente = $servicoTipoCliente;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServicoTrocaChip()
+    {
+        return $this->servicoTrocaChip;
+    }
+
+    /**
+     * @param mixed $servicoTrocaChip
+     */
+    public function setServicoTrocaChip($servicoTrocaChip): void
+    {
+        $this->servicoTrocaChip = $servicoTrocaChip;
     }
 
     /**

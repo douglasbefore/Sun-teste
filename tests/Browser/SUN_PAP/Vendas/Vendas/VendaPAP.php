@@ -31,11 +31,16 @@ class VendaPAP extends VendaServicoPAP
     private $clienteTelefoneFixo;
     private $enderecoCEP;
     private $enderecoNumero;
+    private $enderecoRua;
+    private $taxaInstalacao;
+    private $formaPagamentoTaxaInstalacao;
+    private $totalPlanoFixa;
+    private $totalFixaAposMeses;
+    private $totalPlanoMovel;
 
 
     public function __construct()
     {
-//        $this->vendaServicos[] = new VendaServicoPAP();
         new VendaElementsPAP();
         $this->usuarioLogin = '05114040189';  // Usuario Vendedor
 
@@ -294,5 +299,101 @@ class VendaPAP extends VendaServicoPAP
     public function setEnderecoNumero(string $enderecoNumero): void
     {
         $this->enderecoNumero = $enderecoNumero;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnderecoRua()
+    {
+        return $this->enderecoRua;
+    }
+
+    /**
+     * @param mixed $enderecoRua
+     */
+    public function setEnderecoRua($enderecoRua): void
+    {
+        $this->enderecoRua = $enderecoRua;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTaxaInstalacao()
+    {
+        return $this->taxaInstalacao;
+    }
+
+    /**
+     * @param mixed $taxaInstalacao
+     */
+    public function setTaxaInstalacao($taxaInstalacao): void
+    {
+        $this->taxaInstalacao = $taxaInstalacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFormaPagamentoTaxaInstalacao()
+    {
+        return $this->formaPagamentoTaxaInstalacao;
+    }
+
+    /**
+     * @param mixed $formaPagamentoTaxaInstalacao
+     */
+    public function setFormaPagamentoTaxaInstalacao($formaPagamentoTaxaInstalacao): void
+    {
+        $this->formaPagamentoTaxaInstalacao = $formaPagamentoTaxaInstalacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPlanoFixa()
+    {
+        return $this->totalPlanoFixa;
+    }
+
+    /**
+     * @param mixed $totalPlanoFixa
+     */
+    public function setTotalPlanoFixa($totalPlanoFixa): void
+    {
+        $this->totalPlanoFixa = $totalPlanoFixa;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalFixaAposMeses()
+    {
+        return $this->totalFixaAposMeses;
+    }
+
+    /**
+     * @param mixed $totalFixaAposMeses
+     */
+    public function setTotalFixaAposMeses($totalFixaAposMeses): void
+    {
+        $this->totalFixaAposMeses = $totalFixaAposMeses;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTotalPlanoMovel()
+    {
+        return $this->totalPlanoMovel;
+    }
+
+    /**
+     * @param mixed $totalPlanoMovel
+     */
+    public function setTotalPlanoMovel($totalPlanoMovel): void
+    {
+        $this->totalPlanoMovel = $totalPlanoMovel;
     }
 }

@@ -27,9 +27,6 @@ class VendaServicoControleCartaoTest extends DuskTestCase
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $browser->click(CampoVenda::BotaoRecolherAnalise);
-            $browser->pause(500);
-
             $browser->press(IncluirServicos::BotaoMovelControleCartao);
             $browser->pause(500);
 

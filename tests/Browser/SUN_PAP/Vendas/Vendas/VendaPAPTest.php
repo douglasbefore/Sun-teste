@@ -288,17 +288,13 @@ class VendaPAPTest extends DuskTestCase
         }
 
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise);
+        $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaBuscandoGruposOferta);
 
-//        $facilidadeIndisponivel = $browser->element(CampoVenda::AlertaFacilidadeIndisponivel);
-//        if(!isset($facilidadeIndisponivel)) {
-            $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaBuscandoGruposOferta);
+        $browser->waitForText('Grupo de Oferta');
+        $browser->elements(CampoVenda::RadioGrupoOferta)[0]->click();
 
-            $browser->waitForText('Grupo de Oferta');
-            $browser->elements(CampoVenda::RadioGrupoOferta)[0]->click();
-
-            $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
-            $browser->press(CampoVenda::BotaoContinuar);
-//        }
+        $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
+        $browser->press(CampoVenda::BotaoContinuar);
     }
 
     /**
@@ -314,6 +310,7 @@ class VendaPAPTest extends DuskTestCase
         $browser->type(CampoVenda::CampoEnderecoCep, $this->Venda->getEnderecoCEP());
         $browser->type(CampoVenda::CampoEnderecoNumero, $this->Venda->getEnderecoNumero());
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
+        $this->getVenda()->setEnderecoRua($browser->value(CampoVenda::CampoEnderecoRua));
 
         $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
         $browser->press(CampoVenda::BotaoContinuar);
@@ -335,6 +332,7 @@ class VendaPAPTest extends DuskTestCase
         foreach ($enderecosEscolha as $id => $itemEndereco){
             if ( strpos(str_replace('-', '', $itemEndereco->getText()), str_replace('-','', $this->Venda->getEnderecoCEP())) !== false){
                 $browser->elements(CampoVenda::RadioEscolhaEndereco)[$id]->click();
+                $this->getVenda()->setEnderecoRua($browser->elements(CampoVenda::RadioEscolhaEndereco . ' .title')[$id]->getText());
                 $achouEndereco = true;
                 $browser->pause(200);
                 $browser->press(CampoVenda::BotaoContinuar);
@@ -352,14 +350,44 @@ class VendaPAPTest extends DuskTestCase
     }
 
     /**
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function faturaFixa()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->press(CampoVenda::BotaoContinuar);
+            $browser->pause(500);
+
+            $browser->press(FaturaFixa::RadioFormatoEnvioPapel);
+            $browser->elements(FaturaFixa::RadioDataVencimento)[1]->click();
+
+            $browser->press(FaturaFixa::RadioFormaPagamentoBoleto);
+        });
+    }
+
+    /**
      * @param Browser $browser
      */
-    public function faturaFixa(Browser $browser)
+    public function trataRodapeValoresVenda(Browser $browser)
     {
-        $browser->press(FaturaFixa::RadioFormatoEnvioPapel);
-        $browser->elements(FaturaFixa::RadioDataVencimento)[1]->click();
+        $browser->pause(500);
+        if($this->getVenda()->isVendaFixa()) {
+            $this->getVenda()->setTaxaInstalacao($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText());
+            if ($this->getVenda()->getTaxaInstalacao() != 'Gratuita') {
+                $this->getVenda()->setFormaPagamentoTaxaInstalacao($browser->element(RodapeVenda::RadioFormaPagamentoAVista)->getText());
+                $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
+            } else {
+                $this->getVenda()->setFormaPagamentoTaxaInstalacao(null);
+            }
 
-        $browser->press(FaturaFixa::RadioFormaPagamentoBoleto);
+            $this->getVenda()->setTotalPlanoFixa($browser->element(RodapeVenda::ValueTotalPlanoFixa)->getText());
+            $this->getVenda()->setTotalFixaAposMeses($browser->element(RodapeVenda::ValueFixaAposMeses)->getText());
+        }
+
+        if($this->getVenda()->isVendaMovel()){
+            $this->getVenda()->setTotalPlanoMovel($browser->element(RodapeVenda::ValueTotalPlanoMovel)->getText());
+        }
     }
 
     /**
@@ -376,22 +404,89 @@ class VendaPAPTest extends DuskTestCase
 
             foreach ($this->Venda->getVendaServicos() as $vendaServico) {
 
-                $selectorPanelServicoTopo                      = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoTopo;
-                $selectorPanelServicoCampos                    = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoCampos;
-                $selectorPanelServicoServicosAdicionaisLabel   = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoServicosAdicionaisLabel;
-                $selectorPanelServicoServicosAdicionais        = $vendaServico->getServicoElementoPlanoResumo() .' '. ResumoVenda::PanelServicoServicosAdicionais;
+                $elementServico = $vendaServico->getServicoElementoPlanoResumo().' ';
+
+                $selectorPanelServicoTopo                      = $elementServico.ResumoVenda::PanelServicoTopo;
+                $selectorPanelServicoServicosAdicionaisLabel   = $elementServico.ResumoVenda::LabelPanelServicoServicosAdicionais;
+                $selectorPanelServicoServicosAdicionais        = $elementServico.ResumoVenda::PanelServicoServicosAdicionais;
 
                 $nomeServico = $vendaServico->getServicoNome().' - '.$vendaServico->getServicoDescricaoPlano();
                 $browser->assertSeeIn($selectorPanelServicoTopo, $nomeServico);
 
-                $camposServicoResumo = $browser->elements($selectorPanelServicoCampos);
-                foreach ($camposServicoResumo as $campo) {
-                    $camposResumo = explode('|', preg_replace("/\r|\n/", "|", $campo->getText()));
+                if (!is_null($vendaServico->getServicoValor())) {
+                    $labelResumoServicoValor = $browser->element($elementServico . ResumoVenda::LabelPanelServicoValor);
+                    if (isset($labelResumoServicoValor)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoValor, $vendaServico->getServicoValor());
+                    }
+                }
 
-                    if (in_array('Valor', $camposResumo)){
-                        $browser->assertSeeIn();
+                if (!is_null($vendaServico->getServicoTipoCliente())) {
+                    $labelResumoServicoTipoCliente = $browser->element($elementServico . ResumoVenda::LabelPanelServicoTipoCliente);
+                    if (isset($labelResumoServicoTipoCliente)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoTipoCliente, $vendaServico->getServicoTipoCliente());
+                    }
+                }
 
-                        $vendaServico->getServicoValor();
+//                if (!is_null($vendaServico->getServicoTrocaChip())) {
+//                    $labelResumoServicoTrocaChip = $browser->element($elementServico . ResumoVenda::LabelPanelServicoTrocaChip);
+//                    if (isset($labelResumoServicoTrocaChip)) {
+//                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoTrocaChip, $vendaServico->getServicoTrocaChip());
+//                    }
+//                }
+
+                if (!is_null($vendaServico->getServicoOperadora())) {
+                    $labelResumoServicoOperadora = $browser->element($elementServico . ResumoVenda::LabelPanelServicoOperadora);
+                    if (isset($labelResumoServicoOperadora)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoOperadora, $vendaServico->getServicoOperadora());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoNumeroCliente())) {
+                    $labelResumoServicoNumeroCliente = $browser->element($elementServico . ResumoVenda::LabelPanelServicoNumeroCliente);
+                    if (isset($labelResumoServicoNumeroCliente)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoNumeroCliente, $vendaServico->getServicoNumeroCliente());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoPortabilidade())) {
+                    $labelResumoServicoPortabilidade = $browser->element($elementServico . ResumoVenda::LabelPanelServicoPortabilidade);
+                    if (isset($labelResumoServicoPortabilidade)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoPortabilidade, $vendaServico->getServicoPortabilidade());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoICCID())) {
+                    $labelResumoServicoICCID = $browser->element($elementServico . ResumoVenda::LabelPanelServicoICCID);
+                    if (isset($labelResumoServicoICCID)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoICCID, $vendaServico->getServicoICCID());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoFatura())) {
+                    $labelResumoServicoFatura = $browser->element($elementServico . ResumoVenda::LabelPanelServicoFatura);
+                    if (isset($labelResumoServicoFatura)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoFatura, $vendaServico->getServicoFatura());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoDataVencimento())) {
+                    $labelResumoServicoDataVencimento = $browser->element($elementServico . ResumoVenda::LabelPanelServicoDataVencimento);
+                    if (isset($labelResumoServicoDataVencimento)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoDataVencimento, $vendaServico->getServicoDataVencimento());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoOutraOperadora())) {
+                    $labelResumoServicoOutraOperadora = $browser->element($elementServico . ResumoVenda::LabelPanelServicoOutraOperadora);
+                    if (isset($labelResumoServicoOutraOperadora)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoOutraOperadora, $vendaServico->getServicoOutraOperadora());
+                    }
+                }
+
+                if (!is_null($vendaServico->getServicoEmail())) {
+                    $labelResumoServicoEmail = $browser->element($elementServico . ResumoVenda::LabelPanelServicoEmail);
+                    if (isset($labelResumoServicoEmail)) {
+                        $browser->assertSeeIn($elementServico . ResumoVenda::ValuePanelServicoEmail, $vendaServico->getServicoEmail());
                     }
                 }
 
