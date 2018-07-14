@@ -14,7 +14,7 @@ use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncaoLogin;
 use Tests\Browser\Pages\Funcoes\FuncoesMenu;
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
-use Tests\Feature\Funcoes\funcoesPHP;
+use Tests\Feature\Funcoes\funcoesPHP as funcoesPHP;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 
@@ -29,8 +29,8 @@ class VendaPAPTest extends DuskTestCase
      */
     public function __construct()
     {
+        parent::__construct();
         $this->Venda = new VendaPAP();
-//        $this->Venda->setVendaServicos() = new VendaServicoPAP();
     }
 
     public function getVenda(){
@@ -39,11 +39,7 @@ class VendaPAPTest extends DuskTestCase
 
     public function VendaServico($dadosVendaServico){
         $this->getVenda()->setVendaServicos($dadosVendaServico);
-        $this->VendaServico = new VendaServicoPAP();
     }
-//    public function getVendaServico(){
-//        return $this->getVenda()->getVendaServicos();
-//    }
 
     /**
      * @throws \Exception
@@ -84,8 +80,8 @@ class VendaPAPTest extends DuskTestCase
      * @group EscolherVendaMovel
      * @return void
      */
-    public function testEscolherVendaMovel(){
-
+    public function testEscolherVendaMovel()
+    {
         $this->inicioVenda();
         $this->Venda->setVendaMovel(true);
 
@@ -93,6 +89,9 @@ class VendaPAPTest extends DuskTestCase
             $funcoes = new FuncoesGerais();
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::LoadCarregando);
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
+
+            $pegarDDDVenda = $browser->resolver->driver->executeScript('return $("'.CampoVenda::SelectDDD.'  option:selected").text();');
+            $this->getVenda()->setVendaDDD(preg_replace("/[^0-9]/", "", $pegarDDDVenda));
 
             $browser->type(CampoVenda::CampoVendaCPFCliente, $this->Venda->getClienteCPF());
             $browser->click(TipoServicos::BotaoMovel);
@@ -110,14 +109,17 @@ class VendaPAPTest extends DuskTestCase
      * @group escolherVendaFixa
      * @return void
      */
-    public function testEscolherVendaFixa(){
-
+    public function testEscolherVendaFixa()
+    {
         $this->inicioVenda();
         $this->Venda->setVendaFixa(true);
 
         $this->browse(function (Browser $browser) {
             $funcoes = new FuncoesGerais();
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
+
+            $pegarDDDVenda = $browser->resolver->driver->executeScript('return $("'.CampoVenda::SelectDDD.'  option:selected").text();');
+            $this->getVenda()->setVendaDDD(preg_replace("/[^0-9]/", "", $pegarDDDVenda));
 
             $browser->type(CampoVenda::CampoVendaCPFCliente, $this->Venda->getClienteCPF());
 
@@ -145,6 +147,9 @@ class VendaPAPTest extends DuskTestCase
         $this->browse(function (Browser $browser){
             $funcoes = new FuncoesGerais();
             $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaRequisicaoToken);
+
+            $pegarDDDVenda = $browser->resolver->driver->executeScript('return $("'.CampoVenda::SelectDDD.'  option:selected").text();');
+            $this->getVenda()->setVendaDDD(preg_replace("/[^0-9]/", "", $pegarDDDVenda));
 
             $browser->type(CampoVenda::CampoVendaCPFCliente, $this->Venda->getClienteCPF());
 
@@ -195,9 +200,9 @@ class VendaPAPTest extends DuskTestCase
         $clienteNome = $browser->value(CampoVenda::CampoClienteNomeCompleto);
         if ($clienteNome == "") {
             $browser->type(CampoVenda::CampoClienteNomeCompleto, $this->Venda->getClienteNome());
-        }else{
-            $this->Venda->setClienteNome($clienteNome);
-            if (!$browser->element(CampoVenda::CampoClienteNomeCompleto)->isEnabled()){
+        } else {
+            $this->Venda->setClienteNome(trim($clienteNome));
+            if (!$browser->element(CampoVenda::CampoClienteNomeCompleto)->isEnabled()) {
                 $this->Venda->setClienteCadastroWebVendas(true);
             }
         }
@@ -205,20 +210,20 @@ class VendaPAPTest extends DuskTestCase
         $campoDataNascimento = $browser->value(CampoVenda::CampoClienteDataNascimento);
         if ($campoDataNascimento == "") {
             $browser->type(CampoVenda::CampoClienteDataNascimento, $this->Venda->getClienteDataNascimento());
-        }else{
-            if(strripos($campoDataNascimento, '/')) {
+        } else {
+            if (count(explode('/', $campoDataNascimento)) == 3) {
                 $dataAtual = Carbon::now();
                 $dataNascimesmo = Carbon::createFromFormat('d/m/Y', $campoDataNascimento);
                 $intervalo = $dataAtual->diffInYears($dataNascimesmo);
-            }else{
+            } else {
                 $intervalo = 0;
             }
 
-            if($intervalo <= 16 || $intervalo >= 100){
+            if ($intervalo <= 16 || $intervalo >= 100) {
                 $browser->value(CampoVenda::CampoClienteDataNascimento, '');
                 $browser->type(CampoVenda::CampoClienteDataNascimento, $this->Venda->getClienteDataNascimento());
-            }else{
-                $this->Venda->setClienteDataNascimento($campoDataNascimento);
+            } else {
+                $this->Venda->setClienteDataNascimento(trim($campoDataNascimento));
             }
         }
 
@@ -226,7 +231,7 @@ class VendaPAPTest extends DuskTestCase
         if ($clienteNomeMae == "") {
             $browser->type(CampoVenda::CampoClienteNomeMae, $this->Venda->getClienteNomeMae());
         }else{
-            $this->Venda->setClienteNomeMae($clienteNomeMae);
+            $this->Venda->setClienteNomeMae(trim($clienteNomeMae));
         }
 
         $botaoSexoMasculino = $browser->element(CampoVenda::BotaoClienteSexoMasculinoActive);
@@ -247,21 +252,30 @@ class VendaPAPTest extends DuskTestCase
         if ($clienteEmail == "") {
             $browser->type(CampoVenda::CampoClienteEmail, $this->Venda->getClienteEmail());
         }else{
-            $this->Venda->setClienteEmail($clienteEmail);
+            $this->Venda->setClienteEmail(trim($clienteEmail));
         }
 
         $clienteTelefoneCelular = $browser->value(CampoVenda::CampoClienteTelefoneCelular);
         if ($clienteTelefoneCelular == "") {
             $browser->type(CampoVenda::CampoClienteTelefoneCelular, $this->Venda->getClienteTelefoneCelular());
         }else{
-            $this->Venda->setClienteTelefoneCelular($clienteTelefoneCelular);
+            $this->Venda->setClienteTelefoneCelular(trim($clienteTelefoneCelular));
         }
 
         $clienteTelefoneFixo = $browser->value(CampoVenda::CampoClienteTelefoneFixo);
         if ($clienteTelefoneFixo == "" || strlen($clienteTelefoneFixo) != 10) {
             $browser->type(CampoVenda::CampoClienteTelefoneFixo, $this->Venda->getClienteTelefoneFixo());
         }else{
-            $this->Venda->setClienteTelefoneFixo($clienteTelefoneFixo);
+            $this->Venda->setClienteTelefoneFixo(trim($clienteTelefoneFixo));
+        }
+
+        $checkbox = $browser->element(CampoVenda::CheckboxReceberSMS);
+        if (isset($checkbox)) {
+            if (strpos($checkbox->getAttribute('class'), 'selected') !== false) {
+                $this->Venda->setClienteReceberSMS('Sim');
+            } else {
+                $this->Venda->setClienteReceberSMS('Não');
+            }
         }
     }
 
@@ -288,6 +302,12 @@ class VendaPAPTest extends DuskTestCase
         }
 
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise);
+
+        $fazReserva = $browser->element(ReservaVenda::TituloReservaVenda);
+        if(isset($fazReserva)){
+            $browser->press(ReservaVenda::BotaoContinuarSemReserva);
+        }
+
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaBuscandoGruposOferta);
 
         $browser->waitForText('Grupo de Oferta');
@@ -310,6 +330,7 @@ class VendaPAPTest extends DuskTestCase
         $browser->type(CampoVenda::CampoEnderecoCep, $this->Venda->getEnderecoCEP());
         $browser->type(CampoVenda::CampoEnderecoNumero, $this->Venda->getEnderecoNumero());
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
+        $browser->pause(1000);
         $this->getVenda()->setEnderecoRua($browser->value(CampoVenda::CampoEnderecoRua));
 
         $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
@@ -360,34 +381,42 @@ class VendaPAPTest extends DuskTestCase
             $browser->pause(500);
 
             $browser->press(FaturaFixa::RadioFormatoEnvioPapel);
-            $browser->elements(FaturaFixa::RadioDataVencimento)[1]->click();
+            $this->Venda->setFixaFormatoEnvio($browser->element(FaturaFixa::RadioFormatoEnvioPapel)->getText());
+
+            $random = rand(0, count($browser->elements(FaturaFixa::RadioDataVencimento)) - 1);
+            $this->Venda->setFixaDataVencimento($browser->elements(FaturaFixa::RadioDataVencimento)[$random]->getText());
+            $browser->elements(FaturaFixa::RadioDataVencimento)[$random]->click();
 
             $browser->press(FaturaFixa::RadioFormaPagamentoBoleto);
+            $this->Venda->setFixaFormaPagamento($browser->element(FaturaFixa::RadioFormaPagamentoBoleto)->getText());
         });
     }
 
     /**
-     * @param Browser $browser
+     * @throws \Exception
+     * @throws \Throwable
      */
-    public function trataRodapeValoresVenda(Browser $browser)
+    public function trataRodapeValoresVenda()
     {
-        $browser->pause(500);
-        if($this->getVenda()->isVendaFixa()) {
-            $this->getVenda()->setTaxaInstalacao($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText());
-            if ($this->getVenda()->getTaxaInstalacao() != 'Gratuita') {
-                $this->getVenda()->setFormaPagamentoTaxaInstalacao($browser->element(RodapeVenda::RadioFormaPagamentoAVista)->getText());
-                $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
-            } else {
-                $this->getVenda()->setFormaPagamentoTaxaInstalacao(null);
+        $this->browse(function (Browser $browser) {
+            $browser->pause(500);
+            if($this->getVenda()->isVendaFixa()) {
+                $this->getVenda()->setTaxaInstalacao($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText());
+                if ($this->getVenda()->getTaxaInstalacao() != 'Gratuita') {
+                    $this->getVenda()->setFormaPagamentoTaxaInstalacao($browser->element(RodapeVenda::RadioFormaPagamentoAVista)->getText());
+                    $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
+                } else {
+                    $this->getVenda()->setFormaPagamentoTaxaInstalacao(null);
+                }
+
+                $this->getVenda()->setTotalPlanoFixa($browser->element(RodapeVenda::ValueTotalPlanoFixa)->getText());
+                $this->getVenda()->setTotalFixaAposMeses($browser->element(RodapeVenda::ValueFixaAposMeses)->getText());
             }
 
-            $this->getVenda()->setTotalPlanoFixa($browser->element(RodapeVenda::ValueTotalPlanoFixa)->getText());
-            $this->getVenda()->setTotalFixaAposMeses($browser->element(RodapeVenda::ValueFixaAposMeses)->getText());
-        }
-
-        if($this->getVenda()->isVendaMovel()){
-            $this->getVenda()->setTotalPlanoMovel($browser->element(RodapeVenda::ValueTotalPlanoMovel)->getText());
-        }
+            if($this->getVenda()->isVendaMovel()){
+                $this->getVenda()->setTotalPlanoMovel($browser->element(RodapeVenda::ValueTotalPlanoMovel)->getText());
+            }
+        });
     }
 
     /**
@@ -402,14 +431,13 @@ class VendaPAPTest extends DuskTestCase
             $browser->press(CampoVenda::BotaoContinuar);
             $browser->waitFor(CampoVenda::BotaoEnviarPedido);
 
-            foreach ($this->Venda->getVendaServicos() as $vendaServico) {
+            /**
+             * @var $vendaServico VendaServicoPAP
+             */
+            foreach ($this->Venda->getVendaServicos() as $elementServico => $vendaServico) {
+                $elementServico.=' ';
 
-                $elementServico = $vendaServico->getServicoElementoPlanoResumo().' ';
-
-                $selectorPanelServicoTopo                      = $elementServico.ResumoVenda::PanelServicoTopo;
-                $selectorPanelServicoServicosAdicionaisLabel   = $elementServico.ResumoVenda::LabelPanelServicoServicosAdicionais;
-                $selectorPanelServicoServicosAdicionais        = $elementServico.ResumoVenda::PanelServicoServicosAdicionais;
-
+                $selectorPanelServicoTopo = $elementServico.ResumoVenda::PanelServicoTopo;
                 $nomeServico = $vendaServico->getServicoNome().' - '.$vendaServico->getServicoDescricaoPlano();
                 $browser->assertSeeIn($selectorPanelServicoTopo, $nomeServico);
 
@@ -490,6 +518,52 @@ class VendaPAPTest extends DuskTestCase
                     }
                 }
 
+                if(!empty($vendaServico->getServicoAdicionais())){
+                    $selectorPanelServicoServicosAdicionaisLabel   = $elementServico.ResumoVenda::LabelPanelServicoServicosAdicionais;
+                    $selectorPanelServicoServicosAdicionais        = $elementServico.ResumoVenda::PanelServicoServicosAdicionais;
+                    $labelResumoServicoAdicionais = $browser->element($selectorPanelServicoServicosAdicionaisLabel);
+                    if(isset($labelResumoServicoAdicionais)){
+                        foreach ($vendaServico->getServicoAdicionais() as $servicoAdicionais) {
+                            $browser->with($selectorPanelServicoServicosAdicionais, function (Browser $panelAdicionais) use ($servicoAdicionais){
+                               $panelAdicionais->assertSee($servicoAdicionais);
+                            });
+                        }
+                    }
+                }
+            }
+
+            // Validar Dados do Cliente
+            $browser->assertSeeIn(ResumoVenda::ValueClienteCPF, FuncoesPHP::mascara($this->Venda->getClienteCPF(), '###.###.###-##'));
+            $browser->assertSeeIn(ResumoVenda::ValueClienteNome, $this->Venda->getClienteNome());
+            $browser->assertSeeIn(ResumoVenda::ValueClienteNomeMae, $this->Venda->getClienteNomeMae());
+            // não validar o sexo do cliente pois, caso o usuário ja tenha cadastro no nosso banco de dados, não esta mostrando o sexo do mesmos mo resumo da venda.
+            ///$browser->assertSeeIn(ResumoVenda::ValueClienteSexo, $this->Venda->getClienteSexo());
+            $browser->assertSeeIn(ResumoVenda::ValueClienteDataNascimento, FuncoesPHP::mascara($this->Venda->getClienteDataNascimento(), '##/##/####'));
+            $browser->assertSeeIn(ResumoVenda::ValueClienteTelefoneCelular, FuncoesPHP::mascara($this->Venda->getClienteTelefoneCelular(), '(##) #####-####'));
+            $browser->assertSeeIn(ResumoVenda::ValueClienteTelefoneFixo, FuncoesPHP::mascara($this->Venda->getClienteTelefoneFixo(), '(##) ####-####'));
+            $browser->assertSeeIn(ResumoVenda::ValueClienteEmail, $this->Venda->getClienteEmail());
+            $browser->assertSeeIn(ResumoVenda::ValueClienteReceberSMS, $this->Venda->getClienteReceberSMS());
+
+            // Validar Endereco do Cliente
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteRua, $this->Venda->getEnderecoRua());
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteNumero, $this->Venda->getEnderecoNumero());
+//            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, FuncoesPHP::mascara($this->Venda->getEnderecoCEP(), '#####-###'));
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, str_replace('-', '', $this->Venda->getEnderecoCEP()));
+
+            // Validar Fatura Cliente
+            if($this->Venda->isVendaFixa()){
+                $browser->assertSeeIn(ResumoVenda::ValueFaturaClienteDataVencimento, $this->Venda->getFixaDataVencimento());
+                $browser->assertSeeIn(ResumoVenda::ValueFaturaClienteFormatoEnvio, $this->Venda->getFixaFormatoEnvio());
+                $browser->assertSeeIn(ResumoVenda::ValueFaturaClienteFormatoPagamento, $this->Venda->getFixaFormaPagamento());
+            }
+
+            // Validar Total
+            if($this->Venda->isVendaFixa()){
+                $browser->assertSeeIn(ResumoVenda::ValueTotalFixa, $this->Venda->getTotalPlanoFixa());
+                $browser->assertSeeIn(ResumoVenda::ValueTotalTaxaInstalacao, $this->Venda->getTaxaInstalacao());
+            }
+            if($this->Venda->isVendaMovel()){
+                $browser->assertSeeIn(ResumoVenda::ValueTotalMovel, $this->Venda->getTotalPlanoMovel());
             }
 
             $browser->press(CampoVenda::BotaoEnviarPedido);

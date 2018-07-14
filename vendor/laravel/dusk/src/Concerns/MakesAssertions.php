@@ -345,7 +345,7 @@ trait MakesAssertions
 
         PHPUnit::assertTrue(
             Str::contains($element->getText(), $text),
-            "Did not see expected text [{$text}] within element [{$fullSelector}]."
+            "Did not see expected text [{$text}] within element [{$fullSelector}] -> Valor esperado: {$element->getText()}."
         );
 
         return $this;

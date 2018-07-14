@@ -21,9 +21,11 @@ class IncluirServicos extends VendaServicosElementsPAP
     const BotaoMovelControleCartaoDesabilitado = '.icon-card.disabled.controleCartao';
     const BotaoMovelControlePassDigital = '.icon-card.controlePassDigital';
     const BotaoMovelControlePassDigitalDesabilitado = '.icon-card.disabled.controlePassDigital';
+    const BotaoMovelPosFatura = '.icon-card.posFatura';
+    const BotaoMovelPosFaturaDesabilitado = '.icon-card.disabled.posFatura';
     const BotaoFixaTelefoniaFixa = '.icon-card.telefoniaFixa';
-    const BotaoFixaBandaLarga = 'icon-card.bandaLarga';
-    const BotaoFixaTVPorAssinatura = 'icon-card.tvPorAssinatura';
+    const BotaoFixaBandaLarga = '.icon-card.bandaLarga';
+    const BotaoFixaTVPorAssinatura = '.icon-card.tvPorAssinatura';
 
 }
 
@@ -78,9 +80,10 @@ class FixoFWT extends VendaServicosElementsPAP
     const CampoNumeroCliente = '.fixoFWT [id^="numeroCliente_"] input';
     const Validar_CampoNumeroCliente = '.fixoFWT [id^="numeroCliente_"] .form-control-feedback';
     const SelectOperadora = '.fixoFWT [id^="operadora_"] select';
+    const OptionOperadora = '.fixoFWT [id^="operadora_"] option';
     const Validar_SelectOperadora = '.fixoFWT [id^="operadora_"] .form-control-feedback';
-    const SelectOutraOperadora = '.fixoFWT [id^="outraOperadora_"] input';
-    const Validar_SelectOutraOperadora = '.fixoFWT [id^="outraOperadora_"] .form-control-feedback';
+    const CampoOutraOperadora = '.fixoFWT [id^="outraOperadora_"] input';
+    const Validar_CampoOutraOperadora = '.fixoFWT [id^="outraOperadora_"] .form-control-feedback';
     const CampoICCID = '.fixoFWT [id^="iccid_"] input';
     const Validar_CampoICCID = '.fixoFWT [id^="iccid_"] .form-control-feedback';
     const RadioFaturaEmail = '.fixoFWT [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
@@ -132,18 +135,56 @@ class ControlePassDigital extends VendaServicosElementsPAP
     const CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] input';
     const Validar_CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] .form-control-feedback';
     const SelectOperadora = '.controlePassDigital [id^="operadora_"] select';
+    const OptionOperadora = '.controlePassDigital [id^="operadora_"] option';
     const Validar_SelectOperadora = '.controlePassDigital [id^="operadora_"] .form-control-feedback';
     const SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] input';
     const Validar_SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] .form-control-feedback';
+    const CampoOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] input';
+    const Validar_CampoOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] .form-control-feedback';
     const CampoICCID = '.controlePassDigital [id^="iccid_"] input';
     const Validar_CampoICCID = '.controlePassDigital [id^="iccid_"] .form-control-feedback';
     const RadioFaturaEmail = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
     const RadioFaturaViaPostal = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(2)';
     const Validar_RadioFatura = '.controlePassDigital [id^="tipoFatura_"] .form-control-feedback';
-    const CampoEmail = '.controleFatura [id^="email_"] input';
-    const Validar_CampoEmail = '.controleFatura [id^="email_"] .form-control-feedback';
+    const CampoEmail = '.controlePassDigital [id^="email_"] input';
+    const Validar_CampoEmail = '.controlePassDigital [id^="email_"] .form-control-feedback';
     const RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] > div.radio-group.circle > div';
     const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
+}
+
+class ControlePosFatura extends VendaServicosElementsPAP
+{
+    const PosicaoIncluirServicoExiste = '#iconCardListServicos [data-name="posFatura"]';
+//    const NomeDoServico = 'Controle Pass Digital';
+//    const LabelServicoResumo = '.controlePassDigital';
+//    const SeletorNomeServico = '.controlePassDigital .toggle-form .text-wrapper';
+//    const AlertaCarregandoPlanos = '.controlePassDigital .loading-wrapper > div > span';
+//    const BotaoRemoverServico = '.controlePassDigital > div.remove > span';
+//    const SelectPlano = '.controlePassDigital [id^="plano_"] select';
+//    const OptionPlano = '.controlePassDigital [id^="plano_"] option';
+//    const Validar_SelectPlano = '.controlePassDigital [id^="plano_"] .form-control-feedback';
+//    const RadioTipoClienteAlta = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(1)';
+//    const RadioTipoClienteMigracao = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(2)';
+//    const RadioTipoClienteUpgrade = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(3)';
+//    const Validar_RadioTipoCliente = '.controlePassDigital [id^="tipoCliente_"] .form-control-feedback';
+//    const RadioPortabilidadeSim = '.controlePassDigital [id^="portabilidade_"] > div.radio-group.block > div:nth-child(1)';
+//    const RadioPortabilidadeNao = '.controlePassDigital [id^="portabilidade_"] > div.radio-group.block > div:nth-child(2)';
+////    const Validar_RadioPortabilidade = '.controlePassDigital [id^="portabilidade_"] .form-control-feedback';
+//    const CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] input';
+//    const Validar_CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] .form-control-feedback';
+//    const SelectOperadora = '.controlePassDigital [id^="operadora_"] select';
+//    const Validar_SelectOperadora = '.controlePassDigital [id^="operadora_"] .form-control-feedback';
+//    const SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] input';
+//    const Validar_SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] .form-control-feedback';
+//    const CampoICCID = '.controlePassDigital [id^="iccid_"] input';
+//    const Validar_CampoICCID = '.controlePassDigital [id^="iccid_"] .form-control-feedback';
+//    const RadioFaturaEmail = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
+//    const RadioFaturaViaPostal = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(2)';
+//    const Validar_RadioFatura = '.controlePassDigital [id^="tipoFatura_"] .form-control-feedback';
+//    const CampoEmail = '.controleFatura [id^="email_"] input';
+//    const Validar_CampoEmail = '.controleFatura [id^="email_"] .form-control-feedback';
+//    const RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] > div.radio-group.circle > div';
+//    const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
 }
 
 class FixaTelefoniaFixa extends VendaServicosElementsPAP
@@ -172,6 +213,7 @@ class FixaBandaLarga extends VendaServicosElementsPAP
     const BotaoRemoverServico = '.bandaLarga > div.remove > span';
     const SelectPlano = '.bandaLarga [id^="plano_"] select';
     const OptionPlano = '.bandaLarga [id^="plano_"] option';
+    const Validar_SelectPlano = '.bandaLarga [id^="plano_"] .form-control-feedback';
     const AlertaCarregandoServicosAdicionais = '.bandaLarga .field-wrapper.servicos-adicionais .loading-wrapper';
     const CheckboxServicosAdicionais_ProtegeVoce = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="1"]';
     const CheckboxServicosAdicionais_ProtegeVoceMais = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="2"]';

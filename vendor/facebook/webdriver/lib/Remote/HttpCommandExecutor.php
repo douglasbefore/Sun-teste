@@ -27,7 +27,8 @@ use InvalidArgumentException;
 class HttpCommandExecutor implements WebDriverCommandExecutor
 {
     /**
-     * @see https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#command-reference
+     * @see
+     *   http://code.google.com/p/selenium/wiki/JsonWireProtocol#Command_Reference
      */
     protected static $commands = [
         DriverCommand::ACCEPT_ALERT => ['method' => 'POST', 'url' => '/session/:sessionId/accept_alert'],
@@ -153,7 +154,7 @@ class HttpCommandExecutor implements WebDriverCommandExecutor
 
         if (!empty($http_proxy)) {
             curl_setopt($this->curl, CURLOPT_PROXY, $http_proxy);
-            if ($http_proxy_port !== null) {
+            if (!empty($http_proxy_port)) {
                 curl_setopt($this->curl, CURLOPT_PROXYPORT, $http_proxy_port);
             }
         }

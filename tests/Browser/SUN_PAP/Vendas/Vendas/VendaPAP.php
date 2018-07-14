@@ -8,15 +8,17 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use ArrayObject;
 use Carbon\Carbon;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Feature\Funcoes\funcoesPHP;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
 
-class VendaPAP extends VendaServicoPAP
+class VendaPAP
 {
     private $usuarioLogin;
+    private $vendaDDD;
     private $vendaFixa;
     private $vendaMovel;
     private $vendaServicos = array();
@@ -29,11 +31,15 @@ class VendaPAP extends VendaServicoPAP
     private $clienteEmail;
     private $clienteTelefoneCelular;
     private $clienteTelefoneFixo;
+    private $clienteReceberSMS;
     private $enderecoCEP;
     private $enderecoNumero;
     private $enderecoRua;
     private $taxaInstalacao;
     private $formaPagamentoTaxaInstalacao;
+    private $fixaFormatoEnvio;
+    private $fixaDataVencimento;
+    private $fixaFormaPagamento;
     private $totalPlanoFixa;
     private $totalFixaAposMeses;
     private $totalPlanoMovel;
@@ -42,7 +48,7 @@ class VendaPAP extends VendaServicoPAP
     public function __construct()
     {
         new VendaElementsPAP();
-        $this->usuarioLogin = '05114040189';  // Usuario Vendedor
+        $this->usuarioLogin = '12270707729';  // Usuario Vendedor
 
         $this->vendaFixa = false;
         $this->vendaMovel = false;
@@ -56,6 +62,7 @@ class VendaPAP extends VendaServicoPAP
         $this->clienteEmail = 'testeteste@teste.com.br';
         $this->clienteTelefoneCelular = '(67) 98585-6498';
         $this->clienteTelefoneFixo = '(67) 3333-1111';
+        $this->clienteReceberSMS = 'Não';
 
         $this->enderecoCEP = '79020-250';
         $this->enderecoNumero = '780';
@@ -72,9 +79,9 @@ class VendaPAP extends VendaServicoPAP
     /**
      * @param $vendaServicos
      */
-    public function setVendaServicos($vendaServicos): void
+    public function setVendaServicos(VendaServicoPAP $vendaServicos): void
     {
-        $this->vendaServicos[] = $vendaServicos;
+        $this->vendaServicos[$vendaServicos->getServicoElementoPlanoResumo()] = $vendaServicos;
     }
 
     /**
@@ -91,6 +98,22 @@ class VendaPAP extends VendaServicoPAP
     public function setUsuarioLogin(string $usuarioLogin): void
     {
         $this->usuarioLogin = $usuarioLogin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVendaDDD()
+    {
+        return $this->vendaDDD;
+    }
+
+    /**
+     * @param mixed $vendaDDD
+     */
+    public function setVendaDDD($vendaDDD): void
+    {
+        $this->vendaDDD = $vendaDDD;
     }
 
     /**
@@ -272,6 +295,22 @@ class VendaPAP extends VendaServicoPAP
     /**
      * @return mixed
      */
+    public function getClienteReceberSMS()
+    {
+        return $this->clienteReceberSMS;
+    }
+
+    /**
+     * @param mixed $clienteReceberSMS
+     */
+    public function setClienteReceberSMS($clienteReceberSMS): void
+    {
+        $this->clienteReceberSMS = $clienteReceberSMS;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getEnderecoCEP()
     {
         return $this->enderecoCEP;
@@ -347,6 +386,54 @@ class VendaPAP extends VendaServicoPAP
     public function setFormaPagamentoTaxaInstalacao($formaPagamentoTaxaInstalacao): void
     {
         $this->formaPagamentoTaxaInstalacao = $formaPagamentoTaxaInstalacao;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFixaFormatoEnvio()
+    {
+        return $this->fixaFormatoEnvio;
+    }
+
+    /**
+     * @param mixed $fixaFormatoEnvio
+     */
+    public function setFixaFormatoEnvio($fixaFormatoEnvio): void
+    {
+        $this->fixaFormatoEnvio = $fixaFormatoEnvio;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFixaDataVencimento()
+    {
+        return $this->fixaDataVencimento;
+    }
+
+    /**
+     * @param mixed $fixaDataVencimento
+     */
+    public function setFixaDataVencimento($fixaDataVencimento): void
+    {
+        $this->fixaDataVencimento = $fixaDataVencimento;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFixaFormaPagamento()
+    {
+        return $this->fixaFormaPagamento;
+    }
+
+    /**
+     * @param mixed $fixaFormaPagamento
+     */
+    public function setFixaFormaPagamento($fixaFormaPagamento): void
+    {
+        $this->fixaFormaPagamento = $fixaFormaPagamento;
     }
 
     /**

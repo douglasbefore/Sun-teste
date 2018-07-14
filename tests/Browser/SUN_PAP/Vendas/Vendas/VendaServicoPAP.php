@@ -8,8 +8,11 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use Tests\Feature\Funcoes\funcoesPHP;
+
 class VendaServicoPAP
 {
+    private $servicoVendaDDD;
     private $servicoNome;
     private $servicoElementoPlanoResumo;
     private $servicoDescricaoPlano;
@@ -25,6 +28,22 @@ class VendaServicoPAP
     private $servicoEmail;
     private $servicoDataVencimento;
     private $servicoAdicionais = array();
+
+    /**
+     * @return mixed
+     */
+    public function getServicoVendaDDD()
+    {
+        return $this->servicoVendaDDD;
+    }
+
+    /**
+     * @param mixed $servicoVendaDDD
+     */
+    public function setServicoVendaDDD($servicoVendaDDD): void
+    {
+        $this->servicoVendaDDD = $servicoVendaDDD;
+    }
 
     /**
      * @return mixed
@@ -155,7 +174,18 @@ class VendaServicoPAP
      */
     public function setServicoNumeroCliente($servicoNumeroCliente): void
     {
-        $this->servicoNumeroCliente = $servicoNumeroCliente;
+        $servicoNumeroCliente = preg_replace("/[^0-9]/", "", $servicoNumeroCliente);
+        $servicoNumeroCliente = $this->servicoVendaDDD . $servicoNumeroCliente;
+
+        // Tratativa de campo telefone para os serviço pelo motivo que no serviço da Fixa são 8 digitos e no movel são 9.
+        // Precisa do tratamento para que seja validado no resumo da venda com mais de um servico.
+        if(strlen($servicoNumeroCliente) == 10 ) {
+            $this->servicoNumeroCliente = FuncoesPHP::mascara($servicoNumeroCliente, '(##) ####-####');
+        } elseif (strlen($servicoNumeroCliente) == 11 ){
+            $this->servicoNumeroCliente = FuncoesPHP::mascara($servicoNumeroCliente, '(##) #####-####');
+        } else{
+            $this->servicoNumeroCliente = $servicoNumeroCliente;
+        }
     }
 
     /**
@@ -263,7 +293,7 @@ class VendaServicoPAP
     }
 
     /**
-     * @param array $servicoAdicionais
+     * @param $servicoAdicionais
      */
     public function setServicoAdicionais($servicoAdicionais): void
     {

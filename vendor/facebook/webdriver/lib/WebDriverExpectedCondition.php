@@ -34,17 +34,17 @@ class WebDriverExpectedCondition
      */
     private $apply;
 
-    protected function __construct(callable $apply)
-    {
-        $this->apply = $apply;
-    }
-
     /**
      * @return callable A callable function to be executed by WebDriverWait
      */
     public function getApply()
     {
         return $this->apply;
+    }
+
+    protected function __construct(callable $apply)
+    {
+        $this->apply = $apply;
     }
 
     /**
@@ -72,7 +72,7 @@ class WebDriverExpectedCondition
     {
         return new static(
             function (WebDriver $driver) use ($title) {
-                return mb_strpos($driver->getTitle(), $title) !== false;
+                return strpos($driver->getTitle(), $title) !== false;
             }
         );
     }
@@ -118,7 +118,7 @@ class WebDriverExpectedCondition
     {
         return new static(
             function (WebDriver $driver) use ($url) {
-                return mb_strpos($driver->getCurrentURL(), $url) !== false;
+                return strpos($driver->getCurrentURL(), $url) !== false;
             }
         );
     }
@@ -194,35 +194,6 @@ class WebDriverExpectedCondition
     }
 
     /**
-     * An expectation for checking than at least one element in an array of elements is present on the
-     * DOM of a page and visible.
-     * Visibility means that the element is not only displayed but also has a height and width that is greater than 0.
-     *
-     * @param WebDriverBy $by The located used to find the element.
-     * @return WebDriverExpectedCondition<WebDriverElement> Condition returns the elements that are located and visible.
-     */
-    public static function visibilityOfAnyElementLocated(WebDriverBy $by)
-    {
-        return new static(
-            function (WebDriver $driver) use ($by) {
-                $elements = $driver->findElements($by);
-                $visibleElements = [];
-
-                foreach ($elements as $element) {
-                    try {
-                        if ($element->isDisplayed()) {
-                            $visibleElements[] = $element;
-                        }
-                    } catch (StateElementReferenceException $e) {
-                    }
-                }
-
-                return count($visibleElements) > 0 ? $visibleElements : null;
-            }
-        );
-    }
-
-    /**
      * An expectation for checking that an element, known to be present on the DOM of a page, is visible.
      * Visibility means that the element is not only displayed but also has a height and width that is greater than 0.
      *
@@ -269,7 +240,7 @@ class WebDriverExpectedCondition
                 try {
                     $element_text = $driver->findElement($by)->getText();
 
-                    return mb_strpos($element_text, $text) !== false;
+                    return strpos($element_text, $text) !== false;
                 } catch (StaleElementReferenceException $e) {
                     return null;
                 }
@@ -321,32 +292,18 @@ class WebDriverExpectedCondition
     /**
      * An expectation for checking if the given text is present in the specified elements value attribute.
      *
-     * @codeCoverageIgnore
-     * @deprecated Use WebDriverExpectedCondition::elementValueContains() instead
      * @param WebDriverBy $by The locator used to find the element.
      * @param string $text The text to be presented in the element value.
      * @return WebDriverExpectedCondition<bool> Condition returns whether the text is present in value attribute.
      */
     public static function textToBePresentInElementValue(WebDriverBy $by, $text)
     {
-        return self::elementValueContains($by, $text);
-    }
-
-    /**
-     * An expectation for checking if the given text is present in the specified elements value attribute.
-     *
-     * @param WebDriverBy $by The locator used to find the element.
-     * @param string $text The text to be presented in the element value.
-     * @return WebDriverExpectedCondition<bool> Condition returns whether the text is present in value attribute.
-     */
-    public static function elementValueContains(WebDriverBy $by, $text)
-    {
         return new static(
             function (WebDriver $driver) use ($by, $text) {
                 try {
                     $element_text = $driver->findElement($by)->getAttribute('value');
 
-                    return mb_strpos($element_text, $text) !== false;
+                    return strpos($element_text, $text) !== false;
                 } catch (StaleElementReferenceException $e) {
                     return null;
                 }
@@ -482,7 +439,7 @@ class WebDriverExpectedCondition
      * @return WebDriverExpectedCondition<mixed> Condition returns the return value of the getApply() of the given
      * condition.
      */
-    public static function refreshed(self $condition)
+    public static function refreshed(WebDriverExpectedCondition $condition)
     {
         return new static(
             function (WebDriver $driver) use ($condition) {
@@ -587,7 +544,7 @@ class WebDriverExpectedCondition
      * @param WebDriverExpectedCondition $condition The condition to be negated.
      * @return mixed The negation of the result of the given condition.
      */
-    public static function not(self $condition)
+    public static function not(WebDriverExpectedCondition $condition)
     {
         return new static(
             function (WebDriver $driver) use ($condition) {

@@ -155,7 +155,7 @@ class CaminhoMenu
                         'SubMenu' => ['#submenu_7_6'],
                         'Grupo' => ['Venda'],
                         'BotaoItem' => ['#MenuModulo22', '.corBotaoInsere', 'Inserir Registro'],
-                        'FormTela' => ['.module-container', 'Nova Venda']
+                        'FormTela' => ['.module-container .container', 'Nova Venda']
                     ],
                 ],
             ];

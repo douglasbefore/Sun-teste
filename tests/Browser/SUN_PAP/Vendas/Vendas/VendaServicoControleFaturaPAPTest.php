@@ -18,7 +18,6 @@ use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 
 class VendaServicoControleFaturaPAPTest extends DuskTestCase
 {
-
     /**
      * Verifica se após selecionar serviço Controle Fatura, esta desabilitando os serviços
      * que não são permitidos junto com o Fatura.
@@ -41,11 +40,14 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
             $browser->press(IncluirServicos::BotaoIncluirServico);
             $browser->pause(500);
 
+            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
+            if(isset($posFatura)){
+                $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
+            }
             $browser->assertVisible(IncluirServicos::BotaoMovelControleFaturaDesabilitado);
             $browser->assertVisible(IncluirServicos::BotaoMovelFixoFWT);
             $browser->assertVisible(IncluirServicos::BotaoMovelControleCartaoDesabilitado);
             $browser->assertVisible(IncluirServicos::BotaoMovelControlePassDigitalDesabilitado);
-
         });
     }
 
@@ -68,6 +70,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteAlta($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -84,6 +87,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -174,6 +178,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteAltaPortabilidade($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -190,6 +195,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -254,7 +260,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -316,7 +322,6 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $dadosServico->setServicoDataVencimento($browser->elements(ControleFatura::RadioDataVencimento)[$random]->getText());
         $browser->elements(ControleFatura::RadioDataVencimento)[$random]->click();
 
-        $dadosVenda->trataRodapeValoresVenda($browser);
         $dadosVenda->VendaServico($dadosServico);
     }
 
@@ -340,6 +345,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteAltaPortabilidadeOutros($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -356,9 +362,11 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
+        $browser->pause(500);
         $browser->press(CampoVenda::BotaoContinuar);
 
         $browser->element(ControleFatura::SeletorNomeServico)->getLocationOnScreenOnceScrolledIntoView();
@@ -420,7 +428,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -540,6 +548,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteMigracao($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -556,6 +565,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -603,7 +613,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -641,8 +651,8 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
      *  - Tipo Fatura: E-mail
      * @throws \Exception
      * @throws \Throwable
-     * @Test ServicoMovelControleFaturaClienteMigracao
-     * @group ServicoMovelControleFaturaClienteMigracao
+     * @Test ServicoMovelControleFaturaClienteMigracaoEmail
+     * @group ServicoMovelControleFaturaClienteMigracaoEmail
      * @return void
      */
     public function testServicoMovelControleFaturaClienteMigracaoEmail()
@@ -655,6 +665,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteMigracaoEmail($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -671,6 +682,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -717,7 +729,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -795,6 +807,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteUpgrade($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
 
@@ -812,6 +825,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -858,7 +872,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -910,6 +924,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
             $this->ServicoMovelControleFaturaClienteUpgradeEmail($browser, $dadosVenda);
 
+            $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
         });
     }
@@ -926,6 +941,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         }
         $dadosServico->setServicoNome(ControleFatura::NomeDoServico);
         $dadosServico->setServicoElementoPlanoResumo(ControleFatura::LabelServicoResumo);
+        $dadosServico->setServicoVendaDDD($dadosVenda->getVenda()->getVendaDDD());
 
         $browser->press(IncluirServicos::BotaoMovelControleFatura);
         $funcoes->loadCarregandoCampoNull($browser, ControleFatura::AlertaCarregandoPlanos);
@@ -949,7 +965,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoTipoCliente($browser->element(ControleFatura::RadioTipoClienteAlta)->getText());
+        $dadosServico->setServicoTipoCliente($browser->element(ControleFatura::RadioTipoClienteUpgrade)->getText());
         $browser->press(ControleFatura::RadioTipoClienteUpgrade);
         $browser->press(CampoVenda::BotaoContinuar);
         $browser->pause(500);
@@ -972,7 +988,7 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
         $browser->assertVisible(ControleFatura::Validar_RadioFatura);
         $browser->assertVisible(ControleFatura::Validar_RadioDataVencimento);
 
-        $dadosServico->setServicoNumeroCliente('(67) 91111-1111');
+        $dadosServico->setServicoNumeroCliente('91111-1111');
         $browser->value(ControleFatura::CampoNumeroCliente, '');
         $browser->type(ControleFatura::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
         $browser->press(CampoVenda::BotaoContinuar);
@@ -1030,6 +1046,4 @@ class VendaServicoControleFaturaPAPTest extends DuskTestCase
 
         $dadosVenda->VendaServico($dadosServico);
     }
-
-
 }

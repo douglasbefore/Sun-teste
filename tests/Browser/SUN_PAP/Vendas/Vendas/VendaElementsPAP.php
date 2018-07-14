@@ -54,7 +54,7 @@ class CampoVenda extends VendaElementsPAP
     /* Campos Nova Venda */
     const CampoVendaCPFCliente = '.module-container .container .field-group > input';
     const Validar_CampoVendaCPFCliente = '.module-container .container .form-control-feedback';
-    const SelectDDD = '.module-container .container > div > div > div:nth-child(2) > div > div > select';
+    const SelectDDD = '.module-container .container .form-control.custom-select';
 
     /* Dados do Cliente */
     const CampoClienteCPF = '#cpf > div.form-control-feedback';
@@ -78,6 +78,7 @@ class CampoVenda extends VendaElementsPAP
     const Validar_CampoClienteTelefoneFixo = '#fixo > div.form-control-feedback';
     const CampoClienteOutroContato = '#celular > div.field-group > input';
     const BotaoAnexarDocumento = '.module-container .panel .col-12.mt-3 > button';
+    const CheckboxReceberSMS = '.module-container .core-checkbox .checkbox-icon';
 
     /* Endereco do cliente */
     const CampoEnderecoCep = '#cep > div.field-group > input';
@@ -102,7 +103,7 @@ class FaturaFixa extends VendaElementsPAP{
     const RadioFormatoEnvioPapel = '.module-container .container > div > div > div:nth-child(1) > div > div > div:nth-child(2)';
     const CampoEmail = '#email input';
     const Validar_CampoEmail = '#email .form-control-feedback';
-    const RadioDataVencimento = '.module-container .container .radio-options';
+    const RadioDataVencimento = '.module-container .container > div > div > div:nth-child(2) .radio-options';
     const RadioFormaPagamentoBoleto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(1)';
     const RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) > div > div > div:nth-child(2)';
     const Validar_RadioFormaPagamentoDebitoAuto = '.module-container .container > div > div > div:nth-child(3) .form-control-feedback';
@@ -113,6 +114,12 @@ class FaturaFixa extends VendaElementsPAP{
     const CampoFaturaConta = '.module-container .container > div > div > div:nth-child(6) .field-group > input';
     const Validar_CampoFaturaConta = '.module-container .container > div > div > div:nth-child(6) .form-control-feedback';
 
+}
+
+class ReservaVenda extends VendaElementsPAP
+{
+    const TituloReservaVenda = '.module-container .pagina-reserva > div:nth-child(1) > div.mensagem > div.titulo';
+    const BotaoContinuarSemReserva = '.module-container .pagina-reserva button.btn.btn-primary.primary-actions';
 }
 
 class RodapeVenda extends VendaElementsPAP{
@@ -133,7 +140,7 @@ class RodapeVenda extends VendaElementsPAP{
 class ResumoVenda extends VendaElementsPAP{
     const PanelServicoTopo = '.text-wrapper';
     const LabelPanelServicoServicosAdicionais = '.summary-field-list label';
-    const PanelServicoServicosAdicionais = '.summary-field-list li';
+    const PanelServicoServicosAdicionais = '.summary-field-list ul';
 
     const LabelPanelServicoValor = '[data-test="Valor"] .label';
     const ValuePanelServicoValor = '[data-test="Valor"] .value';
@@ -157,4 +164,27 @@ class ResumoVenda extends VendaElementsPAP{
     const ValuePanelServicoDataVencimento = '[data-test="Data Vencimento"] .value';
     const LabelPanelServicoEmail = '[data-test="Email"] .label';
     const ValuePanelServicoEmail = '[data-test="Email"] .value';
+
+    const ValueClienteCPF = '.info-section [data-test="CPF"] .value';
+    const ValueClienteNome = '.info-section [data-test="Nome"] .value';
+    const ValueClienteNomeMae = '.info-section [data-test="Nome da mãe"] .value';
+    const ValueClienteSexo = '.info-section [data-test="Sexo"] .value';
+    const ValueClienteDataNascimento = '.info-section [data-test="Data Nascimento"] .value';
+    const ValueClienteTelefoneCelular = '.info-section [data-test="Telefone Celular"] .value';
+    const ValueClienteTelefoneFixo = '.info-section [data-test="Telefone Fixo"] .value';
+    const ValueClienteEmail = '.info-section [data-test="Email"] .value';
+    const ValueClienteReceberSMS = '.info-section [data-test="Receber SMS"] .value';
+
+    const ValueEnderecoClienteRua = '.info-section [data-test="Rua"] .value';
+    const ValueEnderecoClienteNumero = '.info-section [data-test="Número"] .value';
+    const ValueEnderecoClienteCEP = '.info-section [data-test="CEP"] .value';
+
+    const ValueFaturaClienteDataVencimento = '.resumo-fatura [data-test="Data Vencimento"] .value';
+    const ValueFaturaClienteFormatoEnvio = '.resumo-fatura [data-test="Formato de Envio"] .value';
+    const ValueFaturaClienteFormatoPagamento = '.resumo-fatura [data-test="Formato de Pagamento"] .value';
+
+    const ValueTotalFixa = '.resumo-total [data-test="Total Fixa"] .value';
+    const ValueTotalTaxaInstalacao = '.resumo-total [data-test="Taxa de Instalação"] .value';
+    const ValueTotalMovel = '.resumo-total [data-test="Total Móvel"] .value';
+
 }

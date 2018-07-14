@@ -25,30 +25,24 @@ class funcoesPHP{
         return "8955".$iccid;
     }
 
-    public static function gerarCelularRandomico($ddd = null){
-        $tamanho = 8;
+    public static function gerarCelularRandomico(){
+        $tamanho = 7;
         $all_str = "1234567890";
         $celular = "";
         for ($i = 0; $i <= $tamanho; $i++) {
             $celular .= $all_str[mt_rand(0, strlen($all_str)-1)];
         }
-        if(!$ddd){
-            $ddd = "67";
-        }
-        return $ddd."9".$celular;
+        return "9".$celular;
     }
 
-    public static function gerarTelefoneRandomico($ddd = null){
-        $tamanho = 7;
+    public static function gerarTelefoneRandomico(){
+        $tamanho = 6;
         $all_str = "1234567890";
         $telefone = "";
         for ($i = 0; $i <= $tamanho; $i++) {
             $telefone .= $all_str[mt_rand(0, strlen($all_str)-1)];
         }
-        if(!$ddd){
-            $ddd = "67";
-        }
-        return $ddd."3".$telefone;
+        return "3".$telefone;
     }
 
     /**
@@ -134,5 +128,28 @@ class funcoesPHP{
     private static function mod($dividendo, $divisor) {
         return round($dividendo - (floor($dividendo / $divisor) * $divisor));
     }
+
+    /**
+     * @param $val
+     * @param $mask
+     * @return string
+     */
+    public static function mascara($val, $mask)
+    {
+        $maskared = '';
+        $k = 0;
+        for ($i = 0; $i <= strlen($mask) - 1; $i++) {
+            if ($mask[$i] == '#' || $mask[$i]==$val[$k]) {
+                if (isset($val[$k]))
+                    $maskared .= $val[$k++];
+            } else {
+                if (isset($mask[$i])) {
+                    $maskared .= $mask[$i];
+                }
+            }
+        }
+        return $maskared;
+    }
+
 
 }
