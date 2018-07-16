@@ -8,9 +8,9 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
-class VendaServicosElementsPAP{}
+class VendaElementsServicosPAP{}
 
-class IncluirServicos extends VendaServicosElementsPAP
+class IncluirServicos extends VendaElementsServicosPAP
 {
     const BotaoIncluirServico = '.module-container .container .btn-incluir-servico';
     const BotaoMovelControleFatura = '.icon-card.controleFatura';
@@ -29,7 +29,7 @@ class IncluirServicos extends VendaServicosElementsPAP
 
 }
 
-class ControleFatura extends VendaServicosElementsPAP
+class ControleFatura extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Controle Fatura';
     const LabelServicoResumo = '.controleFatura';
@@ -64,7 +64,7 @@ class ControleFatura extends VendaServicosElementsPAP
     const Validar_RadioDataVencimento = '.controleFatura [id^="dataVencimento_"] .form-control-feedback';
 }
 
-class FixoFWT extends VendaServicosElementsPAP
+class FixoFWT extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Fixo FWT';
     const LabelServicoResumo = '.fixoFWT';
@@ -95,7 +95,7 @@ class FixoFWT extends VendaServicosElementsPAP
     const Validar_RadioDataVencimento = '.fixoFWT [id^="dataVencimento_"] .form-control-feedback';
 }
 
-class ControleCartao extends VendaServicosElementsPAP
+class ControleCartao extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Controle Cartão';
     const LabelServicoResumo = '.controleCartao';
@@ -115,7 +115,7 @@ class ControleCartao extends VendaServicosElementsPAP
     const Validar_CampoICCID = '.controleCartao [id^="iccid_"] .form-control-feedback';
 }
 
-class ControlePassDigital extends VendaServicosElementsPAP
+class ControlePassDigital extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Controle Pass Digital';
     const LabelServicoResumo = '.controlePassDigital';
@@ -152,7 +152,7 @@ class ControlePassDigital extends VendaServicosElementsPAP
     const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
 }
 
-class ControlePosFatura extends VendaServicosElementsPAP
+class ControlePosFatura extends VendaElementsServicosPAP
 {
     const PosicaoIncluirServicoExiste = '#iconCardListServicos [data-name="posFatura"]';
 //    const NomeDoServico = 'Controle Pass Digital';
@@ -187,7 +187,7 @@ class ControlePosFatura extends VendaServicosElementsPAP
 //    const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
 }
 
-class FixaTelefoniaFixa extends VendaServicosElementsPAP
+class FixaTelefoniaFixa extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Telefonia Fixa';
     const LabelServicoResumo = '.telefoniaFixa';
@@ -204,7 +204,7 @@ class FixaTelefoniaFixa extends VendaServicosElementsPAP
     const Validar_CampoNumeroCliente = '.telefoniaFixa [id^="numeroCliente_"] .form-control-feedback';
 }
 
-class FixaBandaLarga extends VendaServicosElementsPAP
+class FixaBandaLarga extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'Banda Larga';
     const LabelServicoResumo = '.bandaLarga';
@@ -224,7 +224,7 @@ class FixaBandaLarga extends VendaServicosElementsPAP
     const CheckboxServicosAdicionais_FOXPremium = '.bandaLarga .form-wrapper .field-wrapper.servicos-adicionais .form-group [id="18"]';
 }
 
-class FixaTVAssinatura extends VendaServicosElementsPAP
+class FixaTVAssinatura extends VendaElementsServicosPAP
 {
     const NomeDoServico = 'TV por Assinatura';
     const LabelServicoResumo = '.tvPorAssinatura';

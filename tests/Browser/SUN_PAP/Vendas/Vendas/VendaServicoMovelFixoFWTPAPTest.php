@@ -12,45 +12,10 @@ use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Feature\Funcoes\funcoesPHP;
-//use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
-//use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
 
-class VendaServicoFixoFWTPAPTest extends DuskTestCase
+
+class VendaServicoMovelFixoFWTPAPTest extends DuskTestCase
 {
-    /**
-     * Verifica se após selecionar serviço Fixo FWT, esta desabilitando os serviços
-     * que não são permitidos junto com o Fixo FWT.
-     * @throws \Exception
-     * @throws \Throwable
-     * @Test ServicoMovelFixoFWTOutrosServicosDesabilitados
-     * @group ServicoMovelFixoFWTOutrosServicosDesabilitados
-     * @return void
-     */
-    public function testServicoMovelFixoFWTOutrosServicosDesabilitados()
-    {
-        $this->browse(function (Browser $browser) {
-            $dadosVenda = new VendaPAPTest();
-
-            $dadosVenda->testEscolherVendaMovel();
-            $dadosVenda->dadosCliente();
-
-            $browser->press(IncluirServicos::BotaoMovelFixoFWT);
-            $browser->pause(500);
-
-            $browser->press(IncluirServicos::BotaoIncluirServico);
-            $browser->pause(500);
-
-            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
-            if(isset($posFatura)){
-                $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
-            }
-            $browser->assertVisible(IncluirServicos::BotaoMovelControleFatura);
-            $browser->assertVisible(IncluirServicos::BotaoMovelFixoFWTDesabilitado);
-            $browser->assertVisible(IncluirServicos::BotaoMovelControleCartao);
-            $browser->assertVisible(IncluirServicos::BotaoMovelControlePassDigitalDesabilitado);
-        });
-    }
-
     /**
      * Verifica todos os campo obrigatorios para o serviço movel Fixo FWT.
      *  - Portabilidade: Não
@@ -798,5 +763,39 @@ class VendaServicoFixoFWTPAPTest extends DuskTestCase
         $browser->elements(FixoFWT::RadioDataVencimento)[$random]->click();
 
         $dadosVenda->VendaServico($dadosServico);
+    }
+
+    /**
+     * Verifica se após selecionar serviço Fixo FWT, esta desabilitando os serviços
+     * que não são permitidos junto com o Fixo FWT.
+     * @throws \Exception
+     * @throws \Throwable
+     * @Test ServicoMovelFixoFWTOutrosServicosDesabilitados
+     * @group ServicoMovelFixoFWTOutrosServicosDesabilitados
+     * @return void
+     */
+    public function testServicoMovelFixoFWTOutrosServicosDesabilitados()
+    {
+        $this->browse(function (Browser $browser) {
+            $dadosVenda = new VendaPAPTest();
+
+            $dadosVenda->testEscolherVendaMovel();
+            $dadosVenda->dadosCliente();
+
+            $browser->press(IncluirServicos::BotaoMovelFixoFWT);
+            $browser->pause(500);
+
+            $browser->press(IncluirServicos::BotaoIncluirServico);
+            $browser->pause(500);
+
+            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
+            if(isset($posFatura)){
+                $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
+            }
+            $browser->assertVisible(IncluirServicos::BotaoMovelControleFatura);
+            $browser->assertVisible(IncluirServicos::BotaoMovelFixoFWTDesabilitado);
+            $browser->assertVisible(IncluirServicos::BotaoMovelControleCartao);
+            $browser->assertVisible(IncluirServicos::BotaoMovelControlePassDigitalDesabilitado);
+        });
     }
 }

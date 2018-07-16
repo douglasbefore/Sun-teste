@@ -129,14 +129,22 @@ class FuncoesGerais extends Page
      * @param $text
      * @return array
      */
-    public function retornaValueOption($browser, $selector, $text)
+    public function retornaValueOption($browser, $selector, $text = null)
     {
         $valueOperadora = $browser->elements($selector);
 
-        foreach ($valueOperadora as $operadora) {
-            if (strpos(strtolower($operadora->getText()), strtolower($text))) {
-                return array("value" => $operadora->getAttribute('value'), "text" => $operadora->getAttribute('text'));
+        if(is_null($text)) {
+            foreach ($valueOperadora as $operadora) {
+                if (strpos(strtolower($operadora->getText()), strtolower($text))) {
+                    return array("value" => $operadora->getAttribute('value'), "text" => $operadora->getAttribute('text'));
+                }
             }
+        }
+        else{
+            $random = rand(0, count($valueOperadora) - 1);
+
+            return array("value" => $valueOperadora[$random]->getAttribute('value'),
+                         "text"  => $valueOperadora[$random]->getAttribute('text'));
         }
     }
 

@@ -16,7 +16,7 @@ use Tests\Browser\Pages\Funcoes\FuncoesMenu;
 use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\Feature\Funcoes\funcoesPHP as funcoesPHP;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsPAP;
-use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsServicosPAP;
 
 class VendaPAPTest extends DuskTestCase
 {
@@ -49,7 +49,7 @@ class VendaPAPTest extends DuskTestCase
 
         if($primeirVez){
             new VendaElementsPAP();
-            new VendaServicosElementsPAP();
+            new VendaElementsServicosPAP();
             new VendaPAP();
         }
 
@@ -201,7 +201,7 @@ class VendaPAPTest extends DuskTestCase
         if ($clienteNome == "") {
             $browser->type(CampoVenda::CampoClienteNomeCompleto, $this->Venda->getClienteNome());
         } else {
-            $this->Venda->setClienteNome(trim($clienteNome));
+            $this->Venda->setClienteNome($clienteNome);
             if (!$browser->element(CampoVenda::CampoClienteNomeCompleto)->isEnabled()) {
                 $this->Venda->setClienteCadastroWebVendas(true);
             }
@@ -223,7 +223,7 @@ class VendaPAPTest extends DuskTestCase
                 $browser->value(CampoVenda::CampoClienteDataNascimento, '');
                 $browser->type(CampoVenda::CampoClienteDataNascimento, $this->Venda->getClienteDataNascimento());
             } else {
-                $this->Venda->setClienteDataNascimento(trim($campoDataNascimento));
+                $this->Venda->setClienteDataNascimento($campoDataNascimento);
             }
         }
 
@@ -231,7 +231,7 @@ class VendaPAPTest extends DuskTestCase
         if ($clienteNomeMae == "") {
             $browser->type(CampoVenda::CampoClienteNomeMae, $this->Venda->getClienteNomeMae());
         }else{
-            $this->Venda->setClienteNomeMae(trim($clienteNomeMae));
+            $this->Venda->setClienteNomeMae($clienteNomeMae);
         }
 
         $botaoSexoMasculino = $browser->element(CampoVenda::BotaoClienteSexoMasculinoActive);
@@ -252,21 +252,21 @@ class VendaPAPTest extends DuskTestCase
         if ($clienteEmail == "") {
             $browser->type(CampoVenda::CampoClienteEmail, $this->Venda->getClienteEmail());
         }else{
-            $this->Venda->setClienteEmail(trim($clienteEmail));
+            $this->Venda->setClienteEmail($clienteEmail);
         }
 
         $clienteTelefoneCelular = $browser->value(CampoVenda::CampoClienteTelefoneCelular);
         if ($clienteTelefoneCelular == "") {
             $browser->type(CampoVenda::CampoClienteTelefoneCelular, $this->Venda->getClienteTelefoneCelular());
         }else{
-            $this->Venda->setClienteTelefoneCelular(trim($clienteTelefoneCelular));
+            $this->Venda->setClienteTelefoneCelular($clienteTelefoneCelular);
         }
 
         $clienteTelefoneFixo = $browser->value(CampoVenda::CampoClienteTelefoneFixo);
         if ($clienteTelefoneFixo == "" || strlen($clienteTelefoneFixo) != 10) {
             $browser->type(CampoVenda::CampoClienteTelefoneFixo, $this->Venda->getClienteTelefoneFixo());
         }else{
-            $this->Venda->setClienteTelefoneFixo(trim($clienteTelefoneFixo));
+            $this->Venda->setClienteTelefoneFixo($clienteTelefoneFixo);
         }
 
         $checkbox = $browser->element(CampoVenda::CheckboxReceberSMS);

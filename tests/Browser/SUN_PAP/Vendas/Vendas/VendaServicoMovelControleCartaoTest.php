@@ -6,44 +6,10 @@ use Tests\Browser\Pages\Funcoes\FuncoesGerais;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Tests\Feature\Funcoes\funcoesPHP;
-use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicosElementsPAP;
+use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaElementsServicosPAP;
 
-class VendaServicoControleCartaoTest extends DuskTestCase
+class VendaServicoMovelControleCartaoTest extends DuskTestCase
 {
-    /**
-     * Verifica se após selecionar serviço Controle Cartão, esta desabilitando os serviços
-     * que não são permitidos junto com o Fatura.
-     * @throws \Exception
-     * @throws \Throwable
-     * @Test ServicoMovelControleControleOutrosServicosDesabilitados
-     * @group ServicoMovelControleControleOutrosServicosDesabilitados
-     * @return void
-     */
-    public function testServicoMovelControleControleOutrosServicosDesabilitados()
-    {
-        $this->browse(function (Browser $browser) {
-            $dadosVenda = new VendaPAPTest();
-
-            $dadosVenda->testEscolherVendaMovel();
-            $dadosVenda->dadosCliente();
-
-            $browser->press(IncluirServicos::BotaoMovelControleCartao);
-            $browser->pause(500);
-
-            $browser->press(IncluirServicos::BotaoIncluirServico);
-            $browser->pause(500);
-
-            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
-            if(isset($posFatura)){
-                $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
-            }
-            $browser->assertVisible(IncluirServicos::BotaoMovelControleFaturaDesabilitado);
-            $browser->assertVisible(IncluirServicos::BotaoMovelFixoFWT);
-            $browser->assertVisible(IncluirServicos::BotaoMovelControleCartaoDesabilitado);
-            $browser->assertVisible(IncluirServicos::BotaoMovelControlePassDigitalDesabilitado);
-        });
-    }
-
     /**
      * Verifica todos os campo obrigatorios para o serviço movel Controle Cartão tipo de cliente Alta
      * @throws \Exception
@@ -264,5 +230,39 @@ class VendaServicoControleCartaoTest extends DuskTestCase
         $browser->type(ControleCartao::CampoNumeroCliente, $dadosServico->getServicoNumeroCliente());
 
         $dadosVenda->VendaServico($dadosServico);
+    }
+
+    /**
+     * Verifica se após selecionar serviço Controle Cartão, esta desabilitando os serviços
+     * que não são permitidos junto com o Fatura.
+     * @throws \Exception
+     * @throws \Throwable
+     * @Test ServicoMovelControleControleOutrosServicosDesabilitados
+     * @group ServicoMovelControleControleOutrosServicosDesabilitados
+     * @return void
+     */
+    public function testServicoMovelControleControleOutrosServicosDesabilitados()
+    {
+        $this->browse(function (Browser $browser) {
+            $dadosVenda = new VendaPAPTest();
+
+            $dadosVenda->testEscolherVendaMovel();
+            $dadosVenda->dadosCliente();
+
+            $browser->press(IncluirServicos::BotaoMovelControleCartao);
+            $browser->pause(500);
+
+            $browser->press(IncluirServicos::BotaoIncluirServico);
+            $browser->pause(500);
+
+            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
+            if(isset($posFatura)){
+                $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
+            }
+            $browser->assertVisible(IncluirServicos::BotaoMovelControleFaturaDesabilitado);
+            $browser->assertVisible(IncluirServicos::BotaoMovelFixoFWT);
+            $browser->assertVisible(IncluirServicos::BotaoMovelControleCartaoDesabilitado);
+            $browser->assertVisible(IncluirServicos::BotaoMovelControlePassDigitalDesabilitado);
+        });
     }
 }
