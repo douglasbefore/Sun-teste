@@ -8,6 +8,7 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use App\consultaCliente;
 use ArrayObject;
 use Carbon\Carbon;
 use Laravel\Dusk\Browser;
@@ -44,10 +45,10 @@ class VendaPAP
     private $totalFixaAposMeses;
     private $totalPlanoMovel;
 
-
     public function __construct()
     {
         new VendaElementsPAP();
+//        $this->usuarioLogin = '02717678123';  // Usuario Vendedor
         $this->usuarioLogin = '12270707729';  // Usuario Vendedor
 
         $this->vendaFixa = false;

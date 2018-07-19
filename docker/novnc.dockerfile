@@ -16,6 +16,8 @@ ARG NOVNC_URL="https://github.com/douglasbefore/noVNC/archive/v1.0.0-beta.tar.gz
 
 RUN apk add ${NOVNC_DEP}
 
+RUN apk add udev chromium chromium-chromedriver
+
 RUN mkdir -pv ${NOVNC_DIR} \
 	&& cd ${NOVNC_DIR} \
 	&& echo "caminho NVC: ${NOVNC_DIR}" \
@@ -28,3 +30,6 @@ RUN mkdir -pv ${NOVNC_DIR} \
 WORKDIR ${NOVNC_DIR}
 
 ENTRYPOINT ["connect"]
+
+ENV CHROME_BIN /usr/bin/chromium-browser
+ENV LIGHTHOUSE_CHROMIUM_PATH /usr/bin/chromium-browser

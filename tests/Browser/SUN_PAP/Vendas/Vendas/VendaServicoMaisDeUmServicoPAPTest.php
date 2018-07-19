@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use App\consultaCliente;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -20,8 +21,10 @@ class VendaServicoMaisDeUmServicoPAPTest extends DuskTestCase
     {
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
-            $dadosVenda->getVenda()->setClienteCPF('85788830206');
-//            $dadosVenda->getVenda()->setClienteCPF('58248048187');
+            $dadosVenda->getVenda()->setClienteCPF(consultaCliente::buscaClienteFixa());
+//            $dadosVenda->getVenda()->setClienteCPF('10746123701');
+//            $dadosVenda->getVenda()->setEnderecoCEP('79032295');
+//            $dadosVenda->getVenda()->setEnderecoNumero('685');
 
             $dadosVenda->testEsolherVendaMovelFixa();
             $dadosVenda->dadosCliente();
@@ -40,4 +43,12 @@ class VendaServicoMaisDeUmServicoPAPTest extends DuskTestCase
             $dadosVenda->validarResumoVenda();
         });
     }
+
+//    public function testVariasVezesBandaLarga()
+//    {
+//        for($i=0; $i<5; $i++){
+//            $this->testServicoControleFatura_TelefoniaFixa_BandaLarga();
+//        }
+//    }
+
 }

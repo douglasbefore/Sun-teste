@@ -21,6 +21,7 @@ services:
         environment:
             - HUB_PORT_4444_TCP_ADDR=hub
             - HUB_PORT_4444_TCP_PORT=4444
+            - CHROME=true
         volumes_from:
             - hub
 
@@ -33,6 +34,8 @@ services:
             - chrome
         ports:
             - 6080:6080
+        environment:
+            - VNC_PASSWORD=
 
     console:
         build:

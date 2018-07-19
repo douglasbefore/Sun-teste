@@ -8,6 +8,7 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use App\consultaCliente;
 use Carbon\Carbon;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -187,6 +188,7 @@ class VendaPAPTest extends DuskTestCase
                 $this->fluxoVendaMovel($browser);
             }
 
+            $browser->pause(500);
             $browser->click(CampoVenda::BotaoRecolherAnalise);
             $browser->pause(500);
         });
@@ -263,7 +265,7 @@ class VendaPAPTest extends DuskTestCase
         }
 
         $clienteTelefoneFixo = $browser->value(CampoVenda::CampoClienteTelefoneFixo);
-        if ($clienteTelefoneFixo == "" || strlen($clienteTelefoneFixo) != 10) {
+        if ($clienteTelefoneFixo == "" && strlen($clienteTelefoneFixo) != 10) {
             $browser->type(CampoVenda::CampoClienteTelefoneFixo, $this->Venda->getClienteTelefoneFixo());
         }else{
             $this->Venda->setClienteTelefoneFixo($clienteTelefoneFixo);
@@ -277,6 +279,15 @@ class VendaPAPTest extends DuskTestCase
                 $this->Venda->setClienteReceberSMS('Não');
             }
         }
+
+        $this->assertNotNull($this->Venda->getClienteCPF());
+        $this->assertNotNull($this->Venda->getClienteNome());
+        $this->assertNotNull($this->Venda->getClienteDataNascimento());
+        $this->assertNotNull($this->Venda->getClienteNomeMae());
+        $this->assertNotNull($this->Venda->getClienteSexo());
+        $this->assertNotNull($this->Venda->getClienteEmail());
+        $this->assertNotNull($this->Venda->getClienteTelefoneCelular());
+        $this->assertNotNull($this->Venda->getClienteTelefoneFixo());
     }
 
     /**
@@ -335,7 +346,7 @@ class VendaPAPTest extends DuskTestCase
 
         $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
         $browser->press(CampoVenda::BotaoContinuar);
-
+        $browser->pause(500);
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaVerificando);
     }
 
@@ -351,6 +362,8 @@ class VendaPAPTest extends DuskTestCase
         $enderecosEscolha = $browser->elements(CampoVenda::RadioEscolhaEndereco);
 
         foreach ($enderecosEscolha as $id => $itemEndereco){
+            $funcoes->barraRolagemElemento($browser, CampoVenda::RadioEscolhaEndereco, $id);
+//            $browser->elements(CampoVenda::RadioEscolhaEndereco)[$id]->getLocationOnScreenOnceScrolledIntoView();
             if ( strpos(str_replace('-', '', $itemEndereco->getText()), str_replace('-','', $this->Venda->getEnderecoCEP())) !== false){
                 $browser->elements(CampoVenda::RadioEscolhaEndereco)[$id]->click();
                 $this->getVenda()->setEnderecoRua($browser->elements(CampoVenda::RadioEscolhaEndereco . ' .title')[$id]->getText());
@@ -362,6 +375,7 @@ class VendaPAPTest extends DuskTestCase
         }
 
         if(!$achouEndereco){
+            $funcoes->barraRolagemElemento($browser,CampoVenda::BotaoCadastrarOutroEndereco);
             $browser->press(CampoVenda::BotaoCadastrarOutroEndereco);
             $this->cadastroEnderecoVenda($browser);
             $this->escolhaEndereco($browser);

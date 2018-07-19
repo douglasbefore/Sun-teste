@@ -10,11 +10,14 @@ ARG LOCAL_PORT_TESTE=${_LOCAL_PORT_TESTE}
 
 # Instalando extensoes necessarias do PHP
     RUN apk add -q --update curl git zip autoconf alpine-sdk bash sudo nano \
-        && pecl install xdebug \
+        && pecl install xdebug
+
+    RUN docker-php-ext-install mysqli pdo pdo_mysql
 
     RUN docker-php-ext-enable xdebug \
+
         && echo "Iniciando Docker/XDebug em: ${LOCAL_IP_TESTE}:${LOCAL_PORT_TESTE}" \
-        && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" >> $PHP_INI_DIR/conf.d/xdebug.ini \
+        # && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_enable=1" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_host=${LOCAL_IP_TESTE}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
         && echo -e "xdebug.remote_port=${LOCAL_PORT_TESTE}" >> $PHP_INI_DIR/conf.d/xdebug.ini \
@@ -47,6 +50,7 @@ ARG LOCAL_PORT_TESTE=${_LOCAL_PORT_TESTE}
 	&& echo "${USER} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USER} \
 	&& chown -Rv ${USER} /home/${USER}
 
+ENV DB_HOST=${LOCAL_IP_TESTE}
 ENV WEBDRIVER_DOCKER="http://${LOCAL_IP_TESTE}:4444/wd/hub"
 ENV LOCAL_APP_URL="http://${LOCAL_IP_TESTE}:8080/_sys/main.php"
 

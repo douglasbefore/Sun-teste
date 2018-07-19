@@ -8,7 +8,10 @@
 
 namespace Tests\Browser\Pages\Funcoes;
 
+use Facebook\WebDriver\Remote\RemoteWebElement;
 use Laravel\Dusk\Browser;
+use Laravel\Dusk\Concerns\InteractsWithElements;
+use phpDocumentor\Reflection\Element;
 use Tests\DuskTestCase;
 
 class FuncoesGerais extends Page
@@ -55,16 +58,56 @@ class FuncoesGerais extends Page
      * Funçao para rolar a barra de rolagem até o elemento.
      *
      * @param  Browser $browser
+     * @param $seletor
+     * @param null $id
      */
-    public function barraRolagemElemento(Browser $browser, $seletor){
-        $x = $browser->element($seletor)->getLocationOnScreenOnceScrolledIntoView()->getX();
-        $browser->driver->executeScript('window.scrollTo('.$x.', 0);');
+    public function barraRolagemElemento(Browser $browser, $seletor, $id = null){
+        $posicaoTopoPagina = $browser->driver->executeScript('return posicaoTopoPagina = $(window).scrollTop();');
+
+        if(is_null($id)) {
+            $tamanhoElemento = $browser->driver->executeScript('return $("' . $seletor . '").height();');
+            $posicaoElemento = $browser->element($seletor)->getLocation()->getY();
+        }else{
+            $tamanhoElemento = $browser->driver->executeScript('var itens = $("' . $seletor . '").map(function () {
+                                                                                return $(this).height();
+                                                                            }).get();
+                                                                       return itens['.$id.'];');
+            $posicaoElemento = $browser->elements($seletor)[$id]->getLocation()->getY();
+        }
+
+        if($posicaoTopoPagina > $posicaoElemento){
+            $y = $posicaoElemento-$tamanhoElemento;
+        }else{
+            $y = $posicaoElemento+$tamanhoElemento;
+        }
+
+
+//        $elementLocal = $browser->element($seletor)->getLocation();
+//        $x= $elementLocal->getX();
+//        $y= $pagina-$elementLocal->getY();
+        $browser->driver->executeScript('window.scrollTo(0, '. $y. ');');
+    }
+
+    /**
+     * Funçao para rolar a barra de rolagem até o id retornado do elements.
+     *
+     * @param  Browser $browser
+     * @var $id RemoteWebElement
+     */
+    public function barraRolagemElementoId(Browser $browser, $seletor, $id){
+        $pagina = $browser->driver->executeScript('return $height = $(window).scrollTop();');
+
+        $elementLocal = $id->getLocation();
+        $x= $elementLocal->getX()+10;
+        $y= $pagina-$elementLocal->getY()+10;
+        $browser->driver->executeScript('window.scrollTo('. $x .','. $y .');');
     }
 
     /**
      * Funçao para esperar acabar o load de carregar do sistema.
      *
      * @param  Browser $browser
+     * @param string $selector
      * @return bool
      */
     public function loadCarregando(Browser $browser, $selector = '#load')
@@ -82,7 +125,9 @@ class FuncoesGerais extends Page
      * Funçao para esperar acabar os loads que apos finalizar sao removidos do html.
      *
      * @param  Browser $browser
-     * @return bool
+     * @param string $selector
+     * @param null $tempo
+     * @return void
      */
     public function loadCarregandoCampoNull(Browser $browser, $selector = '#load', $tempo = null)
     {
@@ -104,7 +149,8 @@ class FuncoesGerais extends Page
      * Funçao para esperar ate o selector fique abilitado.
      *
      * @param  Browser $browser
-     * @return bool
+     * @param $selector
+     * @return void
      */
     public function elementsIsEnabled($browser, $selector)
     {
@@ -133,15 +179,16 @@ class FuncoesGerais extends Page
     {
         $valueOperadora = $browser->elements($selector);
 
-        if(is_null($text)) {
+        if(!is_null($text)) {
             foreach ($valueOperadora as $operadora) {
                 if (strpos(strtolower($operadora->getText()), strtolower($text))) {
-                    return array("value" => $operadora->getAttribute('value'), "text" => $operadora->getAttribute('text'));
+                    return array("value" => $operadora->getAttribute('value'),
+                                 "text" => $operadora->getAttribute('text'));
                 }
             }
         }
         else{
-            $random = rand(0, count($valueOperadora) - 1);
+            $random = rand(1, count($valueOperadora) - 1);
 
             return array("value" => $valueOperadora[$random]->getAttribute('value'),
                          "text"  => $valueOperadora[$random]->getAttribute('text'));
