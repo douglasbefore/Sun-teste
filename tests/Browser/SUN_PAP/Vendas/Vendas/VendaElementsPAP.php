@@ -178,6 +178,9 @@ class ResumoVenda extends VendaElementsPAP{
     const ValueEnderecoClienteRua = '.info-section [data-test="Rua"] .value';
     const ValueEnderecoClienteNumero = '.info-section [data-test="Número"] .value';
     const ValueEnderecoClienteCEP = '.info-section [data-test="CEP"] .value';
+    const ValueEnderecoClienteCidade = '.info-section [data-test="Cidade"] .value';
+    const ValueEnderecoClienteEstado = '.info-section [data-test="Estado (UF)"] .value';
+    const ValueEnderecoClienteBairro = '.info-section [data-test="Bairro"] .value';
 
     const ValueFaturaClienteDataVencimento = '.resumo-fatura [data-test="Data Vencimento"] .value';
     const ValueFaturaClienteFormatoEnvio = '.resumo-fatura [data-test="Formato de Envio"] .value';

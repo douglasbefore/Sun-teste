@@ -36,6 +36,9 @@ class VendaPAP
     private $enderecoCEP;
     private $enderecoNumero;
     private $enderecoRua;
+    private $enderecoBairro;
+    private $enderecoEstado;
+    private $enderecoCidade;
     private $taxaInstalacao;
     private $formaPagamentoTaxaInstalacao;
     private $fixaFormatoEnvio;
@@ -355,6 +358,54 @@ class VendaPAP
     public function setEnderecoRua($enderecoRua): void
     {
         $this->enderecoRua = $enderecoRua;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnderecoBairro()
+    {
+        return $this->enderecoBairro;
+    }
+
+    /**
+     * @param mixed $enderecoBairro
+     */
+    public function setEnderecoBairro($enderecoBairro): void
+    {
+        $this->enderecoBairro = $enderecoBairro;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnderecoEstado()
+    {
+        return $this->enderecoEstado;
+    }
+
+    /**
+     * @param mixed $enderecoEstado
+     */
+    public function setEnderecoEstado($enderecoEstado): void
+    {
+        $this->enderecoEstado = $enderecoEstado;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnderecoCidade()
+    {
+        return $this->enderecoCidade;
+    }
+
+    /**
+     * @param mixed $enderecoCidade
+     */
+    public function setEnderecoCidade($enderecoCidade): void
+    {
+        $this->enderecoCidade = $enderecoCidade;
     }
 
     /**

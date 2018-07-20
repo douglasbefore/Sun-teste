@@ -9,6 +9,7 @@
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
 use App\consultaCliente;
+use App\consultaUF;
 use Carbon\Carbon;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
@@ -280,6 +281,7 @@ class VendaPAPTest extends DuskTestCase
             }
         }
 
+        // Validação para avisar erros nos dados do cliente no dusk.
         $this->assertNotNull($this->Venda->getClienteCPF());
         $this->assertNotNull($this->Venda->getClienteNome());
         $this->assertNotNull($this->Venda->getClienteDataNascimento());
@@ -288,6 +290,7 @@ class VendaPAPTest extends DuskTestCase
         $this->assertNotNull($this->Venda->getClienteEmail());
         $this->assertNotNull($this->Venda->getClienteTelefoneCelular());
         $this->assertNotNull($this->Venda->getClienteTelefoneFixo());
+        $this->assertNotNull($this->Venda->getClienteReceberSMS());
     }
 
     /**
@@ -341,8 +344,23 @@ class VendaPAPTest extends DuskTestCase
         $browser->type(CampoVenda::CampoEnderecoCep, $this->Venda->getEnderecoCEP());
         $browser->type(CampoVenda::CampoEnderecoNumero, $this->Venda->getEnderecoNumero());
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
-        $browser->pause(1000);
-        $this->getVenda()->setEnderecoRua($browser->value(CampoVenda::CampoEnderecoRua));
+
+        $browser->waitUntil('$("'.CampoVenda::CampoEnderecoRua.'").val()!=""', 5);
+
+        $this->Venda->setEnderecoRua($browser->value(CampoVenda::CampoEnderecoRua));
+        $this->Venda->setEnderecoBairro($browser->value(CampoVenda::CampoEnderecoBairro));
+        $pegarEnderecoUf = $browser->element(CampoVenda::SelectEnderecoUF)->getAttribute('value');
+        $this->Venda->setEnderecoEstado($pegarEnderecoUf);
+        $pegarEnderecoCidade = $browser->resolver->driver->executeScript('return $("'.CampoVenda::SelectEnderecoCidade.'  option:selected").text();');
+        $this->Venda->setEnderecoCidade(trim($pegarEnderecoCidade));
+
+        // Validação para avisar erros nos dados do endereço no dusk.
+        $this->assertNotNull($this->Venda->getEnderecoCEP());
+        $this->assertNotNull($this->Venda->getEnderecoNumero());
+        $this->assertNotNull($this->Venda->getEnderecoRua());
+        $this->assertNotNull($this->Venda->getEnderecoBairro());
+        $this->assertNotNull($this->Venda->getEnderecoEstado());
+        $this->assertNotNull($this->Venda->getEnderecoCidade());
 
         $funcoes->elementsIsEnabled($browser, CampoVenda::BotaoContinuar);
         $browser->press(CampoVenda::BotaoContinuar);
@@ -563,6 +581,9 @@ class VendaPAPTest extends DuskTestCase
             $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteNumero, $this->Venda->getEnderecoNumero());
 //            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, FuncoesPHP::mascara($this->Venda->getEnderecoCEP(), '#####-###'));
             $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, str_replace('-', '', $this->Venda->getEnderecoCEP()));
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCidade, $this->Venda->getEnderecoCidade());
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteEstado, consultaUF::retornaUfSigla()[$this->Venda->getEnderecoEstado()]);
+            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteBairro, $this->Venda->getEnderecoBairro());
 
             // Validar Fatura Cliente
             if($this->Venda->isVendaFixa()){
