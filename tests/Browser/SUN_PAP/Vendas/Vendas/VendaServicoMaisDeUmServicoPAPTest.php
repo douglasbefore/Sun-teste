@@ -22,9 +22,6 @@ class VendaServicoMaisDeUmServicoPAPTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
             $dadosVenda->getVenda()->setClienteCPF(consultaCliente::buscaClienteFixa());
-//            $dadosVenda->getVenda()->setClienteCPF('10746123701');
-//            $dadosVenda->getVenda()->setEnderecoCEP('79032295');
-//            $dadosVenda->getVenda()->setEnderecoNumero('685');
 
             $dadosVenda->testEsolherVendaMovelFixa();
             $dadosVenda->dadosCliente();
