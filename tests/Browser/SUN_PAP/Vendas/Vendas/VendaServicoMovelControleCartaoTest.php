@@ -255,7 +255,7 @@ class VendaServicoMovelControleCartaoTest extends DuskTestCase
             $browser->press(IncluirServicos::BotaoIncluirServico);
             $browser->pause(500);
 
-            $posFatura = $browser->element(ControlePosFatura::PosicaoIncluirServicoExiste);
+            $posFatura = $browser->element(PosFatura::PosicaoIncluirServicoExiste);
             if(isset($posFatura)){
                 $browser->assertVisible(IncluirServicos::BotaoMovelPosFatura);
             }

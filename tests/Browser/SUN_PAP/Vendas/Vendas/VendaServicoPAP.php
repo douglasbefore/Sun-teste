@@ -28,6 +28,9 @@ class VendaServicoPAP
     private $servicoEmail;
     private $servicoDataVencimento;
     private $servicoAdicionais = array();
+    private $servicoPossuiDependente = false;
+    private $servicoQuantidadeDependenteGratuitos;
+    private $servicoDependentes = array();
 
     /**
      * @return mixed
@@ -298,5 +301,53 @@ class VendaServicoPAP
     public function setServicoAdicionais($servicoAdicionais): void
     {
         $this->servicoAdicionais[] = $servicoAdicionais;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isServicoPossuiDependente(): bool
+    {
+        return $this->servicoPossuiDependente;
+    }
+
+    /**
+     * @param bool $servicoPossuiDependente
+     */
+    public function setServicoPossuiDependente(bool $servicoPossuiDependente): void
+    {
+        $this->servicoPossuiDependente = $servicoPossuiDependente;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServicoQuantidadeDependenteGratuitos()
+    {
+        return $this->servicoQuantidadeDependenteGratuitos;
+    }
+
+    /**
+     * @param mixed $servicoQuantidadeDependenteGratuitos
+     */
+    public function setServicoQuantidadeDependenteGratuitos($servicoQuantidadeDependenteGratuitos): void
+    {
+        $this->servicoQuantidadeDependenteGratuitos = $servicoQuantidadeDependenteGratuitos;
+    }
+
+    /**
+     * @return array
+     */
+    public function getServicoDependentes(): array
+    {
+        return $this->servicoDependentes;
+    }
+
+    /**
+     * @param array $servicoDependentes
+     */
+    public function setServicoDependentes(array $servicoDependentes): void
+    {
+        $this->servicoDependentes = $servicoDependentes;
     }
 }

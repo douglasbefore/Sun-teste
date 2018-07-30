@@ -152,39 +152,49 @@ class ControlePassDigital extends VendaElementsServicosPAP
     const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
 }
 
-class ControlePosFatura extends VendaElementsServicosPAP
+class PosFatura extends VendaElementsServicosPAP
 {
     const PosicaoIncluirServicoExiste = '#iconCardListServicos [data-name="posFatura"]';
-//    const NomeDoServico = 'Controle Pass Digital';
-//    const LabelServicoResumo = '.controlePassDigital';
-//    const SeletorNomeServico = '.controlePassDigital .toggle-form .text-wrapper';
-//    const AlertaCarregandoPlanos = '.controlePassDigital .loading-wrapper > div > span';
-//    const BotaoRemoverServico = '.controlePassDigital > div.remove > span';
-//    const SelectPlano = '.controlePassDigital [id^="plano_"] select';
-//    const OptionPlano = '.controlePassDigital [id^="plano_"] option';
-//    const Validar_SelectPlano = '.controlePassDigital [id^="plano_"] .form-control-feedback';
-//    const RadioTipoClienteAlta = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(1)';
-//    const RadioTipoClienteMigracao = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(2)';
-//    const RadioTipoClienteUpgrade = '.controlePassDigital [id^="tipoCliente_"] > div > div:nth-child(3)';
-//    const Validar_RadioTipoCliente = '.controlePassDigital [id^="tipoCliente_"] .form-control-feedback';
-//    const RadioPortabilidadeSim = '.controlePassDigital [id^="portabilidade_"] > div.radio-group.block > div:nth-child(1)';
-//    const RadioPortabilidadeNao = '.controlePassDigital [id^="portabilidade_"] > div.radio-group.block > div:nth-child(2)';
-////    const Validar_RadioPortabilidade = '.controlePassDigital [id^="portabilidade_"] .form-control-feedback';
-//    const CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] input';
-//    const Validar_CampoNumeroCliente = '.controlePassDigital [id^="numeroCliente_"] .form-control-feedback';
-//    const SelectOperadora = '.controlePassDigital [id^="operadora_"] select';
-//    const Validar_SelectOperadora = '.controlePassDigital [id^="operadora_"] .form-control-feedback';
-//    const SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] input';
-//    const Validar_SelectOutraOperadora = '.controlePassDigital [id^="outraOperadora_"] .form-control-feedback';
-//    const CampoICCID = '.controlePassDigital [id^="iccid_"] input';
-//    const Validar_CampoICCID = '.controlePassDigital [id^="iccid_"] .form-control-feedback';
-//    const RadioFaturaEmail = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
-//    const RadioFaturaViaPostal = '.controlePassDigital [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(2)';
-//    const Validar_RadioFatura = '.controlePassDigital [id^="tipoFatura_"] .form-control-feedback';
-//    const CampoEmail = '.controleFatura [id^="email_"] input';
-//    const Validar_CampoEmail = '.controleFatura [id^="email_"] .form-control-feedback';
-//    const RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] > div.radio-group.circle > div';
-//    const Validar_RadioDataVencimento = '.controlePassDigital [id^="dataVencimento_"] .form-control-feedback';
+    const NomeDoServico = 'Pós Fatura';
+    const LabelServicoResumo = '.posFatura';
+    const SeletorNomeServico = '.posFatura .toggle-form .text-wrapper';
+    const AlertaCarregandoPlanos = '.posFatura .loading-wrapper > div > span';
+    const BotaoRemoverServico = '.posFatura > div.remove > span';
+    const SelectPlano = '.posFatura [id^="plano_"] select';
+    const OptionPlano = '.posFatura [id^="plano_"] option';
+    const Validar_SelectPlano = '.posFatura [id^="plano_"] .form-control-feedback';
+    const RadioTipoClienteAlta = '.posFatura [id^="tipoCliente_"] > div > div:nth-child(1)';
+    const RadioTipoClienteMigracao = '.posFatura [id^="tipoCliente_"] > div > div:nth-child(2)';
+    const RadioTipoClienteUpgrade = '.posFatura [id^="tipoCliente_"] > div > div:nth-child(3)';
+    const Validar_RadioTipoCliente = '.posFatura [id^="tipoCliente_"] .form-control-feedback';
+    const RadioPortabilidadeSim = '.posFatura [id^="portabilidade_"] > div.radio-group.block > div:nth-child(1)';
+    const RadioPortabilidadeNao = '.posFatura [id^="portabilidade_"] > div.radio-group.block > div:nth-child(2)';
+//    const Validar_RadioPortabilidade = '.posFatura [id^="portabilidade_"] .form-control-feedback';
+    const CampoNumeroCliente = '.posFatura [id^="numeroCliente_"] input';
+    const Validar_CampoNumeroCliente = '.posFatura [id^="numeroCliente_"] .form-control-feedback';
+    const SelectOperadora = '.posFatura [id^="operadora_"] select';
+    const OptionOperadora = '.posFatura [id^="operadora_"] option';
+    const Validar_SelectOperadora = '.posFatura [id^="operadora_"] .form-control-feedback';
+    const SelectOutraOperadora = '.posFatura [id^="outraOperadora_"] input';
+    const Validar_SelectOutraOperadora = '.posFatura [id^="outraOperadora_"] .form-control-feedback';
+    const CampoICCID = '.posFatura [id^="iccid_"] input';
+    const Validar_CampoICCID = '.posFatura [id^="iccid_"] .form-control-feedback';
+    const RadioFaturaEmail = '.posFatura [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(1)';
+    const RadioFaturaViaPostal = '.posFatura [id^="tipoFatura_"] > div.radio-group.block > div:nth-child(2)';
+    const Validar_RadioFatura = '.posFatura [id^="tipoFatura_"] .form-control-feedback';
+    const CampoEmail = '.posFatura [id^="email_"] input';
+    const Validar_CampoEmail = '.posFatura [id^="email_"] .form-control-feedback';
+    const RadioDataVencimento = '.posFatura [id^="dataVencimento_"] > div.radio-group.circle > div';
+    const Validar_RadioDataVencimento = '.posFatura [id^="dataVencimento_"] .form-control-feedback';
+    const BotaoAdicionarDependentes = '.posFatura .field-center-wrapper .btn.btn-block.btn-dashed-primary';
+
+    const Modal_DependentesTitulo = '.module-container .modal-wrapper .v-modal.center .modal-header .title';
+    const Modal_DependentesGratuitoPago = '.module-container .modal-wrapper .v-modal.center .dependentes-item';
+    const Modal_BotaoAdicionarDependente = '.module-container .modal-wrapper .v-modal.center .dependentes-item .btn.btn-dashed-primary.btn-block';
+    const Modal_Dependentes = '.module-container .modal-wrapper .v-modal.center .dependentes-item .dependente-selecionado';
+
+
+
 }
 
 class FixaTelefoniaFixa extends VendaElementsServicosPAP
