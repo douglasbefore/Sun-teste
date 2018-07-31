@@ -177,21 +177,21 @@ class FuncoesGerais extends Page
      */
     public function retornaValueOption($browser, $selector, $text = null)
     {
-        $valueOperadora = $browser->elements($selector);
+        $valueOption = $browser->elements($selector);
 
         if(!is_null($text)) {
-            foreach ($valueOperadora as $operadora) {
-                if (strpos(strtolower($operadora->getText()), strtolower($text))) {
-                    return array("value" => $operadora->getAttribute('value'),
-                                 "text" => $operadora->getAttribute('text'));
+            foreach ($valueOption as $option) {
+                if (strpos(strtolower($option->getText()), strtolower($text))) {
+                    return array("value" => $option->getAttribute('value'),
+                                 "text" => $option->getAttribute('text'));
                 }
             }
         }
         else{
-            $random = rand(1, count($valueOperadora) - 1);
+            $random = rand(1, count($valueOption) - 1);
 
-            return array("value" => $valueOperadora[$random]->getAttribute('value'),
-                         "text"  => $valueOperadora[$random]->getAttribute('text'));
+            return array("value" => $valueOption[$random]->getAttribute('value'),
+                         "text"  => $valueOption[$random]->getAttribute('text'));
         }
     }
 
