@@ -562,6 +562,9 @@ class VendaPAPTest extends DuskTestCase
                         }
                     }
                 }
+
+                // Resumo Pos Fatura
+
             }
 
             // Validar Dados do Cliente

@@ -1198,18 +1198,17 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
                     $contaQuantidadeDependentesGratuiros++;
                 }
 
-                // Primeiro teste dependente com numero dependente preenchido.
+                // Primeiro teste dependente com portabilidade dependente preenchido.
                 if ($id == 0){
-
                     $dadosDependentes->setDependentePortabilidade($browser->element(PosFatura::Modal_BotaoPortabilidadeSimDependente)->getText());
                     $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeSimDependente);
 
                     $dadosDependentes->setDependenteNumeroAtual(FuncoesPHP::gerarCelularRandomico());
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroAtualPortabilidadeDependente, $dadosDependentes->getDependenteNumeroAtual());
 
-                    $valueOperadora = $funcoes->retornaValueOption($browser, PosFatura::OptionOperadora, 'Claro');
-                    $dadosServico->setServicoOperadora($valueOperadora['text']);
-                    $browser->select(PosFatura::SelectOperadora, $valueOperadora['value']);
+                    $valueOperadora = $funcoes->retornaValueOption($browser, $grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_OptionOperadoraPortabilidadeDependente, 'Claro');
+                    $dadosDependentes->setDependenteOperadora($valueOperadora['text']);
+                    $browser->select($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_SelectOperadoraPortabilidadeDependente, $valueOperadora['value']);
                 }
 
                 // segundo teste dependente com Iccid dependente preenchido.
@@ -1218,14 +1217,12 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteIccid());
                 }
 
+                //outros testes com o numero do Dependente.
                 else{
                     $dadosDependentes->setDependenteNumero(FuncoesPHP::gerarCelularRandomico());
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteNumero());
                 }
 
-
-
-    //            $imputNumeroLinha-$grupoElementosGratuitoPagosPanelDependentes
                 $dadosServico->setServicoDependentes($dadosDependentes);
             }
         }

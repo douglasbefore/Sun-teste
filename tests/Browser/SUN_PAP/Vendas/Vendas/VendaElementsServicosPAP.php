@@ -196,7 +196,7 @@ class PosFatura extends VendaElementsServicosPAP
     const Modal_InputNumeroLinhaDependente = ' [id^="numeroLinha_"] input';
     const Modal_BotaoPortabilidadeSimDependente = ' [id^="portabilidade_"] [data-value="1"]';
     const Modal_InputNumeroAtualPortabilidadeDependente = ' [id^="numeroPortabilidade_"] input';
-    const Modal_SelectOperadoraPortabilidadeDependente = ' [id^="operadora_"] input';
+    const Modal_SelectOperadoraPortabilidadeDependente = ' [id^="operadora_"] select';
     const Modal_OptionOperadoraPortabilidadeDependente = ' [id^="operadora_"] option';
 
 }
