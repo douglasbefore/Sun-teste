@@ -1214,19 +1214,23 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
                 // segundo teste dependente com Iccid dependente preenchido.
                 elseif($id == 1){
                     $dadosDependentes->setDependenteIccid(FuncoesPHP::geraICCIDRandomico());
-                    $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteIccid());
+                    $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputIccIdDependente, $dadosDependentes->getDependenteIccid());
+                    $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeNaoDependente);
                 }
 
                 //outros testes com o numero do Dependente.
                 else{
                     $dadosDependentes->setDependenteNumero(FuncoesPHP::gerarCelularRandomico());
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteNumero());
+                    $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeNaoDependente);
                 }
 
                 $dadosServico->setServicoDependentes($dadosDependentes);
             }
         }
         $this->assertEquals($dadosServico->getServicoQuantidadeDependenteGratuitos(), $contaQuantidadeDependentesGratuiros);
+
+        $browser->press(PosFatura::Modal_BotaoContinuarDependentes);
 
         $dadosVenda->VendaServico($dadosServico);
     }

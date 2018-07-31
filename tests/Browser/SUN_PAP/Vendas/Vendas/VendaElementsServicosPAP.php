@@ -191,10 +191,13 @@ class PosFatura extends VendaElementsServicosPAP
     const Modal_DependentesTitulo = '.module-container .modal-wrapper .v-modal.center .modal-header .title';
     const Modal_DependentesGratuitoPago = '.module-container .modal-wrapper .v-modal.center .dependentes-item > .title-wrapper .name-wrapper .title';
     const Modal_BotaoAdicionarDependente = '.module-container .modal-wrapper .v-modal.center .dependentes-item .btn.btn-dashed-primary.btn-block';
+    const Modal_BotaoContinuarDependentes = '.module-container .modal-wrapper .v-modal.center .modal-footer .btn.btn-success.btn-block';
     const Modal_PanelTitelDependentes = '.dependente-selecionado .title-wrapper .name-wrapper .title';
     const Modal_LabelPlanoDependente = ' [data-test="Plano"] .value';
     const Modal_InputNumeroLinhaDependente = ' [id^="numeroLinha_"] input';
+    const Modal_InputIccIdDependente = ' [id^="iccidDependente_"] input';
     const Modal_BotaoPortabilidadeSimDependente = ' [id^="portabilidade_"] [data-value="1"]';
+    const Modal_BotaoPortabilidadeNaoDependente = ' [id^="portabilidade_"] [data-value="0"]';
     const Modal_InputNumeroAtualPortabilidadeDependente = ' [id^="numeroPortabilidade_"] input';
     const Modal_SelectOperadoraPortabilidadeDependente = ' [id^="operadora_"] select';
     const Modal_OptionOperadoraPortabilidadeDependente = ' [id^="operadora_"] option';
