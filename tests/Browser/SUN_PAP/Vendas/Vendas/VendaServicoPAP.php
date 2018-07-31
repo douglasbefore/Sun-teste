@@ -344,10 +344,10 @@ class VendaServicoPAP
     }
 
     /**
-     * @param array $servicoDependentes
+     * @param VendaServicoDependentesPAP $servicoDependentes
      */
-    public function setServicoDependentes(array $servicoDependentes): void
+    public function setServicoDependentes(VendaServicoDependentesPAP $servicoDependentes): void
     {
-        $this->servicoDependentes = $servicoDependentes;
+        $this->servicoDependentes[$servicoDependentes->getDependenteid()] = $servicoDependentes;
     }
 }

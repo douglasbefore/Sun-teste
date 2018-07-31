@@ -1177,32 +1177,57 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
             }
         }while(!$acabou);
 
-        $elementesDependentes = $browser->elements(PosFatura::Modal_Dependentes);
-        $contaQuantidadeDependentesGratuiros=0;
+        $panelGratuitoPago = $browser->elements(PosFatura::Modal_DependentesGratuitoPago);
 
-        foreach ($elementesDependentes as $id => $dependentes) {
-            $dadosDependentes = new VendaServicoDependentesPAP();
+        $contaQuantidadeDependentesGratuiros = 0;
+        foreach ($panelGratuitoPago as $gratuitoPago){
+            $panelDependentes = $browser->elements('[data-test="' . $gratuitoPago->getText() . '"] ' . PosFatura::Modal_PanelTitelDependentes);
 
-            $dadosDependentes->setDependenteid($id);
+            foreach ($panelDependentes as $id => $panelDependente) {
 
-            $dependentes->getLocationOnScreenOnceScrolledIntoView();
-            $browser->pause(100);
+                $grupoElementosGratuitoPagosPanelDependentes = '[data-test="' . $gratuitoPago->getText() . '"] [data-test="' . $panelDependente->getText() . '"]';
+                $browser->element($grupoElementosGratuitoPagosPanelDependentes)->getLocationOnScreenOnceScrolledIntoView();
 
-            $element = $browser->script('return $(".module-container .modal-wrapper .v-modal.center .dependentes-item .dependente-selecionado")['. $id .'];')[0]['ELEMENT'];
+                $dadosDependentes = new VendaServicoDependentesPAP();
 
-            $browser->with($element , function (Browser $itemDependente){
-                $itemDependente->assertSee('Dados + Voz - Gratuito');
-            });
+                $dadosDependentes->setDependenteDDD($dadosServico->getServicoVendaDDD());
+                $dadosDependentes->setDependenteid($gratuitoPago->getText() . $id);
+                $dadosDependentes->setDependentePlano($browser->element($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_LabelPlanoDependente)->getText());
 
-//            $dadosDependentes->setDependentePlano($nomePlano);
+                if (strpos($dadosDependentes->getDependentePlano(), 'Gratuito')) {
+                    $contaQuantidadeDependentesGratuiros++;
+                }
 
-            if (strpos($dadosDependentes->getDependentePlano(), 'Gratuito')) {
-                $contaQuantidadeDependentesGratuiros++;
+                // Primeiro teste dependente com numero dependente preenchido.
+                if ($id == 0){
+
+                    $dadosDependentes->setDependentePortabilidade($browser->element(PosFatura::Modal_BotaoPortabilidadeSimDependente)->getText());
+                    $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeSimDependente);
+
+                    $dadosDependentes->setDependenteNumeroAtual(FuncoesPHP::gerarCelularRandomico());
+                    $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroAtualPortabilidadeDependente, $dadosDependentes->getDependenteNumeroAtual());
+
+                    $valueOperadora = $funcoes->retornaValueOption($browser, PosFatura::OptionOperadora, 'Claro');
+                    $dadosServico->setServicoOperadora($valueOperadora['text']);
+                    $browser->select(PosFatura::SelectOperadora, $valueOperadora['value']);
+                }
+
+                // segundo teste dependente com Iccid dependente preenchido.
+                elseif($id == 1){
+                    $dadosDependentes->setDependenteIccid(FuncoesPHP::geraICCIDRandomico());
+                    $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteIccid());
+                }
+
+                else{
+                    $dadosDependentes->setDependenteNumero(FuncoesPHP::gerarCelularRandomico());
+                    $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteNumero());
+                }
+
+
+
+    //            $imputNumeroLinha-$grupoElementosGratuitoPagosPanelDependentes
+                $dadosServico->setServicoDependentes($dadosDependentes);
             }
-
-//            $imputNumeroLinha = $browser->element($dependentes . ' [id^="numeroLinha_"]');
-//            $imputNumeroLinha->value('teste');
-
         }
         $this->assertEquals($dadosServico->getServicoQuantidadeDependenteGratuitos(), $contaQuantidadeDependentesGratuiros);
 
