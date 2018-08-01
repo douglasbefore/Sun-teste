@@ -1021,11 +1021,11 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
      *  - Tipo Fatura: E-mail
      * @throws \Exception
      * @throws \Throwable
-     * @Test ServicoMovelPosFaturaDependentesClienteAlta
-     * @group ServicoMovelPosFaturaDependentesClienteAlta
+     * @Test ServicoMovelPosFaturaUpgradeDependentes
+     * @group ServicoMovelPosFaturaUpgradeDependentes
      * @return void
      */
-    public function testServicoMovelPosFaturaDependentesClienteAlta()
+    public function testServicoMovelPosFaturaUpgradeDependentes()
     {
         $this->browse(function (Browser $browser) {
 
@@ -1033,7 +1033,7 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
             $dadosVenda->testEscolherVendaMovel();
             $dadosVenda->dadosCliente();
 
-            $this->ServicoMovelPosFaturaDependentesClienteAlta($browser, $dadosVenda);
+            $this->ServicoMovelPosFaturaUpgradeDependentes($browser, $dadosVenda);
 
             $dadosVenda->trataRodapeValoresVenda();
             $dadosVenda->validarResumoVenda();
@@ -1044,7 +1044,7 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
      * @param Browser $browser
      * @param VendaPAPTest $dadosVenda
      */
-    public function ServicoMovelPosFaturaDependentesClienteAlta(Browser $browser, VendaPAPTest $dadosVenda)
+    public function ServicoMovelPosFaturaUpgradeDependentes(Browser $browser, VendaPAPTest $dadosVenda)
     {
         $funcoes = new FuncoesGerais();
         $dadosServico = new VendaServicoPAP();
