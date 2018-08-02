@@ -2,6 +2,7 @@
 
 namespace Tests\Browser\SUN_PAP\Vendas\Vendas;
 
+use App\consultaCliente;
 use Laravel\Dusk\Browser;
 use Tests\Browser\SUN_PAP\Vendas\Vendas\VendaServicoPAP;
 use Tests\DuskTestCase;
@@ -26,7 +27,8 @@ class VendaServicoFixaBandaLargaPAPTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $dadosVenda = new VendaPAPTest();
 //            $dadosVenda->getVenda()->setClienteCPF('00218606109');
-            $dadosVenda->getVenda()->setClienteCPF('01126481262');
+            $dadosVenda->getVenda()->setClienteCPF(consultaCliente::buscaClienteFixa());
+            $dadosVenda->getVenda()->setEnderecoPrimeiroEndereco(true);
 
             $dadosVenda->testEscolherVendaFixa();
             $dadosVenda->dadosCliente();

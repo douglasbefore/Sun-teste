@@ -316,6 +316,16 @@ class VendaPAPTest extends DuskTestCase
         }
 
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise);
+//        $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaAguardeRealizandoAnalise, null, false);
+//        $enderecoSemReserva = $browser->element(CampoVenda::AlertaAguardeRealizandoAnalise);
+//        if(isset($enderecoSemReserva)){
+//            if($enderecoSemReserva->getText() != 'Facilidade indisponÃ­vel'){
+//                echo 'entrou';
+//            }
+//            if($enderecoSemReserva->getText() != 'EndereÃ§o sem Cobertura'){
+//                echo 'entrou';
+//            }
+//        }
 
         $fazReserva = $browser->element(ReservaVenda::TituloReservaVenda);
         if(isset($fazReserva)){
@@ -345,7 +355,7 @@ class VendaPAPTest extends DuskTestCase
         $browser->type(CampoVenda::CampoEnderecoNumero, $this->Venda->getEnderecoNumero());
         $funcoes->loadCarregandoCampoNull($browser, CampoVenda::AlertaEnderecoCarregandoCidade);
 
-        $browser->waitUntil('$("'.CampoVenda::CampoEnderecoRua.'").val()!=""', 5);
+        $browser->waitUntil('$("'.CampoVenda::CampoEnderecoRua.'").val()!=""', 15);
 
         $this->Venda->setEnderecoRua($browser->value(CampoVenda::CampoEnderecoRua));
         $this->Venda->setEnderecoBairro($browser->value(CampoVenda::CampoEnderecoBairro));
@@ -381,11 +391,14 @@ class VendaPAPTest extends DuskTestCase
 
         foreach ($enderecosEscolha as $id => $itemEndereco){
             $funcoes->barraRolagemElemento($browser, CampoVenda::RadioEscolhaEndereco, $id);
-//            $browser->elements(CampoVenda::RadioEscolhaEndereco)[$id]->getLocationOnScreenOnceScrolledIntoView();
-            if ( strpos(str_replace('-', '', $itemEndereco->getText()), str_replace('-','', $this->Venda->getEnderecoCEP())) !== false){
+
+            if ( strpos(str_replace('-', '', $itemEndereco->getText()), str_replace('-','', $this->Venda->getEnderecoCEP())) !== false
+                or $this->Venda->getEnderecoPrimeiroEndereco()){
+
                 $browser->elements(CampoVenda::RadioEscolhaEndereco)[$id]->click();
                 $this->getVenda()->setEnderecoRua($browser->elements(CampoVenda::RadioEscolhaEndereco . ' .title')[$id]->getText());
                 $achouEndereco = true;
+
                 $browser->pause(200);
                 $browser->press(CampoVenda::BotaoContinuar);
                 break;
@@ -578,13 +591,19 @@ class VendaPAPTest extends DuskTestCase
 
             // Validar Endereco do Cliente
             $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteRua, $this->Venda->getEnderecoRua());
-            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteNumero, $this->Venda->getEnderecoNumero());
-//            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, FuncoesPHP::mascara($this->Venda->getEnderecoCEP(), '#####-###'));
-            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, str_replace('-', '', $this->Venda->getEnderecoCEP()));
-            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCidade, $this->Venda->getEnderecoCidade());
-            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteEstado, consultaUF::retornaUfSigla()[$this->Venda->getEnderecoEstado()]);
-            $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteBairro, $this->Venda->getEnderecoBairro());
-
+            if(!$this->Venda->getEnderecoPrimeiroEndereco()) {
+                $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteNumero, $this->Venda->getEnderecoNumero());
+                $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCEP, str_replace('-', '', $this->Venda->getEnderecoCEP()));
+            }
+            if (!is_null($this->Venda->getEnderecoCidade())) {
+                $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCidade, $this->Venda->getEnderecoCidade());
+            }
+            if (!is_null($this->Venda->getEnderecoCidade())) {
+                $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteEstado, consultaUF::retornaUfSigla()[$this->Venda->getEnderecoEstado()]);
+            }
+            if(!is_null($this->Venda->getEnderecoCidade())) {
+                $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteBairro, $this->Venda->getEnderecoBairro());
+            }
             // Validar Fatura Cliente
             if($this->Venda->isVendaFixa()){
                 $browser->assertSeeIn(ResumoVenda::ValueFaturaClienteDataVencimento, $this->Venda->getFixaDataVencimento());

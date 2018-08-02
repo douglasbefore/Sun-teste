@@ -127,9 +127,10 @@ class FuncoesGerais extends Page
      * @param  Browser $browser
      * @param string $selector
      * @param null $tempo
+     * @param bool $retornarExeption
      * @return void
      */
-    public function loadCarregandoCampoNull(Browser $browser, $selector = '#load', $tempo = null)
+    public function loadCarregandoCampoNull(Browser $browser, $selector = '#load', $tempo = null, $retornarExeption = true)
     {
         $tempoPadrao = $tempo!=null ? $tempo : self::$Padrao;
         $browser->pause(200);
@@ -140,7 +141,7 @@ class FuncoesGerais extends Page
             $retorno = !(isset($selectorEnabled) XOR ($tempoPadrao != 0));
         } while ($retorno);
 
-        if($tempoPadrao<=0){
+        if($retornarExeption and $tempoPadrao<=0){
             $browser->assertSee($selector);
         }
     }

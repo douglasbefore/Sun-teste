@@ -33,6 +33,7 @@ class VendaPAP
     private $clienteTelefoneCelular;
     private $clienteTelefoneFixo;
     private $clienteReceberSMS;
+    private $enderecoPrimeiroEndereco;
     private $enderecoCEP;
     private $enderecoNumero;
     private $enderecoRua;
@@ -68,8 +69,9 @@ class VendaPAP
         $this->clienteTelefoneFixo = '(67) 3333-1111';
         $this->clienteReceberSMS = 'Não';
 
-        $this->enderecoCEP = '79020-250';
-        $this->enderecoNumero = '780';
+        $this->enderecoPrimeiroEndereco = false;
+        $this->enderecoCEP = '79002-212';
+        $this->enderecoNumero = '1062';
     }
 
     /**
@@ -310,6 +312,22 @@ class VendaPAP
     public function setClienteReceberSMS($clienteReceberSMS): void
     {
         $this->clienteReceberSMS = $clienteReceberSMS;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnderecoPrimeiroEndereco()
+    {
+        return $this->enderecoPrimeiroEndereco;
+    }
+
+    /**
+     * @param mixed $enderecoPrimeiroEndereco
+     */
+    public function setEnderecoPrimeiroEndereco($enderecoPrimeiroEndereco): void
+    {
+        $this->enderecoPrimeiroEndereco = $enderecoPrimeiroEndereco;
     }
 
     /**
