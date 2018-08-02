@@ -598,10 +598,10 @@ class VendaPAPTest extends DuskTestCase
             if (!is_null($this->Venda->getEnderecoCidade())) {
                 $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteCidade, $this->Venda->getEnderecoCidade());
             }
-            if (!is_null($this->Venda->getEnderecoCidade())) {
+            if (!is_null($this->Venda->getEnderecoEstado())) {
                 $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteEstado, consultaUF::retornaUfSigla()[$this->Venda->getEnderecoEstado()]);
             }
-            if(!is_null($this->Venda->getEnderecoCidade())) {
+            if(!is_null($this->Venda->getEnderecoBairro())) {
                 $browser->assertSeeIn(ResumoVenda::ValueEnderecoClienteBairro, $this->Venda->getEnderecoBairro());
             }
             // Validar Fatura Cliente
