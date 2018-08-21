@@ -1192,6 +1192,8 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
 
                 $dadosDependentes->setDependenteDDD($dadosServico->getServicoVendaDDD());
                 $dadosDependentes->setDependenteid($gratuitoPago->getText() . $id);
+                $dadosDependentes->setDependenteGratuitoPago(strtolower($gratuitoPago->getText()));
+                $dadosDependentes->setDependenteNomePainel($panelDependente->getText());
                 $dadosDependentes->setDependentePlano($browser->element($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_LabelPlanoDependente)->getText());
 
                 if (strpos($dadosDependentes->getDependentePlano(), 'Gratuito')) {
@@ -1216,6 +1218,7 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
                     $dadosDependentes->setDependenteIccid(FuncoesPHP::geraICCIDRandomico());
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputIccIdDependente, $dadosDependentes->getDependenteIccid());
                     $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeNaoDependente);
+                    $dadosDependentes->setDependentePortabilidade($browser->element(PosFatura::Modal_BotaoPortabilidadeNaoDependente)->getText());
                 }
 
                 //outros testes com o numero do Dependente.
@@ -1223,6 +1226,7 @@ class VendaServicoMovelPosFaturaTest extends DuskTestCase
                     $dadosDependentes->setDependenteNumero(FuncoesPHP::gerarCelularRandomico());
                     $browser->type($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_InputNumeroLinhaDependente, $dadosDependentes->getDependenteNumero());
                     $browser->press($grupoElementosGratuitoPagosPanelDependentes . PosFatura::Modal_BotaoPortabilidadeNaoDependente);
+                    $dadosDependentes->setDependentePortabilidade($browser->element(PosFatura::Modal_BotaoPortabilidadeNaoDependente)->getText());
                 }
 
                 $dadosServico->setServicoDependentes($dadosDependentes);

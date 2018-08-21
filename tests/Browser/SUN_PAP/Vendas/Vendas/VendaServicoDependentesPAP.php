@@ -13,7 +13,9 @@ use Tests\Feature\Funcoes\funcoesPHP;
 
 class VendaServicoDependentesPAP
 {
-    private $dependenteid;
+    private $dependenteId;
+    private $dependenteGratuitoPago;
+    private $dependenteNomePainel;
     private $dependenteDDD;
     private $dependentePlano;
     private $dependenteNumero;
@@ -26,17 +28,49 @@ class VendaServicoDependentesPAP
     /**
      * @return mixed
      */
-    public function getDependenteid()
+    public function getDependenteId()
     {
-        return $this->dependenteid;
+        return $this->dependenteId;
     }
 
     /**
-     * @param mixed $dependenteid
+     * @param mixed $dependenteId
      */
-    public function setDependenteid($dependenteid): void
+    public function setDependenteId($dependenteId): void
     {
-        $this->dependenteid = $dependenteid;
+        $this->dependenteId = $dependenteId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDependenteGratuitoPago()
+    {
+        return $this->dependenteGratuitoPago;
+    }
+
+    /**
+     * @param mixed $dependenteGratuitoPago
+     */
+    public function setDependenteGratuitoPago($dependenteGratuitoPago): void
+    {
+        $this->dependenteGratuitoPago = $dependenteGratuitoPago;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDependenteNomePainel()
+    {
+        return $this->dependenteNomePainel;
+    }
+
+    /**
+     * @param mixed $dependenteNomePainel
+     */
+    public function setDependenteNomePainel($dependenteNomePainel): void
+    {
+        $this->dependenteNomePainel = $dependenteNomePainel;
     }
 
     /**

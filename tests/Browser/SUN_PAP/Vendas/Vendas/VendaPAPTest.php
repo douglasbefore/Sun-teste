@@ -551,8 +551,8 @@ class VendaPAPTest extends DuskTestCase
                 }
 
                 if(!empty($vendaServico->getServicoAdicionais())){
-                    $selectorPanelServicoServicosAdicionaisLabel   = $elementServico.ResumoVenda::LabelPanelServicoServicosAdicionais;
-                    $selectorPanelServicoServicosAdicionais        = $elementServico.ResumoVenda::PanelServicoServicosAdicionais;
+                    $selectorPanelServicoServicosAdicionaisLabel   = $elementServico . ResumoVenda::LabelPanelServicoServicosAdicionais;
+                    $selectorPanelServicoServicosAdicionais        = $elementServico . ResumoVenda::PanelServicoServicosAdicionais;
                     $labelResumoServicoAdicionais = $browser->element($selectorPanelServicoServicosAdicionaisLabel);
                     if(isset($labelResumoServicoAdicionais)){
                         foreach ($vendaServico->getServicoAdicionais() as $servicoAdicionais) {
@@ -563,7 +563,36 @@ class VendaPAPTest extends DuskTestCase
                     }
                 }
 
-                // Resumo Pos Fatura
+                /**
+                 * Resumo Pos Fatura
+                 * @var $dependente VendaServicoDependentesPAP
+                 */
+                if(!empty($vendaServico->getServicoDependentes())){
+                    foreach ($vendaServico->getServicoDependentes() as $dependente){
+                        $selectorPanelServicoDependente = $elementServico . '.' . $dependente->getDependenteGratuitoPago() . ' [data-test="' . $dependente->getDependenteNomePainel() . '"] ';
+
+                        $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesPortabilidade, $dependente->getDependentePortabilidade());
+
+                        $dependentePortabilidade = $browser->element($selectorPanelServicoDependente . ResumoVenda::ValueDependentesPortabilidade)->getText();
+                        if($dependentePortabilidade == 'Sim'){
+                            $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesNumeroPortabilidade, $dependente->getDependenteNumeroAtual());
+                            $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesOperadora, $dependente->getDependenteOperadora());
+
+                            $dependentePortabilidadeOutros = $browser->element($selectorPanelServicoDependente . ResumoVenda::ValueDependentesOperadora)->getText();
+                            if($dependentePortabilidadeOutros == 'Outros'){
+                                $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesOutraOperadora, $dependente->getDependenteOutraOperadora());
+                            }
+                        }
+
+                        if(!is_null($dependente->getDependenteIccid())){
+                            $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesICCID, $dependente->getDependenteIccid());
+                        }
+
+                        if(!is_null($dependente->getDependenteNumero())){
+                            $browser->assertSeeIn($selectorPanelServicoDependente . ResumoVenda::ValueDependentesNumeroLinha, $dependente->getDependenteNumero());
+                        }
+                    }
+                }
 
             }
 

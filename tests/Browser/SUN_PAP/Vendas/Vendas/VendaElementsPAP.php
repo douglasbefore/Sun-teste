@@ -190,4 +190,11 @@ class ResumoVenda extends VendaElementsPAP{
     const ValueTotalTaxaInstalacao = '.resumo-total [data-test="Taxa de Instalação"] .value';
     const ValueTotalMovel = '.resumo-total [data-test="Total Móvel"] .value';
 
+    const ValueDependentesPortabilidade = '[data-test="Portabilidade"]';
+    const ValueDependentesNumeroPortabilidade = '[data-test="Número Portabilidade"]';
+    const ValueDependentesOperadora = '[data-test="Operadora"]';
+    const ValueDependentesOutraOperadora = '[data-test="Outra Operadora"]';
+    const ValueDependentesICCID = '[data-test="ICCID"]';
+    const ValueDependentesNumeroLinha = '[data-test="Número Linha"]';
+
 }
