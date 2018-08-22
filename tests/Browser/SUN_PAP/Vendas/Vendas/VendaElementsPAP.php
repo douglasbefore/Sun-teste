@@ -123,8 +123,8 @@ class ReservaVenda extends VendaElementsPAP
 }
 
 class RodapeVenda extends VendaElementsPAP{
-    const LabelTaxaInstalacaoFixa = '.module-container .total-container [data-test="Taxa de Instalação Fixa"] .label';
-    const ValueTaxaInstalacaoFixa = '.module-container .total-container [data-test="Taxa de Instalação Fixa"] .value';
+    const LabelTaxaHabilitacaoFixa = '.module-container .total-container [data-test="Taxa de Habilitação"] .label';
+    const ValueTaxaHabilitacaoFixa = '.module-container .total-container [data-test="Taxa de Habilitação"] .value';
     const RadioFormaPagamentoAVista = '#formaPagamento .radio-group.block > div:nth-child(1)';
     const RadioFormaPagamento10Vezes = '#formaPagamento .radio-group.block > div:nth-child(2)';
     const Validar_RadioFormaPagamento = '#formaPagamento .form-control-feedback';
@@ -134,7 +134,6 @@ class RodapeVenda extends VendaElementsPAP{
     const ValueFixaAposMeses = '.module-container .total-container [data-test="Fixa após 12 meses"] .value';
     const LabelTotalPlanoMovel = '.module-container .total-container [data-test="Plano Móvel"] .label';
     const ValueTotalPlanoMovel = '.module-container .total-container [data-test="Plano Móvel"] .value';
-
 }
 
 class ResumoVenda extends VendaElementsPAP{
@@ -187,7 +186,7 @@ class ResumoVenda extends VendaElementsPAP{
     const ValueFaturaClienteFormatoPagamento = '.resumo-fatura [data-test="Formato de Pagamento"] .value';
 
     const ValueTotalFixa = '.resumo-total [data-test="Total Fixa"] .value';
-    const ValueTotalTaxaInstalacao = '.resumo-total [data-test="Taxa de Instalação"] .value';
+    const ValueTotalTaxaHabilitacao = '.resumo-total [data-test="Taxa de Habilitação"] .value';
     const ValueTotalMovel = '.resumo-total [data-test="Total Móvel"] .value';
 
 }

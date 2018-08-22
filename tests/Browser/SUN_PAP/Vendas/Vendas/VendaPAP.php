@@ -40,8 +40,8 @@ class VendaPAP
     private $enderecoBairro;
     private $enderecoEstado;
     private $enderecoCidade;
-    private $taxaInstalacao;
-    private $formaPagamentoTaxaInstalacao;
+    private $taxaHabilitacao;
+    private $formaPagamentoTaxaHabilitacao;
     private $fixaFormatoEnvio;
     private $fixaDataVencimento;
     private $fixaFormaPagamento;
@@ -429,33 +429,33 @@ class VendaPAP
     /**
      * @return mixed
      */
-    public function getTaxaInstalacao()
+    public function getTaxaHabilitacao()
     {
-        return $this->taxaInstalacao;
+        return $this->taxaHabilitacao;
     }
 
     /**
-     * @param mixed $taxaInstalacao
+     * @param mixed $taxaHabilitacao
      */
-    public function setTaxaInstalacao($taxaInstalacao): void
+    public function setTaxaHabilitacao($taxaHabilitacao): void
     {
-        $this->taxaInstalacao = $taxaInstalacao;
+        $this->taxaHabilitacao = $taxaHabilitacao;
     }
 
     /**
      * @return mixed
      */
-    public function getFormaPagamentoTaxaInstalacao()
+    public function getFormaPagamentoTaxaHabilitacao()
     {
-        return $this->formaPagamentoTaxaInstalacao;
+        return $this->formaPagamentoTaxaHabilitacao;
     }
 
     /**
-     * @param mixed $formaPagamentoTaxaInstalacao
+     * @param mixed $formaPagamentoTaxaHabilitacao
      */
-    public function setFormaPagamentoTaxaInstalacao($formaPagamentoTaxaInstalacao): void
+    public function setFormaPagamentoTaxaHabilitacao($formaPagamentoTaxaHabilitacao): void
     {
-        $this->formaPagamentoTaxaInstalacao = $formaPagamentoTaxaInstalacao;
+        $this->formaPagamentoTaxaHabilitacao = $formaPagamentoTaxaHabilitacao;
     }
 
     /**

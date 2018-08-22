@@ -62,7 +62,7 @@ class VendaServicoFixaTelefoniaFixaPAPTest extends DuskTestCase
         $browser->press(IncluirServicos::BotaoFixaTelefoniaFixa);
         $browser->pause(500);
 
-        if($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText() != 'Gratuita') {
+        if($browser->element(RodapeVenda::ValueTaxaHabilitacaoFixa)->getText() != 'Gratuita') {
             $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
         }
         $browser->pause(500);
@@ -128,7 +128,7 @@ class VendaServicoFixaTelefoniaFixaPAPTest extends DuskTestCase
         $browser->press(IncluirServicos::BotaoFixaTelefoniaFixa);
         $browser->pause(500);
 
-        if($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText() != 'Gratuita') {
+        if($browser->element(RodapeVenda::ValueTaxaHabilitacaoFixa)->getText() != 'Gratuita') {
             $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
         }
         $browser->pause(500);

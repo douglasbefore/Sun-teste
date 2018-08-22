@@ -446,12 +446,12 @@ class VendaPAPTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->pause(500);
             if($this->getVenda()->isVendaFixa()) {
-                $this->getVenda()->setTaxaInstalacao($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText());
-                if ($this->getVenda()->getTaxaInstalacao() != 'Gratuita') {
-                    $this->getVenda()->setFormaPagamentoTaxaInstalacao($browser->element(RodapeVenda::RadioFormaPagamentoAVista)->getText());
+                $this->getVenda()->setTaxaHabilitacao($browser->element(RodapeVenda::ValueTaxaHabilitacaoFixa)->getText());
+                if ($this->getVenda()->getTaxaHabilitacao() != 'Gratuita') {
+                    $this->getVenda()->setFormaPagamentoTaxaHabilitacao($browser->element(RodapeVenda::RadioFormaPagamentoAVista)->getText());
                     $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
                 } else {
-                    $this->getVenda()->setFormaPagamentoTaxaInstalacao(null);
+                    $this->getVenda()->setFormaPagamentoTaxaHabilitacao(null);
                 }
 
                 $this->getVenda()->setTotalPlanoFixa($browser->element(RodapeVenda::ValueTotalPlanoFixa)->getText());
@@ -614,7 +614,7 @@ class VendaPAPTest extends DuskTestCase
             // Validar Total
             if($this->Venda->isVendaFixa()){
                 $browser->assertSeeIn(ResumoVenda::ValueTotalFixa, $this->Venda->getTotalPlanoFixa());
-                $browser->assertSeeIn(ResumoVenda::ValueTotalTaxaInstalacao, $this->Venda->getTaxaInstalacao());
+                $browser->assertSeeIn(ResumoVenda::ValueTotalTaxaHabilitacao, $this->Venda->getTaxaHabilitacao());
             }
             if($this->Venda->isVendaMovel()){
                 $browser->assertSeeIn(ResumoVenda::ValueTotalMovel, $this->Venda->getTotalPlanoMovel());

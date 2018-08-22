@@ -58,7 +58,7 @@ class VendaServicoFixaBandaLargaPAPTest extends DuskTestCase
         $browser->press(IncluirServicos::BotaoFixaBandaLarga);
         $browser->pause(500);
 
-        if($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText() != 'Gratuita') {
+        if($browser->element(RodapeVenda::ValueTaxaHabilitacaoFixa)->getText() != 'Gratuita') {
             $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
         }
         $browser->pause(500);
@@ -118,7 +118,7 @@ class VendaServicoFixaBandaLargaPAPTest extends DuskTestCase
         $browser->press(IncluirServicos::BotaoFixaBandaLarga);
         $browser->pause(500);
 
-        if($browser->element(RodapeVenda::ValueTaxaInstalacaoFixa)->getText() != 'Gratuita') {
+        if($browser->element(RodapeVenda::ValueTaxaHabilitacaoFixa)->getText() != 'Gratuita') {
             $browser->press(RodapeVenda::RadioFormaPagamentoAVista);
         }
         $browser->pause(500);
